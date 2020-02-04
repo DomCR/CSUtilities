@@ -9,7 +9,7 @@
     <Import_RootNamespace>CSUtilities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)AppDomainUtility.cs" />
+    <Compile Include="..\..\CSUtilities\CSUtilities\AppDomainUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ByteExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
   </ItemGroup>
