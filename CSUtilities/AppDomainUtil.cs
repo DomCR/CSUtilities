@@ -14,5 +14,14 @@ namespace CSUtilities
                 .Where(p => p.GetInterface(typeof(T).FullName) != null)
                 .ToArray();
         }
+
+        public static Type[] GetTypesWithAttribute<T>() where T : Attribute
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => p.GetCustomAttributesData() != null)
+                .Where(a => a == typeof(T))
+                .ToArray();
+        }
     }
 }
