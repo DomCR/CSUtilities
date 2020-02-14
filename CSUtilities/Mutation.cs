@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace CSUtilities
@@ -106,12 +109,14 @@ namespace CSUtilities
         /// <returns>The deserializated object.</returns>
         public static T Deserialize<T>(string path)
         {
-            FileStream stream = new FileStream(path, FileMode.Open);
-            BinaryFormatter formater = new BinaryFormatter();
-            formater.Binder = new AllowAllAssemblyVersionsDeserializationBinder();
-            object result = formater.Deserialize(stream);
-            stream.Close();
-            return (T)result;
+            //FileStream stream = new FileStream(path, FileMode.Open);
+            //BinaryFormatter formater = new BinaryFormatter();
+            //formater.Binder = new AllowAllAssemblyVersionsDeserializationBinder();
+            //object result = formater.Deserialize(stream);
+            //stream.Close();
+            //return (T)result;
+
+            throw new NotImplementedException();
         }
         /// <summary>
         /// Deserialize an object.

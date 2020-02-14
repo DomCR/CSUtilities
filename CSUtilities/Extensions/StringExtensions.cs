@@ -133,5 +133,32 @@ namespace CSUtilities.Extensions
 
             return line;
         }
+        /// <summary>
+        /// Find the first character equal to the parameter.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="characters"></param>
+        /// <returns></returns>
+        public static char? FirstEqual(this string s, IEnumerable<char> characters)
+        {
+            char? token = null;
+            int? pos = null;
+
+            foreach (char item in characters)
+            {
+                //string tmp = m_buffer.Substring(m_currIndex);
+                int curr = s.IndexOf(item);
+
+                //Get the next token in the buffer
+                if ((pos == null || curr < pos) && curr > -1 /*&& curr >= m_currIndex*/)
+                {
+                    //pos = m_buffer.IndexOf(item);
+                    pos = curr;
+                    token = item;
+                }
+            }
+
+            return token;
+        }
     }
 }
