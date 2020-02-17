@@ -12,7 +12,7 @@
     <Compile Include="..\..\CSUtilities\CSUtilities\EnumUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mutation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TaskManager.cs" />
-    <Compile Include="..\..\CSUtilities\CSUtilities\AppDomainUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AppDomainUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ByteExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
   </ItemGroup>

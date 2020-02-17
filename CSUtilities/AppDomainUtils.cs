@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSUtilities
 {
-    internal static class AppDomainUtil
+    internal static class AppDomainUtils
     {
         public static Type[] GetTypesOfInterface<T>()
         {
