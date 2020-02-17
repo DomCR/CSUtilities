@@ -43,7 +43,7 @@ namespace CSUtilities.Extensions
         /// <returns></returns>
         public static string ReadBetween(this string line, char start, char end)
         {
-            var stack = new Stack<int>();
+            Stack<int> stack = new Stack<int>();
             bool isFirst = true;
             string group = "";
 
@@ -113,8 +113,11 @@ namespace CSUtilities.Extensions
             bool reading = true;
             for (int i = 0; i < line.Length; i++)
             {
-                if (line[i] == c)
-                    break;
+                if (line[i] == c && reading)
+                {
+                    reading = false;
+                    continue;
+                }
                 else if (reading)
                     value += line[i];
                 else
@@ -159,6 +162,45 @@ namespace CSUtilities.Extensions
             }
 
             return token;
+        }
+        /// <summary>
+        /// Split an string by spaces and substrings between " ".
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string[] ToArgs(this string s)
+        {
+            List<string> args = new List<string>();
+            string word = "";
+            bool isReading = false;
+
+            foreach (char c in s)
+            {
+                if (c == '"')
+                {
+                    isReading = !isReading;
+                    continue;
+                }
+
+                if (c == ' ' && !isReading)
+                {
+                    //Avoid empty words
+                    if (String.IsNullOrEmpty(word))
+                        continue;
+
+                    args.Add(word);
+                    word = "";
+                }
+                else
+                {
+                    word += c;
+                }
+            }
+
+            if (!String.IsNullOrEmpty(word))
+                args.Add(word);
+
+            return args.ToArray();
         }
     }
 }
