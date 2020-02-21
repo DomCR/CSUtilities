@@ -39,7 +39,6 @@ namespace CSUtilities
                 return (T)formatter.Deserialize(stream);
             }
         }
-
         /// <summary>
         /// Deep copy of an object using reflection.
         /// </summary>
