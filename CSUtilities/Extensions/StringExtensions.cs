@@ -20,7 +20,15 @@ namespace CSUtilities.Extensions
 
             text = text.Replace("\r\n", "\n");
 
-            return text.Split('\n');
+            string[] lines = text.Split('\n');
+
+            if (string.IsNullOrEmpty(lines.Last()))
+            {
+                //Delete the last empty line
+                lines = lines.Take(lines.Length - 1).ToArray();
+            }
+
+            return lines;
         }
         /// <summary>
         /// Gets a string and returns an array of bytes.
