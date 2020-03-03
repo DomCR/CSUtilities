@@ -175,8 +175,9 @@ namespace CSUtilities.Extensions
         /// Split an string by spaces and substrings between " ".
         /// </summary>
         /// <param name="s"></param>
+        /// <param name="keepCollons"></param>
         /// <returns></returns>
-        public static string[] ToArgs(this string s)
+        public static string[] ToArgs(this string s, bool keepCollons = false)
         {
             List<string> args = new List<string>();
             string word = "";
@@ -187,6 +188,10 @@ namespace CSUtilities.Extensions
                 if (c == '"')
                 {
                     isReading = !isReading;
+
+                    if (keepCollons)
+                        word += c;
+
                     continue;
                 }
 
