@@ -48,12 +48,74 @@ namespace CSUtilities.Extensions
         /// <param name="line"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
+        /// <exception cref="ArgumentException">The line is not closed by the 2 characters.</exception>
         /// <returns></returns>
         public static string ReadBetween(this string line, char start, char end)
         {
+            #region old code
+            //Stack<int> stack = new Stack<int>();
+            //bool isFirst = true;
+            //string group = "";
+
+            //for (int i = 0; i < line.Length; i++)
+            //{
+            //    if (line[i] == start)
+            //    {
+            //        //Save the index of the open character
+            //        stack.Push(i);
+
+            //        //Save the index of the first open char
+            //        if (isFirst)
+            //        {
+            //            isFirst = false;
+            //            continue;
+            //        }
+            //    }
+            //    else if (line[i] == end)
+            //    {
+            //        //Check if the sequence contains an open
+            //        if (!isFirst)
+            //        {
+            //            stack.Pop();
+
+            //            //Closing character found
+            //            if (!stack.Any())
+            //            {
+            //                return group;
+            //            }
+            //        }
+            //    }
+
+            //    //If the first open character have been found, start reading the string
+            //    if (!isFirst)
+            //    {
+            //        group += line[i];
+            //    }
+            //} 
+            #endregion
+
+            if(line.TryReadBetween(start, end, out string group))
+            {
+                return group;
+            }
+            else
+            {
+            throw new ArgumentException("Closing character not found, this is an open line.");
+            }
+        }
+        /// <summary>
+        /// Reads between 2 characters, but returns a value even if the group is not closed.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public static bool TryReadBetween(this string line, char start, char end, out string group)
+        {
             Stack<int> stack = new Stack<int>();
             bool isFirst = true;
-            string group = "";
+            group = "";
 
             for (int i = 0; i < line.Length; i++)
             {
@@ -79,7 +141,7 @@ namespace CSUtilities.Extensions
                         //Closing character found
                         if (!stack.Any())
                         {
-                            break;
+                            return true;
                         }
                     }
                 }
@@ -91,7 +153,7 @@ namespace CSUtilities.Extensions
                 }
             }
 
-            return group;
+            return false;
         }
         /// <summary>
         /// Reads a string until it finds a character.
@@ -185,6 +247,7 @@ namespace CSUtilities.Extensions
 
             foreach (char c in s)
             {
+                //Open or close the string
                 if (c == '"')
                 {
                     isReading = !isReading;
@@ -195,9 +258,10 @@ namespace CSUtilities.Extensions
                     continue;
                 }
 
+                //Ignore the whitespaces outside the strings
                 if (c == ' ' && !isReading)
                 {
-                    //Avoid empty words
+                    //Avoid empty words (multiple spaces)
                     if (String.IsNullOrEmpty(word))
                         continue;
 
@@ -209,7 +273,7 @@ namespace CSUtilities.Extensions
                     word += c;
                 }
             }
-
+            //Add the last word
             if (!String.IsNullOrEmpty(word))
                 args.Add(word);
 
