@@ -30,6 +30,10 @@ namespace CSUtilities.Extensions
 
             return lines;
         }
+        public static bool IsNumeric(this string s)
+        {
+            return double.TryParse(s, out _);
+        }
         /// <summary>
         /// Gets a string and returns an array of bytes.
         /// </summary>

@@ -28,7 +28,7 @@ namespace CSUtilities.Extensions
             else
             {
                 element = q.Dequeue();
-                return false;
+                return true;
             }
         }
     }
