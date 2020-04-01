@@ -5,8 +5,17 @@ using System.Text;
 
 namespace CSUtilities.Extensions
 {
-    public static class QueueExtensions
+    /// <summary>
+    /// Queue utility extensions.
+    /// </summary>
+    internal static class QueueExtensions
     {
+        /// <summary>
+        /// Dequeue an element in a avoiding the exceptions.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="q"></param>
+        /// <returns>the last element or the default value for the type.</returns>
         public static T SafeDequeue<T>(this Queue<T> q)
         {
             if (!q.Any())
@@ -18,6 +27,13 @@ namespace CSUtilities.Extensions
                 return q.Dequeue();
             }
         }
+        /// <summary>
+        /// Dequeue an element in a avoiding the exceptions.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="q"></param>
+        /// <param name="element"></param>
+        /// <returns>If the operation has succeded.</returns>
         public static bool SafeDequeue<T>(this Queue<T> q, out T element)
         {
             if (!q.Any())

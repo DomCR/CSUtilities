@@ -5,22 +5,25 @@ using System.Text;
 
 namespace CSUtilities.Extensions
 {
+    /// <summary>
+    /// String utility extensions.
+    /// </summary>
     internal static class StringExtensions
     {
         /// <summary>
         /// Return an array with all the lines.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
-        public static string[] GetLines(this string text)
+        public static string[] GetLines(this string str)
         {
             //Guard
-            if (text == null)
+            if (str == null)
                 return null;
 
-            text = text.Replace("\r\n", "\n");
+            str = str.Replace("\r\n", "\n");
 
-            string[] lines = text.Split('\n');
+            string[] lines = str.Split('\n');
 
             if (string.IsNullOrEmpty(lines.Last()))
             {
@@ -37,24 +40,24 @@ namespace CSUtilities.Extensions
         /// <summary>
         /// Gets a string and returns an array of bytes.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
-        public static byte[] ToByteArray(this string value)
+        public static byte[] ToByteArray(this string str)
         {
-            return Enumerable.Range(0, value.Length)
+            return Enumerable.Range(0, str.Length)
                 .Where(x => x % 2 == 0)
-                .Select(x => Convert.ToByte(value.Substring(x, 2), 16))
+                .Select(x => Convert.ToByte(str.Substring(x, 2), 16))
                 .ToArray();
         }
         /// <summary>
         /// Returns the first string between 2 characters.
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="str"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <exception cref="ArgumentException">The line is not closed by the 2 characters.</exception>
         /// <returns></returns>
-        public static string ReadBetween(this string line, char start, char end)
+        public static string ReadBetween(this string str, char start, char end)
         {
             #region old code
             //Stack<int> stack = new Stack<int>();
@@ -98,32 +101,32 @@ namespace CSUtilities.Extensions
             //} 
             #endregion
 
-            if(line.TryReadBetween(start, end, out string group))
+            if (str.TryReadBetween(start, end, out string group))
             {
                 return group;
             }
             else
             {
-            throw new ArgumentException("Closing character not found, this is an open line.");
+                throw new ArgumentException("Closing character not found, this is an open line.");
             }
         }
         /// <summary>
         /// Reads between 2 characters, but returns a value even if the group is not closed.
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="s"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="group"></param>
         /// <returns></returns>
-        public static bool TryReadBetween(this string line, char start, char end, out string group)
+        public static bool TryReadBetween(this string s, char start, char end, out string group)
         {
             Stack<int> stack = new Stack<int>();
             bool isFirst = true;
             group = "";
 
-            for (int i = 0; i < line.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                if (line[i] == start)
+                if (s[i] == start)
                 {
                     //Save the index of the open character
                     stack.Push(i);
@@ -135,7 +138,7 @@ namespace CSUtilities.Extensions
                         continue;
                     }
                 }
-                else if (line[i] == end)
+                else if (s[i] == end)
                 {
                     //Check if the sequence contains an open
                     if (!isFirst)
@@ -153,7 +156,7 @@ namespace CSUtilities.Extensions
                 //If the first open character have been found, start reading the string
                 if (!isFirst)
                 {
-                    group += line[i];
+                    group += s[i];
                 }
             }
 
@@ -162,61 +165,73 @@ namespace CSUtilities.Extensions
         /// <summary>
         /// Reads a string until it finds a character.
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="str"></param>
         /// <param name="c">Character to find.</param>
         /// <returns></returns>
-        public static string ReadUntil(this string line, char c)
+        public static string ReadUntil(this string str, char c)
         {
             string value = "";
 
-            for (int i = 0; i < line.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                if (line[i] == c)
+                if (str[i] == c)
                     break;
                 else
-                    value += line[i];
+                    value += str[i];
             }
 
             return value;
         }
-        public static string ReadUntil(this string line, char c, out string rest)
+        /// <summary>
+        /// Reads a string until it finds a character.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="c"></param>
+        /// <param name="residual">The last part of the string.</param>
+        /// <returns></returns>
+        public static string ReadUntil(this string str, char c, out string residual)
         {
             string value = "";
-            rest = "";
+            residual = "";
 
             bool reading = true;
-            for (int i = 0; i < line.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                if (line[i] == c && reading)
+                if (str[i] == c && reading)
                 {
                     reading = false;
                     continue;
                 }
                 else if (reading)
-                    value += line[i];
+                    value += str[i];
                 else
-                    rest += line[i];
+                    residual += str[i];
             }
 
             return value;
 
         }
-        public static string RemoveStartWhitespaces(this string line)
+        /// <summary>
+        /// Remove all the first whitespaces in a string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string RemoveStartWhitespaces(this string str)
         {
-            while (line.StartsWith(" "))
+            while (str.StartsWith(" "))
             {
-                line = line.Remove(0, 1);
+                str = str.Remove(0, 1);
             }
 
-            return line;
+            return str;
         }
         /// <summary>
         /// Find the first character equal to the parameter.
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="str"></param>
         /// <param name="characters"></param>
         /// <returns></returns>
-        public static char? FirstEqual(this string s, IEnumerable<char> characters)
+        public static char? FirstEqual(this string str, IEnumerable<char> characters)
         {
             char? token = null;
             int? pos = null;
@@ -224,7 +239,7 @@ namespace CSUtilities.Extensions
             foreach (char item in characters)
             {
                 //string tmp = m_buffer.Substring(m_currIndex);
-                int curr = s.IndexOf(item);
+                int curr = str.IndexOf(item);
 
                 //Get the next token in the buffer
                 if ((pos == null || curr < pos) && curr > -1 /*&& curr >= m_currIndex*/)
@@ -240,16 +255,16 @@ namespace CSUtilities.Extensions
         /// <summary>
         /// Split an string by spaces and substrings between " ".
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="str"></param>
         /// <param name="keepCollons"></param>
         /// <returns></returns>
-        public static string[] ToArgs(this string s, bool keepCollons = false)
+        public static string[] ToArgs(this string str, bool keepCollons = false)
         {
             List<string> args = new List<string>();
             string word = "";
             bool isReading = false;
 
-            foreach (char c in s)
+            foreach (char c in str)
             {
                 //Open or close the string
                 if (c == '"')
