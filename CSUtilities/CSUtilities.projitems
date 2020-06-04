@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueueExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wpf\RelayCommand.cs" />
     <Compile Include="..\..\CSUtilities\CSUtilities\EnumUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mutation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TaskManager.cs" />
