@@ -47,13 +47,18 @@ namespace CSUtilities.Wpf
 		{
 			m_work = action;
 			m_parent = parent;
+
+			//Setup the window
+			showWindow(m_parent);
 		}
 		private WorkProgress(WorkDelegate work, Window parent) : this()
 		{
 			m_parent = parent;
+			m_work = () => work(updateMessage);
 			m_notifiedWork = work;
 
-			m_context.Message = "INTI";
+			//Setup the window
+			showWindow(m_parent);
 		}
 		/// <summary>
 		/// Show the control in a window with the action progress.
@@ -65,13 +70,6 @@ namespace CSUtilities.Wpf
 			Window window = new Window();
 			//Progress bar with the aciton
 			WorkProgress dialog = new WorkProgress(action, window);
-
-			//Setup the window
-			window.Height = 150;
-			window.Width = 450;
-			window.Content = dialog;
-			window.Activated += dialog.startWork;
-			window.ShowDialog();
 		}
 		/// <summary>
 		/// Show the control in a window with the action progress.
@@ -83,13 +81,6 @@ namespace CSUtilities.Wpf
 			Window window = new Window();
 			//Progress bar with the aciton
 			WorkProgress dialog = new WorkProgress(work, window);
-
-			//Setup the window
-			window.Height = 150;
-			window.Width = 450;
-			window.Content = dialog;
-			window.Activated += dialog.startNotifiedWork;
-			window.ShowDialog();
 		}
 		//****************************************************************************************
 		private void updateMessage(string message)
@@ -105,6 +96,15 @@ namespace CSUtilities.Wpf
 		{
 			Task t = Task.Run(m_work);
 			t.GetAwaiter().OnCompleted(() => workCompleted(m_parent));
+		}
+		private void showWindow(Window window)
+		{
+			//Setup the window
+			window.Height = 150;
+			window.Width = 450;
+			window.Content = this;
+			window.Activated += this.startWork;
+			window.ShowDialog();
 		}
 		/// <summary>
 		/// Close the parent window when the work is done.

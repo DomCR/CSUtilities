@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSUtilities.ViewModels
 {
-	public class WorkProgressViewModel : BaseViewModel
+	internal class WorkProgressViewModel : BaseViewModel
 	{
 		public string Message
 		{
