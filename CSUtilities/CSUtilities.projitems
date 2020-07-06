@@ -14,7 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReflectionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\RelayCommand.cs" />
-    <Compile Include="..\..\CSUtilities\CSUtilities\EnumUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EnumUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mutation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TaskManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AppDomainUtils.cs" />
