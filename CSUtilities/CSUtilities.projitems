@@ -12,6 +12,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueueExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReflectionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CsvReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TypeValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EnumUtils.cs" />
