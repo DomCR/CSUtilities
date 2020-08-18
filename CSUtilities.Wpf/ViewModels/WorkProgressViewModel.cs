@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSUtilities.ViewModels
+namespace CSUtilities.Wpf.ViewModels
 {
 	internal class WorkProgressViewModel : BaseViewModel
 	{

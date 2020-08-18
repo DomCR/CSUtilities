@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\CsvReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TypeValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
+    <Resource Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EnumUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mutation.cs" />

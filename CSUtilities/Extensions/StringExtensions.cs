@@ -60,6 +60,7 @@ namespace CSUtilities.Extensions
 		/// <param name="str"></param>
 		/// <param name="start"></param>
 		/// <param name="end"></param>
+		/// <param name="keepTokens"></param>
 		/// <exception cref="ArgumentException">The line is not closed by the 2 characters.</exception>
 		/// <returns></returns>
 		public static string ReadBetween(this string str, char start, char end, bool keepTokens = false)
@@ -289,7 +290,10 @@ namespace CSUtilities.Extensions
 
 				if (token == null)
 				{
-					args.Add(str.Substring(i));
+					string arg = str.Substring(i);
+
+					args.Add(arg);
+					i += arg.Length;
 				}
 				else if (token == separator)
 				{
@@ -297,14 +301,15 @@ namespace CSUtilities.Extensions
 
 					//Check if the argument is not empty
 					if (!string.IsNullOrEmpty(arg))
+					{
 						args.Add(arg);
-
-					i += pos.Value;
+						i += arg.Length;
+					}
 				}
 				else if (groupDelimitiers.ContainsKey(token.Value))
 				{
 					string group = str.Substring(i + pos.Value).ReadBetween(token.Value, groupDelimitiers[token.Value], keepTokens);
-					args.Add(group);
+					args.Add(str.Substring(i).ReadUntil(token.Value) + group);
 
 					//Jump the last group character
 					i += group.Length;
