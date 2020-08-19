@@ -4,14 +4,14 @@
     xmlns:local="using:CSUtilities.Wpf.Styles"
     xmlns:c="clr-namespace:CSUtilities.Wpf.Controls">
 
-    <Style TargetType="{x:Type c:SorterHeaderControl}" x:Key="SorterHeader">
+    <!--<Style TargetType="{x:Type c:SorterHeaderControl}" x:Key="SorterHeader">
 
     </Style>
 
-    <Style TargetType="{x:Type c:SorterListViewControl}" x:Key="SorterListView">
+    <Style TargetType="{x:Type c:SorterListView}" x:Key="SorterListView">
         <Style.Resources>
             <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource SorterHeader}" />
         </Style.Resources>
-    </Style>
+    </Style>-->
     
 </ResourceDictionary>

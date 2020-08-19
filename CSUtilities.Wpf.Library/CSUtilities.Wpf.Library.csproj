@@ -48,7 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\SorterListViewControl.cs" />
+    <Compile Include="Controls\SorterListView.cs" />
     <Compile Include="UserControls\WorkProgress.xaml.cs">
       <DependentUpon>WorkProgress.xaml</DependentUpon>
     </Compile>

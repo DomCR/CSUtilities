@@ -8,6 +8,7 @@ using System.Windows.Data;
 
 namespace CSUtilities.Wpf.Controls
 {
+	[Obsolete]
 	public class SorterHeaderControl : GridViewColumnHeader
 	{
 		private GridViewColumnHeader m_lastHeaderClicked = null;
