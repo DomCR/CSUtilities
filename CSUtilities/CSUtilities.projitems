@@ -9,6 +9,11 @@
     <Import_RootNamespace>CSUtilities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BigEndianBitConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\DefaultConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\IEndianConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InverseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\LittleEndianBitConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueueExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReflectionExtensions.cs" />
