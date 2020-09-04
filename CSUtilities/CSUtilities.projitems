@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InverseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\LittleEndianBitConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TextEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueueExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReflectionExtensions.cs" />
