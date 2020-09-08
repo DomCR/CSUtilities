@@ -528,7 +528,6 @@ namespace CSUtilities
 			byte.MaxValue
 					});
 		}
-
 		//**************************************************************************
 		private string m_name;
 		private char[] m_chars;
