@@ -232,12 +232,17 @@ namespace CSUtilities.Extensions
 		/// </summary>
 		/// <param name="str"></param>
 		/// <param name="keepCollons"></param>
+		/// <param name="ignoreEmpty"></param>
 		/// <returns></returns>
-		public static string[] ToArgs(this string str, bool keepCollons = false)
+		public static string[] ToArgs(this string str, bool keepCollons = false, bool ignoreEmpty = true)
 		{
-			return str.ToArgs(' ', '"', keepCollons);
+			return str.ToArgs(' ', '"', keepCollons, ignoreEmpty);
 		}
-		public static string[] ToArgs(this string str, char separator, char stringDelimitier, bool keepCollons = false)
+		public static string[] ToArgs(this string str, char separator, bool keepCollons = false, bool ignoreEmpty = true)
+		{
+			return str.ToArgs(separator, '"', keepCollons, ignoreEmpty);
+		}
+		public static string[] ToArgs(this string str, char separator, char stringDelimitier, bool keepCollons = false, bool ignoreEmpty = true)
 		{
 			List<string> args = new List<string>();
 			string word = "";
@@ -260,7 +265,7 @@ namespace CSUtilities.Extensions
 				if (c == separator && !isReading)
 				{
 					//Avoid empty words (multiple spaces)
-					if (String.IsNullOrEmpty(word))
+					if (String.IsNullOrEmpty(word) && ignoreEmpty)
 						continue;
 
 					args.Add(word);
@@ -271,8 +276,14 @@ namespace CSUtilities.Extensions
 					word += c;
 				}
 			}
+
 			//Add the last word
-			if (!String.IsNullOrEmpty(word))
+			if (String.IsNullOrEmpty(word))
+			{
+				if (!ignoreEmpty)
+					args.Add(word);
+			}
+			else
 				args.Add(word);
 
 			return args.ToArray();
