@@ -238,6 +238,14 @@ namespace CSUtilities.Extensions
 		{
 			return str.ToArgs(' ', '"', keepCollons, ignoreEmpty);
 		}
+		/// <summary>
+		/// Split an string by spaces and substrings between collons.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <param name="separator"></param>
+		/// <param name="keepCollons"></param>
+		/// <param name="ignoreEmpty"></param>
+		/// <returns></returns>
 		public static string[] ToArgs(this string str, char separator, bool keepCollons = false, bool ignoreEmpty = true)
 		{
 			return str.ToArgs(separator, '"', keepCollons, ignoreEmpty);

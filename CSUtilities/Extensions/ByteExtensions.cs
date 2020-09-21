@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSUtilities.Extensions
 {
-	public static class ByteExtensions
+	internal static class ByteExtensions
 	{
 		/// <summary>
 		/// Convert a byte array into a hex string array.
