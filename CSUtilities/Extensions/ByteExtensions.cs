@@ -17,7 +17,7 @@ namespace CSUtilities.Extensions
 			StringBuilder hex = new StringBuilder(array.Count() * 2);
 			foreach (byte b in array)
 				hex.AppendFormat("{0:x2}", b);
-			return hex.ToString();
+			return hex.ToString().ToUpper();
 		}
 	}
 }
