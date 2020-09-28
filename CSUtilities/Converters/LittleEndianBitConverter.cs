@@ -3,7 +3,7 @@
 namespace CSUtilities.Converters
 {
 	/// <summary>Represents a little endian bit converter.</summary>
-	public static class LittleEndianBitConverter
+	internal static class LittleEndianBitConverter
 	{
 		private static readonly IEndianConverter Converter;
 

@@ -61,7 +61,7 @@ namespace CSUtilities.Extensions
 		/// <param name="start"></param>
 		/// <param name="end"></param>
 		/// <param name="keepTokens"></param>
-		/// <exception cref="ArgumentException">The line is not closed by the 2 characters.</exception>
+		/// <exception cref="FormatException">The line is not closed by the 2 characters.</exception>
 		/// <returns></returns>
 		public static string ReadBetween(this string str, char start, char end, bool keepTokens = false)
 		{
@@ -71,7 +71,7 @@ namespace CSUtilities.Extensions
 			}
 			else
 			{
-				throw new ArgumentException("Closing character not found, this is an open line.");
+				throw new FormatException("Closing character not found, this is an open line.");
 			}
 		}
 		/// <summary>
@@ -197,7 +197,7 @@ namespace CSUtilities.Extensions
 			return str.Remove(str.Length - 1);
 		}
 		/// <summary>
-		/// Find the first character equal to the parameter.
+		/// Find the first character in the list of tokens.
 		/// </summary>
 		/// <param name="str"></param>
 		/// <param name="characters"></param>
@@ -206,10 +206,17 @@ namespace CSUtilities.Extensions
 		{
 			return FirstEqual(str, characters, out _);
 		}
-		public static char? FirstEqual(this string str, IEnumerable<char> characters, out int? pos)
+		/// <summary>
+		/// Find the first character in the list of tokens.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <param name="characters"></param>
+		/// <param name="index">Index of the found character</param>
+		/// <returns></returns>
+		public static char? FirstEqual(this string str, IEnumerable<char> characters, out int? index)
 		{
 			char? token = null;
-			pos = null;
+			index = null;
 
 			foreach (char item in characters)
 			{
@@ -217,10 +224,10 @@ namespace CSUtilities.Extensions
 				int curr = str.IndexOf(item);
 
 				//Get the next token in the buffer
-				if ((pos == null || curr < pos) && curr > -1 /*&& curr >= m_currIndex*/)
+				if ((index == null || curr < index) && curr > -1 /*&& curr >= m_currIndex*/)
 				{
 					//pos = m_buffer.IndexOf(item);
-					pos = curr;
+					index = curr;
 					token = item;
 				}
 			}
