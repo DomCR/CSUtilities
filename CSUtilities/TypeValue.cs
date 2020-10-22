@@ -8,6 +8,7 @@ namespace CSUtilities
 	/// Class to store a type value directly in it.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
+	//TODO: Change to structre? is not really a reference...
 	public class TypeValue<T> : IEquatable<T>
 	{
 		/// <summary>
@@ -64,7 +65,12 @@ namespace CSUtilities
 		/// <inheritdoc/>
 		public bool Equals(T other)
 		{
-			return Equals(other);
+			return other.Equals(Value);
+		}
+		/// <inheritdoc/>
+		public override string ToString()
+		{
+			return Value.ToString();
 		}
 	}
 }
