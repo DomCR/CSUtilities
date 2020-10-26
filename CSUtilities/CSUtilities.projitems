@@ -10,20 +10,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BigEndianBitConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\DefaultConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BigEndianConverter.cs" />
+    <Compile Include="..\..\CSUtilities\CSUtilities\Converters\DefaultEndianConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InverseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\LittleEndianBitConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\LittleEndianConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\StreamIO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TextEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueueExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReflectionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\CsvReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TypeValue.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Wpf\BaseValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Wpf\Controls\SorterHeaderControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Wpf\Controls\SorterListView.cs" />
     <Resource Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Wpf\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EnumUtils.cs" />

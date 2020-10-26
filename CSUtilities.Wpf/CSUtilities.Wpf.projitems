@@ -9,6 +9,8 @@
     <Import_RootNamespace>CSUtilities.Wpf</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SorterHeaderControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SorterListView.cs" />
   </ItemGroup>
 </Project>

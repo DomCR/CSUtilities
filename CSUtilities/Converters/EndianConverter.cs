@@ -1,97 +1,106 @@
-﻿namespace CSUtilities.Converters
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CSUtilities.Converters
 {
-	/// <summary>Represents a endian bit converter.</summary>
-	internal interface IEndianConverter
+	internal abstract class EndianConverter : IEndianConverter
 	{
+		protected readonly IEndianConverter m_converter;
+		public EndianConverter() { }
+		protected EndianConverter(IEndianConverter converter)
+		{
+			m_converter = converter;
+		}
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(char value);
+		public byte[] GetBytes(char value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(short value);
+		public byte[] GetBytes(short value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(ushort value);
+		public byte[] GetBytes(ushort value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(int value);
+		public byte[] GetBytes(int value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(uint value);
+		public byte[] GetBytes(uint value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(long value);
+		public byte[] GetBytes(long value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(ulong value);
+		public byte[] GetBytes(ulong value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(double value);
+		public byte[] GetBytes(double value) => m_converter.GetBytes(value);
 		/// <summary>Returns the specified value as an array of bytes.</summary>
-		byte[] GetBytes(float value);
+		public byte[] GetBytes(float value) => m_converter.GetBytes(value);
 		/// <summary>
 		/// Converts the specified bytes to a <see cref="System.Char" />.
 		/// </summary>
-		char ToChar(byte[] arr);
+		public char ToChar(byte[] bytes) => m_converter.ToChar(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Int16" />.
 		/// </summary>
-		short ToInt16(byte[] arr);
+		public short ToInt16(byte[] bytes) => m_converter.ToInt16(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.UInt16" />.
 		/// </summary>
-		ushort ToUInt16(byte[] arr);
+		public ushort ToUInt16(byte[] bytes) => m_converter.ToUInt16(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Int32" />.
 		/// </summary>
-		int ToInt32(byte[] arr);
+		public int ToInt32(byte[] bytes) => m_converter.ToInt32(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.UInt32" />.
 		/// </summary>
-		uint ToUInt32(byte[] arr);
+		public uint ToUInt32(byte[] bytes) => m_converter.ToUInt32(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Int64" />.
 		/// </summary>
-		long ToInt64(byte[] arr);
+		public long ToInt64(byte[] bytes) => m_converter.ToInt64(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.UInt64" />.
 		/// </summary>
-		ulong ToUInt64(byte[] arr);
+		public ulong ToUInt64(byte[] bytes) => m_converter.ToUInt64(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Double" />.
 		/// </summary>
-		double ToDouble(byte[] arr);
+		public double ToDouble(byte[] bytes) => m_converter.ToDouble(bytes);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Single" />.
 		/// </summary>
-		float ToSingle(byte[] arr);
+		public float ToSingle(byte[] bytes) => m_converter.ToSingle(bytes);
 		/// <summary>
 		/// Converts the specified bytes to a <see cref="System.Char" />.
 		/// </summary>
-		char ToChar(byte[] arr, int length);
+		public char ToChar(byte[] bytes, int index) => m_converter.ToChar(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Int16" />.
 		/// </summary>
-		short ToInt16(byte[] arr, int length);
+		public short ToInt16(byte[] bytes, int index) => m_converter.ToInt16(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.UInt16" />.
 		/// </summary>
-		ushort ToUInt16(byte[] arr, int length);
+		public ushort ToUInt16(byte[] bytes, int index) => m_converter.ToUInt16(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Int32" />.
 		/// </summary>
-		int ToInt32(byte[] arr, int length);
+		public int ToInt32(byte[] bytes, int index) => m_converter.ToInt32(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.UInt32" />.
 		/// </summary>
-		uint ToUInt32(byte[] arr, int length);
+		public uint ToUInt32(byte[] bytes, int index) => m_converter.ToUInt32(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Int64" />.
 		/// </summary>
-		long ToInt64(byte[] arr, int length);
+		public long ToInt64(byte[] bytes, int index) => m_converter.ToInt64(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.UInt64" />.
 		/// </summary>
-		ulong ToUInt64(byte[] arr, int length);
+		public ulong ToUInt64(byte[] bytes, int index) => m_converter.ToUInt64(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Double" />.
 		/// </summary>
-		double ToDouble(byte[] arr, int length);
+		public double ToDouble(byte[] bytes, int index) => m_converter.ToDouble(bytes, index);
 		/// <summary>
 		/// Converts the specified bytes to an <see cref="System.Single" />.
 		/// </summary>
-		float ToSingle(byte[] arr, int length);
+		public float ToSingle(byte[] bytes, int index) => m_converter.ToSingle(bytes, index);
 	}
 }
