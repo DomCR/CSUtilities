@@ -20,7 +20,11 @@ namespace CSUtilities.IO
 			this.m_stream = stream;
 		}
 		//*******************************************************************
-		public virtual byte[] ReadBytes(int length)
+		public byte ReadByte()
+		{
+			return (byte)m_stream.ReadByte();
+		}
+		public byte[] ReadBytes(int length)
 		{
 			byte[] buffer = new byte[length];
 			if (this.m_stream.Read(buffer, 0, length) < length)
@@ -28,7 +32,18 @@ namespace CSUtilities.IO
 
 			return buffer;
 		}
+		public short ReadShort()
+		{
+			return ReadShort<DefaultEndianConverter>();
+		}
+		public short ReadShort<T>() where T : IEndianConverter, new()
+		{
+			T converter = new T();
 
+			byte[] buffer = new byte[2];
+			this.m_stream.Read(buffer, 0, 2);
+			return converter.ToInt16(buffer);
+		}
 		public int ReadInt()
 		{
 			return ReadInt<DefaultEndianConverter>();
