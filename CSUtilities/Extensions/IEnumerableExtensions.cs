@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CSUtilities.Extensions
@@ -7,7 +8,7 @@ namespace CSUtilities.Extensions
 	/// <summary>
 	/// Estensions for <see cref="IEnumerable{T}"/>.
 	/// </summary>
-	public static class IEnumerableExtensions
+	internal static class IEnumerableExtensions
 	{
 		/// <summary>
 		/// Return true if the collection is empty.
@@ -27,6 +28,16 @@ namespace CSUtilities.Extensions
 		public static Queue<T> ToQueue<T>(this IEnumerable<T> enumerable)
 		{
 			return new Queue<T>(enumerable);
+		}
+		public static IEnumerable<T> RemoveLastEquals<T>(this IEnumerable<T> enumerable, T element)
+		{
+			List<T> lst = new List<T>(enumerable);
+			while (lst.Last().Equals(element))
+			{
+				lst.RemoveAt(lst.Count - 1);
+			}
+
+			return lst;
 		}
 	}
 }
