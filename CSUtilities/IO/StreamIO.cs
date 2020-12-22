@@ -127,6 +127,26 @@ namespace CSUtilities.IO
 			return converter.ToInt16(buffer);
 		}
 		/// <summary>
+		/// Read a <see cref="ushort"/> value form the stream.
+		/// </summary>
+		/// <returns></returns>
+		public ushort ReadUShort()
+		{
+			return ReadUShort<DefaultEndianConverter>();
+		}
+		/// <summary>
+		/// Read a <see cref="ushort"/> value form the stream.
+		/// </summary>
+		/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+		/// <returns></returns>
+		public ushort ReadUShort<T>() where T : IEndianConverter, new()
+		{
+			T converter = new T();
+
+			byte[] buffer = this.ReadBytes(2);
+			return converter.ToUInt16(buffer);
+		}
+		/// <summary>
 		/// Read a <see cref="int"/> value form the stream.
 		/// </summary>
 		/// <returns></returns>
