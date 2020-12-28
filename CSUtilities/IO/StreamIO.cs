@@ -37,19 +37,18 @@ namespace CSUtilities.IO
 		/// <param name="length"></param>
 		/// <returns></returns>
 		/// <remarks>This operation don't advance the positon.</remarks>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		public byte[] GetBytes(int offset, int length)
 		{
 			if (length < 0)
 				throw new ArgumentOutOfRangeException("Length cannot be negative.");
-
-			byte[] buffer = new byte[length];
 
 			//Save the current position
 			long save = this.Position;
 			//Set the position to the begining
 			this.Position = offset;
 
-			buffer = this.ReadBytes( length);
+			byte[] buffer = this.ReadBytes(length);
 			//if (this.m_stream.Read(buffer, offset, length) < length)
 			//	throw new EndOfStreamException();
 
