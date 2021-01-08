@@ -14,7 +14,7 @@ namespace CSUtilities.IO
 		/// <summary>
 		/// Gets or sets the position within the current stream.
 		/// </summary>
-		public long Position
+		public virtual long Position
 		{
 			get => this.m_stream.Position;
 			set => this.m_stream.Position = value;
@@ -23,11 +23,52 @@ namespace CSUtilities.IO
 		/// Gets the length in bytes of the stream.
 		/// </summary>
 		public long Length => this.m_stream.Length;
-		private Stream m_stream = null;
-		public StreamIO(Stream stream)
+		public Stream Stream { get { return m_stream; } }   //TODO: Should return a copy?
+															//*******************************************************************
+		protected Stream m_stream = null;
+		//*******************************************************************
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StreamIO" /> class.
+		/// </summary>
+		/// <param name="filename">File to read/write.</param>
+		public StreamIO(string filename)
 		{
+			m_stream = (Stream)File.Open(filename, FileMode.Open, FileAccess.ReadWrite);
+		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StreamIO" /> class.
+		/// </summary>
+		/// <param name="filename">File to read/write.</param>
+		/// <param name="mode"></param>
+		/// <param name="access"></param>
+		public StreamIO(string filename, FileMode mode, FileAccess access)
+		{
+			m_stream = (Stream)File.Open(filename, mode, access);
+		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StreamIO" /> class.
+		/// </summary>
+		/// <param name="stream"></param>
+		/// <param name="resetPosition"></param>
+		public StreamIO(Stream stream, bool resetPosition = false)
+		{
+			//Check if supports seeking
+			if (!stream.CanSeek)
+			{
+				//Create a copy of the stream to allow seeking
+				byte[] buffer = new byte[stream.Length];
+				stream.Read(buffer, 0, buffer.Length);
+				stream = (Stream)new MemoryStream(buffer);
+
+				if (resetPosition)
+					//Reset the position to the begining
+					stream.Position = 0L;
+			}
 			this.m_stream = stream;
 		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StreamIO" /> class.
+		/// </summary>
 		public StreamIO(byte[] arr) : this(new MemoryStream(arr)) { }
 		//*******************************************************************
 		/// <summary>
@@ -78,12 +119,16 @@ namespace CSUtilities.IO
 			return bs;
 		}
 		/// <summary>
-		/// Reads a byte from the stream and advances the position within the stream by one byte, or returns -1 if at the end of the stream.
+		///
 		/// </summary>
 		/// <returns></returns>
-		public byte ReadByte()
+		public virtual byte ReadByte()
 		{
-			return (byte)m_stream.ReadByte();
+			byte[] arr = new byte[1];
+			byte b = m_stream.Read(arr, 0, 1) == 1 ?
+				arr[0] : throw new EndOfStreamException();
+
+			return b;
 		}
 		/// <summary>
 		/// Read n bytes at the stream position.
