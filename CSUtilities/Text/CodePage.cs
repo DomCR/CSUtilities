@@ -10,7 +10,7 @@ namespace CSUtilities.Text
 	/// <remarks>
 	/// Source: https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding?view=net-5.0
 	/// </remarks>
-	internal enum CodePage
+	public enum CodePage
 	{
 		/// <summary>
 		/// Unknown code page

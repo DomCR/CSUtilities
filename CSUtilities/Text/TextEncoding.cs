@@ -537,7 +537,7 @@ namespace CSUtilities.Text
 		/// <summary>
 		/// Gets the encoding for specified <see cref="CodePage"/>
 		/// </summary>
-		public static Encoding GetEncoding(CodePage code)
+		public static Encoding GetListedEncoding(CodePage code)
 		{
 			switch (code)
 			{

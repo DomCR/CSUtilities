@@ -22,19 +22,16 @@ namespace CSUtilities.IO
 		/// <summary>
 		/// Gets the length in bytes of the stream.
 		/// </summary>
-		public long Length => this.m_stream.Length;
-		public Stream Stream { get { return m_stream; } }   //TODO: Should return a copy?
-															//*******************************************************************
+		public virtual long Length => this.m_stream.Length;
+		public Stream Stream { get { return m_stream; } }
+		//*******************************************************************
 		protected Stream m_stream = null;
 		//*******************************************************************
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
 		/// <param name="filename">File to read/write.</param>
-		public StreamIO(string filename)
-		{
-			m_stream = (Stream)File.Open(filename, FileMode.Open, FileAccess.ReadWrite);
-		}
+		public StreamIO(string filename) : this(filename, FileMode.Open, FileAccess.ReadWrite) { }
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
@@ -49,23 +46,38 @@ namespace CSUtilities.IO
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
 		/// <param name="stream"></param>
+		/// <param name="createCopy"></param>
 		/// <param name="resetPosition"></param>
-		public StreamIO(Stream stream, bool resetPosition = false)
+		public StreamIO(Stream stream, bool createCopy, bool resetPosition)
 		{
+			long position = stream.Position;
+
 			//Check if supports seeking
-			if (!stream.CanSeek)
+			if (!stream.CanSeek || createCopy)
 			{
+				stream.Position = 0;
 				//Create a copy of the stream to allow seeking
 				byte[] buffer = new byte[stream.Length];
 				stream.Read(buffer, 0, buffer.Length);
-				stream = (Stream)new MemoryStream(buffer);
+				m_stream = (Stream)new MemoryStream(buffer);
 
 				if (resetPosition)
 					//Reset the position to the begining
-					stream.Position = 0L;
+					m_stream.Position = 0L;
 			}
-			this.m_stream = stream;
+			else
+				this.m_stream = stream;
+
+			stream.Position = position;
 		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StreamIO" /> class.
+		/// </summary>
+		public StreamIO(Stream stream, bool createCopy) : this(stream, createCopy, false) { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StreamIO" /> class.
+		/// </summary>
+		public StreamIO(Stream stream) : this(stream, false, false) { }
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
@@ -119,7 +131,7 @@ namespace CSUtilities.IO
 			return bs;
 		}
 		/// <summary>
-		///
+		/// Read a single byte form the stream.
 		/// </summary>
 		/// <returns></returns>
 		public virtual byte ReadByte()
@@ -271,6 +283,46 @@ namespace CSUtilities.IO
 			return converter.ToDouble(buffer);
 		}
 		/// <summary>
+		/// Read a <see cref="long"/> value form the stream.
+		/// </summary>
+		/// <returns></returns>
+		public long ReadLong()
+		{
+			return ReadLong<DefaultEndianConverter>();
+		}
+		/// <summary>
+		/// Read a <see cref="long"/> value form the stream.
+		/// </summary>
+		/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+		/// <returns></returns>
+		public long ReadLong<T>() where T : IEndianConverter, new()
+		{
+			T converter = new T();
+
+			byte[] buffer = this.ReadBytes(8);
+			return converter.ToInt64(buffer);
+		}
+		/// <summary>
+		/// Read a <see cref="ulong"/> value form the stream.
+		/// </summary>
+		/// <returns></returns>
+		public ulong ReadULong()
+		{
+			return ReadULong<DefaultEndianConverter>();
+		}
+		/// <summary>
+		/// Read a <see cref="ulong"/> value form the stream.
+		/// </summary>
+		/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+		/// <returns></returns>
+		public ulong ReadULong<T>() where T : IEndianConverter, new()
+		{
+			T converter = new T();
+
+			byte[] buffer = this.ReadBytes(8);
+			return converter.ToUInt64(buffer);
+		}
+		/// <summary>
 		/// Read a string from the stream using the default encoding.
 		/// </summary>
 		/// <param name="length"></param>
@@ -280,7 +332,7 @@ namespace CSUtilities.IO
 			return ReadString(length, Encoding.Default);
 		}
 		/// <summary>
-		/// 
+		/// Read a string from the stream.
 		/// </summary>
 		/// <param name="length"></param>
 		/// <param name="encoding"></param>
