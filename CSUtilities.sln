@@ -7,14 +7,23 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CSUtilities", "CSUtilities\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CSUtilities.Wpf", "CSUtilities.Wpf\CSUtilities.Wpf.shproj", "{E20E9A63-E588-4485-B6CB-C411E2ACC3CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSUtilities.Wpf.Library", "CSUtilities.Wpf.Library\CSUtilities.Wpf.Library.csproj", "{B3B53F2E-43B5-4D53-8FA0-294C43432AE2}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CSUtilities\CSUtilities.projitems*{b3b53f2e-43b5-4d53-8fa0-294c43432ae2}*SharedItemsImports = 4
 		CSUtilities\CSUtilities.projitems*{b4ef345d-52b9-47f1-aa2a-b4ae85f62efc}*SharedItemsImports = 13
 		CSUtilities.Wpf\CSUtilities.Wpf.projitems*{e20e9a63-e588-4485-b6cb-c411e2acc3cf}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3B53F2E-43B5-4D53-8FA0-294C43432AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B53F2E-43B5-4D53-8FA0-294C43432AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B53F2E-43B5-4D53-8FA0-294C43432AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B53F2E-43B5-4D53-8FA0-294C43432AE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
