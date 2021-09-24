@@ -82,7 +82,7 @@ namespace CSUtilities.IO
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
 		public StreamIO(byte[] arr) : this(new MemoryStream(arr)) { }
-		//*******************************************************************
+
 		/// <summary>
 		/// Get an array of bytes given an offset, before the operation the position is set to 0.
 		/// </summary>

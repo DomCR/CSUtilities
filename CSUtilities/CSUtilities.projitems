@@ -11,7 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BigEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Text\CodePage.cs" />
-    <Compile Include="..\..\CSUtilities\CSUtilities\Converters\DefaultEndianConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\DefaultEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InverseConverter.cs" />
