@@ -18,7 +18,7 @@ namespace CSUtilities.Wpf
 		/// A single static instance of this value converter.
 		/// </summary>
 		private static T m_converter = null;
-		//************************************************************************************************
+
 		/// <summary>
 		/// Provide a static instance of the value converter.
 		/// </summary>

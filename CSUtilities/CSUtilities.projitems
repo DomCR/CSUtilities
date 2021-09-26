@@ -9,6 +9,7 @@
     <Import_RootNamespace>CSUtilities</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\StringValueAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BigEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Text\CodePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DefaultEndianConverter.cs" />
@@ -22,11 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueueExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReflectionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\CsvReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TypeValue.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
-    <Resource Include="$(MSBuildThisFileDirectory)Wpf\BaseViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Wpf\RelayCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EnumUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EnumExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mutation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TaskManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AppDomainUtils.cs" />

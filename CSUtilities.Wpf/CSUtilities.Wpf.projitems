@@ -10,7 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SorterHeaderControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SorterListView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RelayCommand.cs" />
   </ItemGroup>
 </Project>

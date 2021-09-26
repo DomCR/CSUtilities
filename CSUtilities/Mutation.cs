@@ -39,6 +39,7 @@ namespace CSUtilities
 				return (T)formatter.Deserialize(stream);
 			}
 		}
+
 		/// <summary>
 		/// Deep copy of an object using reflection.
 		/// </summary>
@@ -51,6 +52,7 @@ namespace CSUtilities
 				throw new ArgumentNullException("Object cannot be null");
 			return (T)processObject(obj);
 		}
+
 		/// <summary>
 		/// store the info of an object in a dictionary
 		/// </summary>
@@ -88,6 +90,7 @@ namespace CSUtilities
 
 			return properties;
 		}
+
 		/// <summary>
 		/// Serialize an object into a file.
 		/// </summary>
@@ -100,6 +103,7 @@ namespace CSUtilities
 			formater.Serialize(stream, obj);
 			stream.Close();
 		}
+
 		/// <summary>
 		/// Deserialize an object.
 		/// </summary>
@@ -117,6 +121,7 @@ namespace CSUtilities
 
 			throw new NotImplementedException();
 		}
+
 		/// <summary>
 		/// Deserialize an object.
 		/// </summary>
@@ -126,7 +131,7 @@ namespace CSUtilities
 		{
 			return Deserialize<object>(path);
 		}
-		//********************************************************************************
+		
 		private static object processObject(object obj)
 		{
 			if (obj == null)
