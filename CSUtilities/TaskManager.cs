@@ -8,7 +8,7 @@ namespace CSUtilities
 	/// <summary>
 	/// Class to control tasks and processes.
 	/// </summary>
-	public static class TaskManager
+	internal static class TaskManager
 	{
 		/// <summary>
 		/// Execute a method in a time span if the method don't finish at the time is canceled.

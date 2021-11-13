@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace CSUtilities
+namespace CSUtilities.Extensions
 {
-	public static class EnumExtensions
+	internal static class EnumExtensions
 	{
 		[Obsolete("Use Type.GetValues()")]
 		public static IEnumerable<T> GetValues<T>()

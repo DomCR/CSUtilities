@@ -1,5 +1,5 @@
+using CSUtilities.Extensions;
 using CSUtilities.Tests.Mock;
-using System;
 using Xunit;
 
 namespace CSUtilities.Tests

@@ -8,7 +8,7 @@ namespace CSUtilities.Attributes
 	/// Simple attribute class for storing String Values
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-	internal sealed class StringValueAttribute : Attribute
+	public sealed class StringValueAttribute : Attribute
 	{
 		/// <summary>
 		/// Gets the value.

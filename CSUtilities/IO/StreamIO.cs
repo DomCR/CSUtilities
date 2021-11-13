@@ -1,6 +1,5 @@
 ﻿using CSUtilities.Converters;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -19,19 +18,22 @@ namespace CSUtilities.IO
 			get => this.m_stream.Position;
 			set => this.m_stream.Position = value;
 		}
+
 		/// <summary>
 		/// Gets the length in bytes of the stream.
 		/// </summary>
 		public virtual long Length => this.m_stream.Length;
+
 		public Stream Stream { get { return m_stream; } }
-		//*******************************************************************
+
 		protected Stream m_stream = null;
-		//*******************************************************************
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
 		/// <param name="filename">File to read/write.</param>
 		public StreamIO(string filename) : this(filename, FileMode.Open, FileAccess.ReadWrite) { }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
@@ -42,6 +44,7 @@ namespace CSUtilities.IO
 		{
 			m_stream = (Stream)File.Open(filename, mode, access);
 		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
@@ -70,6 +73,7 @@ namespace CSUtilities.IO
 
 			stream.Position = position;
 		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>

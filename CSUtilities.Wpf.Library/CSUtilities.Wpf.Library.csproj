@@ -7,7 +7,7 @@
     <ProjectGuid>{B3B53F2E-43B5-4D53-8FA0-294C43432AE2}</ProjectGuid>
     <OutputType>library</OutputType>
     <RootNamespace>CSUtilities.Wpf</RootNamespace>
-    <AssemblyName>CSUtilities.Wpf</AssemblyName>
+    <AssemblyName>CSUtilities.Wpf.Library</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
