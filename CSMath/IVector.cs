@@ -1,13 +1,16 @@
 ﻿namespace CSMath
 {
-	public interface IVector<T>
+	public interface IVector
 	{
 		/// <summary>
 		/// Get the diferent components of a dimensional vector.
 		/// </summary>
 		/// <returns>Array with the vector components.</returns>
 		double[] GetComponents();
+	}
 
+	public interface IVector<T> : IVector
+	{
 		/// <summary>
 		/// Create a new instance of the same type with the given components.
 		/// </summary>
