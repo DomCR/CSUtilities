@@ -18,7 +18,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)XYZ.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XYZM.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)XYZ.Operators.cs" />
-  </ItemGroup>
 </Project>
