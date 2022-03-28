@@ -15,18 +15,18 @@ namespace CSUtilities.IO
 		/// </summary>
 		public virtual long Position
 		{
-			get => this.m_stream.Position;
-			set => this.m_stream.Position = value;
+			get => this._stream.Position;
+			set => this._stream.Position = value;
 		}
 
 		/// <summary>
 		/// Gets the length in bytes of the stream.
 		/// </summary>
-		public virtual long Length => this.m_stream.Length;
+		public virtual long Length => this._stream.Length;
 
-		public Stream Stream { get { return m_stream; } }
+		public Stream Stream { get { return _stream; } }
 
-		protected Stream m_stream = null;
+		protected Stream _stream = null;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
@@ -42,7 +42,7 @@ namespace CSUtilities.IO
 		/// <param name="access"></param>
 		public StreamIO(string filename, FileMode mode, FileAccess access)
 		{
-			m_stream = (Stream)File.Open(filename, mode, access);
+			_stream = (Stream)File.Open(filename, mode, access);
 		}
 
 		/// <summary>
@@ -62,14 +62,14 @@ namespace CSUtilities.IO
 				//Create a copy of the stream to allow seeking
 				byte[] buffer = new byte[stream.Length];
 				stream.Read(buffer, 0, buffer.Length);
-				m_stream = (Stream)new MemoryStream(buffer);
+				_stream = (Stream)new MemoryStream(buffer);
 
 				if (resetPosition)
 					//Reset the position to the begining
-					m_stream.Position = 0L;
+					_stream.Position = 0L;
 			}
 			else
-				this.m_stream = stream;
+				this._stream = stream;
 
 			stream.Position = position;
 		}
@@ -78,10 +78,12 @@ namespace CSUtilities.IO
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
 		public StreamIO(Stream stream, bool createCopy) : this(stream, createCopy, false) { }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
 		public StreamIO(Stream stream) : this(stream, false, false) { }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StreamIO" /> class.
 		/// </summary>
@@ -114,6 +116,7 @@ namespace CSUtilities.IO
 
 			return buffer;
 		}
+
 		/// <summary>
 		/// Look into a byte without moving the position of the stream.
 		/// </summary>
@@ -123,6 +126,7 @@ namespace CSUtilities.IO
 			byte b = LookBytes(1)[0];
 			return b;
 		}
+
 		/// <summary>
 		/// Look into an array of bytes without moving the position of the stream.
 		/// </summary>
@@ -134,6 +138,7 @@ namespace CSUtilities.IO
 			this.Position -= count;
 			return bs;
 		}
+
 		/// <summary>
 		/// Read a single byte form the stream.
 		/// </summary>
@@ -141,11 +146,21 @@ namespace CSUtilities.IO
 		public virtual byte ReadByte()
 		{
 			byte[] arr = new byte[1];
-			byte b = m_stream.Read(arr, 0, 1) == 1 ?
+			byte b = _stream.Read(arr, 0, 1) == 1 ?
 				arr[0] : throw new EndOfStreamException();
 
 			return b;
 		}
+
+		/// <summary>
+		/// Read a character from the stream
+		/// </summary>
+		/// <returns></returns>
+		public char ReadChar()
+		{
+			return (char)this.ReadByte();
+		}
+
 		/// <summary>
 		/// Read n bytes at the stream position.
 		/// </summary>
@@ -161,11 +176,32 @@ namespace CSUtilities.IO
 
 			byte[] buffer = new byte[length];
 
-			if (this.m_stream.Read(buffer, 0, length) < length)
+			if (this._stream.Read(buffer, 0, length) < length)
 				throw new EndOfStreamException();
 
 			return buffer;
 		}
+		
+		/// <summary>
+		/// Read the stream as a string until it finds the match character
+		/// </summary>
+		/// <param name="match">Character to match</param>
+		/// <returns></returns>
+		public string ReadUntil(char match)
+		{
+			string line = string.Empty;
+			char last;
+
+			do
+			{
+				last = this.ReadChar();
+				line += last;
+
+			} while (match != last);
+
+			return line;
+		}
+
 		/// <summary>
 		/// Read a <see cref="short"/> value form the stream.
 		/// </summary>
@@ -174,6 +210,7 @@ namespace CSUtilities.IO
 		{
 			return ReadShort<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="short"/> value form the stream.
 		/// </summary>
@@ -352,7 +389,7 @@ namespace CSUtilities.IO
 		/// <inheritdoc/>
 		public void Dispose()
 		{
-			m_stream.Dispose();
+			_stream.Dispose();
 		}
 	}
 }

@@ -73,6 +73,17 @@
 			return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="precision">number of decimals</param>
+		/// <returns></returns>
+		public bool Equals(XYZ other, int precision)
+		{
+			throw new System.NotImplementedException();
+		}
+
 		/// <inheritdoc/>
 		public override int GetHashCode()
 		{

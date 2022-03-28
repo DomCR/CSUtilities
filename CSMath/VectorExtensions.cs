@@ -131,6 +131,19 @@ namespace CSMath
 			return applyFunctionByComponentIndex(left, right, (o, x) => o / x);
 		}
 
+		public static T Round<T>(this T vector)
+			where T : IVector<T>, new()
+		{
+			double[] components1 = vector.GetComponents();
+
+			for (int i = 0; i < components1.Length; i++)
+			{
+				components1[i] = Math.Round(components1[i]);
+			}
+
+			return new T().SetComponents(components1);
+		}
+
 		/// <summary>
 		/// Applies a function in all the components of a vector by order
 		/// </summary>
