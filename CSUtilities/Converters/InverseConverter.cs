@@ -76,6 +76,35 @@ namespace CSUtilities.Converters
 		public ulong ToUInt64(byte[] arr, int offset) => BitConverter.ToUInt64(InverseConverter.fullInverse(arr, offset), 0);
 		public double ToDouble(byte[] arr, int offset) => BitConverter.ToDouble(InverseConverter.fullInverse(arr, offset), 0);
 		public float ToSingle(byte[] arr, int offset) => BitConverter.ToSingle(InverseConverter.fullInverse(arr, offset), 0);
+
+		public byte[] GetBytes<T>(T value)
+			where T : struct
+		{
+			switch (value)
+			{
+				case char c:
+					return this.GetBytes(c);
+				case short s:
+					return this.GetBytes(s);
+				case ushort us:
+					return this.GetBytes(us);
+				case int i:
+					return this.GetBytes(i);
+				case uint ui:
+					return this.GetBytes(ui);
+				case long l:
+					return this.GetBytes(l);
+				case ulong ul:
+					return this.GetBytes(ul);
+				case double d:
+					return this.GetBytes(d);
+				case float f:
+					return this.GetBytes(f);
+				default:
+					throw new NotSupportedException($"type {typeof(T).FullName} not supported");
+			}
+		}
+
 		private static byte[] fullInverse(byte[] arr)
 		{
 			byte[] inverse = new byte[arr.Length];
@@ -87,6 +116,7 @@ namespace CSUtilities.Converters
 
 			return inverse;
 		}
+
 		private static byte[] fullInverse(byte[] arr, int offset)
 		{
 			byte[] inverse = new byte[arr.Length];

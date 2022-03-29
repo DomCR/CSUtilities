@@ -181,7 +181,7 @@ namespace CSUtilities.IO
 
 			return buffer;
 		}
-		
+
 		/// <summary>
 		/// Read the stream as a string until it finds the match character
 		/// </summary>
@@ -223,6 +223,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(2);
 			return converter.ToInt16(buffer);
 		}
+
 		/// <summary>
 		/// Read a <see cref="ushort"/> value form the stream.
 		/// </summary>
@@ -231,6 +232,7 @@ namespace CSUtilities.IO
 		{
 			return ReadUShort<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="ushort"/> value form the stream.
 		/// </summary>
@@ -243,6 +245,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(2);
 			return converter.ToUInt16(buffer);
 		}
+
 		/// <summary>
 		/// Read a <see cref="int"/> value form the stream.
 		/// </summary>
@@ -251,6 +254,7 @@ namespace CSUtilities.IO
 		{
 			return ReadInt<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="int"/> value form the stream.
 		/// </summary>
@@ -263,6 +267,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(4);
 			return converter.ToInt32(buffer);
 		}
+
 		/// <summary>
 		/// Read a <see cref="uint"/> value form the stream.
 		/// </summary>
@@ -271,6 +276,7 @@ namespace CSUtilities.IO
 		{
 			return ReadUInt<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="uint"/> value form the stream.
 		/// </summary>
@@ -283,6 +289,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(4);
 			return converter.ToUInt32(buffer);
 		}
+
 		/// <summary>
 		/// Read a <see cref="float"/> value form the stream.
 		/// </summary>
@@ -291,6 +298,7 @@ namespace CSUtilities.IO
 		{
 			return ReadSingle<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="float"/> value form the stream.
 		/// </summary>
@@ -303,6 +311,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(4);
 			return converter.ToSingle(buffer);
 		}
+
 		/// <summary>
 		/// Read a <see cref="double"/> value form the stream.
 		/// </summary>
@@ -311,6 +320,7 @@ namespace CSUtilities.IO
 		{
 			return ReadDouble<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="double"/> value form the stream.
 		/// </summary>
@@ -323,6 +333,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(8);
 			return converter.ToDouble(buffer);
 		}
+
 		/// <summary>
 		/// Read a <see cref="long"/> value form the stream.
 		/// </summary>
@@ -331,6 +342,7 @@ namespace CSUtilities.IO
 		{
 			return ReadLong<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="long"/> value form the stream.
 		/// </summary>
@@ -343,6 +355,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(8);
 			return converter.ToInt64(buffer);
 		}
+
 		/// <summary>
 		/// Read a <see cref="ulong"/> value form the stream.
 		/// </summary>
@@ -351,6 +364,7 @@ namespace CSUtilities.IO
 		{
 			return ReadULong<DefaultEndianConverter>();
 		}
+
 		/// <summary>
 		/// Read a <see cref="ulong"/> value form the stream.
 		/// </summary>
@@ -363,6 +377,7 @@ namespace CSUtilities.IO
 			byte[] buffer = this.ReadBytes(8);
 			return converter.ToUInt64(buffer);
 		}
+
 		/// <summary>
 		/// Read a string from the stream using the default encoding.
 		/// </summary>
@@ -372,6 +387,7 @@ namespace CSUtilities.IO
 		{
 			return ReadString(length, Encoding.Default);
 		}
+
 		/// <summary>
 		/// Read a string from the stream.
 		/// </summary>
@@ -386,6 +402,31 @@ namespace CSUtilities.IO
 			byte[] numArray = this.ReadBytes(length);
 			return encoding.GetString(numArray);
 		}
+
+		/// <summary>
+		/// Write a value as an array of bytes
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		public void Write<T>(T value)
+			where T : struct
+		{
+			this.Write(value, new DefaultEndianConverter());
+		}
+
+		/// <summary>
+		/// Write a value as an array of bytes defining the byte order
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name="converter"></param>
+		public void Write<T>(T value, IEndianConverter converter)
+			where T : struct
+		{
+			byte[] arr = converter.GetBytes(value);
+			this._stream.Write(arr, 0, arr.Length);
+		}
+
 		/// <inheritdoc/>
 		public void Dispose()
 		{

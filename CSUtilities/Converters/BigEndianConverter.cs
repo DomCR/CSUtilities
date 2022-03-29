@@ -7,6 +7,7 @@ namespace CSUtilities.Converters
 	internal class BigEndianConverter : EndianConverter
 	{
 		public static BigEndianConverter Instance = new BigEndianConverter();
+
 		static IEndianConverter init()
 		{
 			if (BitConverter.IsLittleEndian)
@@ -14,6 +15,7 @@ namespace CSUtilities.Converters
 			else
 				return (IEndianConverter)new DefaultEndianConverter();
 		}
+
 		public BigEndianConverter() : base(init()) { }
 	}
 }
