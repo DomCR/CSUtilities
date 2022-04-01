@@ -427,6 +427,26 @@ namespace CSUtilities.IO
 			this._stream.Write(arr, 0, arr.Length);
 		}
 
+		/// <summary>
+		/// Write a string using the default encoding
+		/// </summary>
+		/// <param name="value"></param>
+		public void Write(string value)
+		{
+			this.Write(value, Encoding.Default);
+		}
+
+		/// <summary>
+		/// Write a string with an specific encoding
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="encoding"></param>
+		public void Write(string value, Encoding encoding)
+		{
+			byte[] arr = encoding.GetBytes(value);
+			this._stream.Write(arr, 0, arr.Length);
+		}
+
 		/// <inheritdoc/>
 		public void Dispose()
 		{
