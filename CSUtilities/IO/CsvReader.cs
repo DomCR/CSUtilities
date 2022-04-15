@@ -89,7 +89,7 @@ namespace CSUtilities.IO
 	//}
 	#endregion
 
-	public class CsvReader : IDisposable
+	internal class CsvReader : IDisposable
 	{
 		public char Separator { get; set; }
 		public string[] Headers { get; }

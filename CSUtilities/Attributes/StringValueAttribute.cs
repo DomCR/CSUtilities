@@ -11,12 +11,12 @@ namespace CSUtilities.Attributes
 	public sealed class StringValueAttribute : Attribute
 	{
 		/// <summary>
-		/// Gets the value.
+		/// Gets the value
 		/// </summary>
 		public string Value { get; }
 
 		/// <summary>
-		/// Default constructor.
+		/// Default constructor
 		/// </summary>
 		/// <param name="value">Value.</param>
 		public StringValueAttribute(string value)

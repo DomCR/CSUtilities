@@ -10,7 +10,7 @@ namespace CSUtilities
 	/// <summary>
 	/// Class that allows to modify, copy or control objects outside their own methods.
 	/// </summary>
-	public static class Mutation
+	internal static class Mutation
 	{
 		/// <summary>
 		/// Clone the serializable object into a new instance.
