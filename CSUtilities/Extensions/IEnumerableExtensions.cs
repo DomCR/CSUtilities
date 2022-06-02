@@ -6,7 +6,7 @@ using System.Text;
 namespace CSUtilities.Extensions
 {
 	/// <summary>
-	/// Estensions for <see cref="IEnumerable{T}"/>.
+	/// Estensions for <see cref="IEnumerable{T}"/>
 	/// </summary>
 	internal static class IEnumerableExtensions
 	{
@@ -19,6 +19,7 @@ namespace CSUtilities.Extensions
 		{
 			return enumerable.GetEnumerator() == null;
 		}
+
 		/// <summary>
 		/// Transforms an enumerable into a Queue.
 		/// </summary>
@@ -29,6 +30,7 @@ namespace CSUtilities.Extensions
 		{
 			return new Queue<T>(enumerable);
 		}
+
 		public static IEnumerable<T> RemoveLastEquals<T>(this IEnumerable<T> enumerable, T element)
 		{
 			List<T> lst = new List<T>(enumerable);
