@@ -19,7 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InverseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\LittleEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\StreamIO.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Text\TextEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueueExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReflectionExtensions.cs" />
@@ -30,5 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)AppDomainUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ByteExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Text\TextEncoding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Text\TextEncoding.Windows1252.cs" />
   </ItemGroup>
 </Project>

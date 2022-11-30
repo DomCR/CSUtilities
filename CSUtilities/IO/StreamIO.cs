@@ -24,6 +24,10 @@ namespace CSUtilities.IO
 		/// </summary>
 		public virtual long Length => this._stream.Length;
 
+		public Encoding Encoding { get; set; } = Encoding.Default;
+
+		public IEndianConverter EndianConverter { get; set; } = new DefaultEndianConverter();
+
 		public Stream Stream { get { return _stream; } }
 
 		protected Stream _stream = null;
@@ -385,7 +389,7 @@ namespace CSUtilities.IO
 		/// <returns></returns>
 		public string ReadString(int length)
 		{
-			return ReadString(length, Encoding.Default);
+			return ReadString(length, this.Encoding);
 		}
 
 		/// <summary>
@@ -414,6 +418,13 @@ namespace CSUtilities.IO
 			this.Write(value, new DefaultEndianConverter());
 		}
 
+		public void Write<T, E>(T value)
+			where T : struct
+			where E : IEndianConverter, new()
+		{
+			this.Write(value, new E());
+		}
+
 		/// <summary>
 		/// Write a value as an array of bytes defining the byte order
 		/// </summary>
@@ -427,13 +438,23 @@ namespace CSUtilities.IO
 			this._stream.Write(arr, 0, arr.Length);
 		}
 
+		public void WriteBytes(byte[] buffer)
+		{
+			this._stream.Write(buffer, 0, buffer.Length);
+		}
+
+		public void WriteBytes(byte[] buffer, int offset, int count)
+		{
+			this._stream.Write(buffer, offset, count);
+		}
+
 		/// <summary>
 		/// Write a string using the default encoding
 		/// </summary>
 		/// <param name="value"></param>
 		public void Write(string value)
 		{
-			this.Write(value, Encoding.Default);
+			this.Write(value, this.Encoding);
 		}
 
 		/// <summary>

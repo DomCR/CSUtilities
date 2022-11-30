@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CSUtilities.Extensions
 {
+	//TODO: refactor extensions
 	/// <summary>
 	/// String utility extensions.
 	/// </summary>
 	internal static class StringExtensions
 	{
+		public static bool IsNull(this string str)
+		{
+			throw new NotImplementedException();
+		}
+
+		public static bool IsNullOrEmpty(this string str)
+		{
+			throw new NotImplementedException();
+		}
+
 		/// <summary>
 		/// Return an array with all the lines.
 		/// </summary>
@@ -33,6 +43,7 @@ namespace CSUtilities.Extensions
 
 			return lines;
 		}
+
 		/// <summary>
 		/// Return if the string is numeric.
 		/// </summary>
@@ -42,6 +53,7 @@ namespace CSUtilities.Extensions
 		{
 			return double.TryParse(s, out _);
 		}
+
 		/// <summary>
 		/// Gets a string and returns an array of bytes.
 		/// </summary>
@@ -54,6 +66,7 @@ namespace CSUtilities.Extensions
 				.Select(x => Convert.ToByte(str.Substring(x, 2), 16))
 				.ToArray();
 		}
+
 		/// <summary>
 		/// Returns the first string between 2 characters.
 		/// </summary>
@@ -74,6 +87,7 @@ namespace CSUtilities.Extensions
 				throw new FormatException("Closing character not found, this is an open line.");
 			}
 		}
+
 		/// <summary>
 		/// Reads between 2 characters, but returns a value even if the group is not closed.
 		/// </summary>
@@ -137,6 +151,7 @@ namespace CSUtilities.Extensions
 
 			return false;
 		}
+
 		/// <summary>
 		/// Reads a string until it finds a character.
 		/// </summary>
@@ -147,6 +162,7 @@ namespace CSUtilities.Extensions
 		{
 			return str.ReadUntil(c, out _);
 		}
+
 		/// <summary>
 		/// Reads a string until it finds a character.
 		/// </summary>
@@ -173,6 +189,7 @@ namespace CSUtilities.Extensions
 			return value;
 
 		}
+
 		/// <summary>
 		/// Remove all the first whitespaces in a string.
 		/// </summary>
@@ -187,6 +204,7 @@ namespace CSUtilities.Extensions
 
 			return str;
 		}
+
 		/// <summary>
 		/// Remove the last character of a string.
 		/// </summary>
@@ -196,6 +214,7 @@ namespace CSUtilities.Extensions
 		{
 			return str.Remove(str.Length - 1);
 		}
+
 		/// <summary>
 		/// Find the first character in the list of tokens.
 		/// </summary>
@@ -206,6 +225,7 @@ namespace CSUtilities.Extensions
 		{
 			return FirstEqual(str, characters, out _);
 		}
+
 		/// <summary>
 		/// Find the first character in the list of tokens.
 		/// </summary>
@@ -234,6 +254,7 @@ namespace CSUtilities.Extensions
 
 			return token;
 		}
+
 		/// <summary>
 		/// Split an string by spaces and substrings between collons.
 		/// </summary>
@@ -245,6 +266,7 @@ namespace CSUtilities.Extensions
 		{
 			return str.ToArgs(' ', '"', keepCollons, ignoreEmpty);
 		}
+
 		/// <summary>
 		/// Split an string by spaces and substrings between collons.
 		/// </summary>
@@ -257,6 +279,7 @@ namespace CSUtilities.Extensions
 		{
 			return str.ToArgs(separator, '"', keepCollons, ignoreEmpty);
 		}
+
 		public static string[] ToArgs(this string str, char separator, char stringDelimitier, bool keepCollons = false, bool ignoreEmpty = true)
 		{
 			List<string> args = new List<string>();
@@ -303,6 +326,7 @@ namespace CSUtilities.Extensions
 
 			return args.ToArray();
 		}
+
 		public static string[] ToArgs(this string str, char separator, IDictionary<char, char> groupDelimitiers, bool keepTokens = false)
 		{
 			List<string> args = new List<string>();
@@ -344,6 +368,7 @@ namespace CSUtilities.Extensions
 
 			return args.ToArray();
 		}
+
 		public static string SubstringByIndex(this string s, int startIndex, int endIndex)
 		{
 			return s.Remove(endIndex).Substring(startIndex);
