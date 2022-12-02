@@ -438,12 +438,12 @@ namespace CSUtilities.IO
 			this._stream.Write(arr, 0, arr.Length);
 		}
 
-		public void WriteBytes(byte[] buffer)
+		public virtual void WriteBytes(byte[] buffer)
 		{
 			this._stream.Write(buffer, 0, buffer.Length);
 		}
 
-		public void WriteBytes(byte[] buffer, int offset, int count)
+		public virtual void WriteBytes(byte[] buffer, int offset, int count)
 		{
 			this._stream.Write(buffer, offset, count);
 		}
