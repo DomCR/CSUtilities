@@ -180,6 +180,21 @@
 		}
 
 		/// <summary>
+		/// Divides the vector by the given scalar.
+		/// </summary>
+		/// <param name="xyz">The source vector.</param>
+		/// <param name="value">The scalar value.</param>
+		/// <returns>The result of the division.</returns>
+		public static XYZ operator /(XYZ xyz, double value)
+		{
+			double invDiv = 1.0f / value;
+
+			return new XYZ(xyz.X * invDiv,
+							xyz.Y * invDiv,
+							xyz.Z * invDiv);
+		}
+
+		/// <summary>
 		/// Negates a given vector.
 		/// </summary>
 		/// <param name="value">The source vector.</param>
