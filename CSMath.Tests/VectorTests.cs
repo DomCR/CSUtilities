@@ -29,6 +29,17 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
+		public void DistanceTest()
+		{
+			var pt1 = Factory.CreatePoint<T>(0);
+			var pt2 = Factory.CreatePoint<T>(1);
+
+			double dist = pt1.DistanceFrom(pt2);
+
+			Assert.Equal(Math.Sqrt(pt1.GetComponents().Length), dist);
+		}
+
+		[Fact]
 		public void SubsctractTest()
 		{
 			var test = Factory.CreateOperationCase<T>((o, x) => o - x);

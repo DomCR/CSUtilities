@@ -6,6 +6,28 @@ namespace CSMath
 	public static class VectorExtensions
 	{
 		/// <summary>
+		/// Distance between two points
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="u"></param>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static double DistanceFrom<T>(this T u, T v)
+			where T : IVector<T>
+		{
+			double value = 0;
+			var c1 = u.GetComponents();
+			var c2 = v.GetComponents();
+
+			for (int i = 0; i < c1.Length; i++)
+			{
+				value += Math.Pow(c1[i] - c2[i], 2);
+			}
+
+			return Math.Sqrt(value);
+		}
+
+		/// <summary>
 		/// Returns the length of the vector.
 		/// </summary>
 		/// <returns>The vector's length.</returns>

@@ -20,6 +20,30 @@ namespace CSMath.Tests
 			_random = new Random(seed);
 		}
 
+		public T CreatePoint<T>(double? def = null)
+			where T : IVector<T>, new()
+		{
+			T pt = new T();
+
+			int n = pt.GetComponents().Length;
+
+			List<double> c1 = new List<double>();
+
+			for (int i = 0; i < n; i++)
+			{
+				if (def.HasValue)
+				{
+					c1.Add(def.Value);
+				}
+				else
+				{
+					c1.Add(_random.Next(-100, 100));
+				}
+			}
+
+			return pt.SetComponents(c1.ToArray());
+		}
+
 		public (T, T, T) CreateOperationCase<T>(Func<double, double, double> op)
 			where T : IVector<T>, new()
 		{
