@@ -141,6 +141,18 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Multiplies a vector with an scalar.
+		/// </summary>
+		/// <param name="left">The first source vector.</param>
+		/// <param name="right">The second source vector.</param>
+		/// <returns>The product vector.</returns>
+		public static T Multiply<T>(this T left, double scalar)
+			where T : IVector<T>, new()
+		{
+			return applyFunctionByScalar(left, scalar, (o, x) => o * x);
+		}
+
+		/// <summary>
 		/// Divides the first vector by the second.
 		/// </summary>
 		/// <param name="left">The first source vector.</param>
@@ -150,6 +162,15 @@ namespace CSMath
 			where T : IVector<T>, new()
 		{
 			return applyFunctionByComponentIndex(left, right, (o, x) => o / x);
+		}
+
+		/// <summary>
+		/// Divides a vector with an scalar.
+		/// </summary>
+		public static T Divide<T>(this T left, double scalar)
+			where T : IVector<T>, new()
+		{
+			return applyFunctionByScalar(left, scalar, (o, x) => o / x);
 		}
 
 		public static T Round<T>(this T vector)
@@ -176,13 +197,27 @@ namespace CSMath
 		private static T applyFunctionByComponentIndex<T>(this T left, T right, Func<double, double, double> op)
 			where T : IVector<T>, new()
 		{
-			double[] components1 = left.GetComponents();
-			double[] components2 = right.GetComponents();
-			double[] result = new double[components1.Length];
+			double[] c1 = left.GetComponents();
+			double[] c2 = right.GetComponents();
+			double[] result = new double[c1.Length];
 
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < c1.Length; i++)
 			{
-				result[i] = op(components1[i], components2[i]);
+				result[i] = op(c1[i], c2[i]);
+			}
+
+			return new T().SetComponents(result);
+		}
+
+		private static T applyFunctionByScalar<T>(this T v, double scalar, Func<double, double, double> op)
+			where T : IVector<T>, new()
+		{
+			double[] c1 = v.GetComponents();
+			double[] result = new double[c1.Length];
+
+			for (int i = 0; i < c1.Length; i++)
+			{
+				result[i] = op(c1[i], scalar);
 			}
 
 			return new T().SetComponents(result);
