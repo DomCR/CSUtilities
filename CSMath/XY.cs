@@ -1,4 +1,6 @@
-﻿namespace CSMath
+﻿using System;
+
+namespace CSMath
 {
 	public struct XY : IVector<XY>
 	{
@@ -16,6 +18,15 @@
 		}
 
 		public XY(double[] components) : this(components[0], components[1]) { }
+
+		/// <summary>
+		/// Get the angle in radians
+		/// </summary>
+		/// <returns></returns>
+		public double GetAngle()
+		{
+			return Math.Atan2(Y, X);
+		}
 
 		public double[] GetComponents()
 		{
