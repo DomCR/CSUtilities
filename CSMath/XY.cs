@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace CSMath
 {
@@ -20,9 +21,9 @@ namespace CSMath
 		public XY(double[] components) : this(components[0], components[1]) { }
 
 		/// <summary>
-		/// Get the angle in radians
+		/// Get the angle
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>angle in radians</returns>
 		public double GetAngle()
 		{
 			return Math.Atan2(Y, X);
@@ -41,6 +42,18 @@ namespace CSMath
 		public override string ToString()
 		{
 			return $"{X},{Y}";
+		}
+
+		/// <summary>
+		/// Get the angle from 2 vectors
+		/// </summary>
+		/// <param name="u"></param>
+		/// <param name="v"></param>
+		/// <returns>angle in radians</returns>
+		public static double GetAngle(XY u, XY v)
+		{
+			XY dir = v.Substract(u);
+			return dir.GetAngle();
 		}
 	}
 }
