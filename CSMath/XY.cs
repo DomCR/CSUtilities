@@ -55,5 +55,11 @@ namespace CSMath
 			XY dir = v.Substract(u);
 			return dir.GetAngle();
 		}
+
+
+		public static explicit operator XY(XYZ xyz)
+		{
+			return new XY(xyz.X, xyz.Y);
+		}
 	}
 }
