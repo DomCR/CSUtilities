@@ -26,6 +26,22 @@
 
 		public XYZ(double[] components) : this(components[0], components[1], components[2]) { }
 
+		public static XYZ CreateFrom(double[] arr)
+		{
+			return CreateFrom(arr, 0);
+		}
+
+		public static XYZ CreateFrom(double[] arr, int offset)
+		{
+			double[] values = new double[3];
+			for (int i = offset; i < arr.Length && i < values.Length + offset; i++)
+			{
+				values[i] = (double)arr[i];
+			}
+
+			return new XYZ(values);
+		}
+
 		/// <summary>
 		/// Computes the cross product of two coordinates.
 		/// </summary>
@@ -228,6 +244,11 @@
 			return (left.X != right.X ||
 					left.Y != right.Y ||
 					left.Z != right.Z);
+		}
+
+		public static explicit operator XYZ(XY xy)
+		{
+			return new XYZ(xy.X, xy.Y, 0);
 		}
 
 		#endregion
