@@ -1,6 +1,8 @@
-﻿namespace CSMath
+﻿using System;
+
+namespace CSMath
 {
-	public partial struct XYZ : IVector<XYZ>
+	public partial struct XYZ : IVector<XYZ>, IEquatable<XYZ>
 	{
 		public readonly static XYZ Zero = new XYZ(0, 0, 0);
 		public readonly static XYZ AxisX = new XYZ(1, 0, 0);
@@ -86,18 +88,24 @@
 			if (!(obj is XYZ other))
 				return false;
 
-			return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
+			return this.Equals(other);
 		}
 
 		/// <summary>
-		/// 
+		/// Indicates whether this instance and a specified object are equal with in a specific precison.
 		/// </summary>
 		/// <param name="other"></param>
-		/// <param name="precision">number of decimals</param>
+		/// <param name="digits">number of decimals</param>
 		/// <returns></returns>
-		public bool Equals(XYZ other, int precision)
+		public bool Equals(XYZ other, int digits)
 		{
-			throw new System.NotImplementedException();
+			return other.IsEqual(this, digits);
+		}
+
+		/// <inheritdoc/>
+		public bool Equals(XYZ other)
+		{
+			return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
 		}
 
 		/// <inheritdoc/>

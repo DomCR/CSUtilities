@@ -105,6 +105,28 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Returns a boolean indicating whether the two given vectors are equal.
+		/// </summary>
+		/// <param name="left">The first vector to compare.</param>
+		/// <param name="right">The second vector to compare.</param>
+		/// <param name="digits">Number of decimals digits to be set as precision.</param>
+		/// <returns>True if the vectors are equal; False otherwise.</returns>
+		public static bool IsEqual<T>(this T left, T right, int digits)
+			where T : IVector<T>
+		{
+			var components1 = left.GetComponents();
+			var components2 = right.GetComponents();
+
+			for (int i = 0; i < components1.Length; i++)
+			{
+				if (Math.Round(components1[i], digits) != Math.Round(components2[i], digits))
+					return false;
+			}
+
+			return true;
+		}
+
+		/// <summary>
 		/// Adds two vectors together.
 		/// </summary>
 		/// <param name="left">The first source vector.</param>

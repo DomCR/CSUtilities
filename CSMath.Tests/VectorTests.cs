@@ -66,6 +66,30 @@ namespace CSMath.Tests
 			Assert.Equal(test.Item3, test.Item1.Divide(test.Item2));
 		}
 
+		[Fact]
+		public void IsEqualTest()
+		{
+			Random random = new Random();
+			double def = random.NextDouble();
+
+			var pt1 = Factory.CreatePoint<T>(def);
+			var pt2 = Factory.CreatePoint<T>(def);
+
+			Assert.True(pt1.IsEqual(pt2));
+		}
+
+		[Fact]
+		public void IsEqualDigitsTest()
+		{
+			Random random = new Random();
+			double def = random.NextDouble();
+
+			var pt1 = Factory.CreatePoint<T>(def);
+			var pt2 = Factory.CreatePoint<T>(def);
+
+			Assert.True(pt1.IsEqual(pt2, 2));
+		}
+
 		protected void writeTest((T, T, T) test)
 		{
 			output.WriteLine($"Item 1 : {test.Item1}");
