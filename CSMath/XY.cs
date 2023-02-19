@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace CSMath
 {
-	public struct XY : IVector<XY>
+	public struct XY : IVector<XY>, IEquatable<XY>
 	{
 		public readonly static XY Zero = new XY(0, 0);
 		public readonly static XY AxisX = new XY(1, 0);
@@ -29,16 +29,51 @@ namespace CSMath
 			return Math.Atan2(Y, X);
 		}
 
+		/// <inheritdoc/>
 		public double[] GetComponents()
 		{
 			return new double[] { X, Y };
 		}
 
+		/// <inheritdoc/>
 		public XY SetComponents(double[] components)
 		{
 			return new XY(components);
 		}
 
+		/// <inheritdoc/>
+		public override bool Equals(object obj)
+		{
+			if (!(obj is XY other))
+				return false;
+
+			return this.Equals(other);
+		}
+
+		/// <summary>
+		/// Indicates whether this instance and a specified object are equal with in a specific precison.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="digits">number of decimals</param>
+		/// <returns></returns>
+		public bool Equals(XY other, int digits)
+		{
+			return other.IsEqual(this, digits);
+		}
+
+		/// <inheritdoc/>
+		public bool Equals(XY other)
+		{
+			return this.X == other.X && this.Y == other.Y;
+		}
+
+		/// <inheritdoc/>
+		public override int GetHashCode()
+		{
+			return this.X.GetHashCode() ^ this.Y.GetHashCode();
+		}
+
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return $"{X},{Y}";
