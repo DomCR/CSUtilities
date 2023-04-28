@@ -9,6 +9,9 @@
     <Import_RootNamespace>CSMath</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Geometry\ILine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Geometry\Line3D.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Geometry\LineExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix4.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix4.Operators.cs" />
@@ -21,8 +24,5 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\Line2D.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Geometry\" />
   </ItemGroup>
 </Project>
