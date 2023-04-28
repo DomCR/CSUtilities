@@ -12,10 +12,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)IVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix4.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix4.Operators.cs" />
+    <Compile Include="..\CSMath\MathUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Quaternion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VectorExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XY.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XYZ.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XYZM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Geometry\Line2D.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Geometry\" />
   </ItemGroup>
 </Project>

@@ -3,16 +3,18 @@ using System.Collections.Generic;
 
 namespace CSMath
 {
+	/// <summary>
+	/// 4x4 Matrix
+	/// </summary>
+	/// <remarks>
+	/// Matrix organization: <br/>
+	/// |m00|m10|m20|m30| <br/>
+	/// |m01|m11|m21|m31| <br/>
+	/// |m02|m12|m22|m32| <br/>
+	/// |m03|m13|m23|m33| <br/>
+	/// </remarks>
 	public partial struct Matrix4
 	{
-		/*
-		 Matrix organization:
-		 |m00|m10|m20|m30|
-		 |m01|m11|m21|m31|
-		 |m02|m12|m22|m32|
-		 |m03|m13|m23|m33|
-		 */
-
 		/// <summary>
 		/// 4-dimensional zero matrix.
 		/// </summary>
@@ -135,6 +137,10 @@ namespace CSMath
 			elements[12], elements[13], elements[14], elements[15])
 		{ }
 
+		/// <summary>
+		/// Gets the matrix rows
+		/// </summary>
+		/// <returns></returns>
 		public List<XYZM> GetRows()
 		{
 			return new List<XYZM>
@@ -146,6 +152,10 @@ namespace CSMath
 			};
 		}
 
+		/// <summary>
+		/// Gets the matrix columns
+		/// </summary>
+		/// <returns></returns>
 		public List<XYZM> GetCols()
 		{
 			return new List<XYZM>
