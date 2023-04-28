@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace CSMath
 {
@@ -138,6 +139,46 @@ namespace CSMath
 		{ }
 
 		/// <summary>
+		/// Creates a rotation matrix from the given Quaternion rotation value.
+		/// </summary>
+		/// <param name="quaternion">The source Quaternion.</param>
+		/// <returns>The rotation matrix.</returns>
+		public static Matrix4 CreateFromQuaternion(Quaternion quaternion)
+		{
+			Matrix4 result;
+
+			double xx = quaternion.X * quaternion.X;
+			double yy = quaternion.Y * quaternion.Y;
+			double zz = quaternion.Z * quaternion.Z;
+
+			double xy = quaternion.X * quaternion.Y;
+			double wz = quaternion.Z * quaternion.W;
+			double xz = quaternion.Z * quaternion.X;
+			double wy = quaternion.Y * quaternion.W;
+			double yz = quaternion.Y * quaternion.Z;
+			double wx = quaternion.X * quaternion.W;
+
+			result.m00 = 1.0f - 2.0f * (yy + zz);
+			result.m01 = 2.0f * (xy + wz);
+			result.m02 = 2.0f * (xz - wy);
+			result.m03 = 0.0f;
+			result.m10 = 2.0f * (xy - wz);
+			result.m11 = 1.0f - 2.0f * (zz + xx);
+			result.m12 = 2.0f * (yz + wx);
+			result.m13 = 0.0f;
+			result.m20 = 2.0f * (xz + wy);
+			result.m21 = 2.0f * (yz - wx);
+			result.m22 = 1.0f - 2.0f * (yy + xx);
+			result.m23 = 0.0f;
+			result.m30 = 0.0f;
+			result.m31 = 0.0f;
+			result.m32 = 0.0f;
+			result.m33 = 1.0f;
+
+			return result;
+		}
+
+		/// <summary>
 		/// Gets the matrix rows
 		/// </summary>
 		/// <returns></returns>
@@ -212,7 +253,7 @@ namespace CSMath
 				   d * (e * jo_kn - f * io_km + g * in_jm);
 		}
 
-				/// <summary>
+		/// <summary>
 		/// Attempts to calculate the inverse of the given matrix. If successful, result will contain the inverted matrix.
 		/// </summary>
 		/// <param name="matrix">The source matrix to invert.</param>

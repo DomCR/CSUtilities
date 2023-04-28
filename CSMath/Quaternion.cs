@@ -113,6 +113,69 @@ namespace CSMath
 			return result;
 		}
 
+		/// <summary>
+		/// Creates a Quaternion from the given rotation matrix.
+		/// </summary>
+		/// <param name="matrix">The rotation matrix.</param>
+		/// <returns>The created Quaternion.</returns>
+		public static Quaternion CreateFromRotationMatrix(Matrix4 matrix)
+		{
+			double trace = matrix.m00 + matrix.m11 + matrix.m22;
+
+			Quaternion q = new Quaternion();
+
+			if (trace > 0.0f)
+			{
+				float s = (float)Math.Sqrt(trace + 1.0f);
+				q.W = s * 0.5f;
+				s = 0.5f / s;
+				q.X = (matrix.m12 - matrix.m21) * s;
+				q.Y = (matrix.m20 - matrix.m02) * s;
+				q.Z = (matrix.m01 - matrix.m10) * s;
+			}
+			else
+			{
+				if (matrix.m00 >= matrix.m11 && matrix.m00 >= matrix.m22)
+				{
+					float s = (float)Math.Sqrt(1.0f + matrix.m00 - matrix.m11 - matrix.m22);
+					float invS = 0.5f / s;
+					q.X = 0.5f * s;
+					q.Y = (matrix.m01 + matrix.m10) * invS;
+					q.Z = (matrix.m02 + matrix.m20) * invS;
+					q.W = (matrix.m12 - matrix.m21) * invS;
+				}
+				else if (matrix.m11 > matrix.m22)
+				{
+					float s = (float)Math.Sqrt(1.0f + matrix.m11 - matrix.m00 - matrix.m22);
+					float invS = 0.5f / s;
+					q.X = (matrix.m10 + matrix.m01) * invS;
+					q.Y = 0.5f * s;
+					q.Z = (matrix.m21 + matrix.m12) * invS;
+					q.W = (matrix.m20 - matrix.m02) * invS;
+				}
+				else
+				{
+					float s = (float)Math.Sqrt(1.0f + matrix.m22 - matrix.m00 - matrix.m11);
+					float invS = 0.5f / s;
+					q.X = (matrix.m20 + matrix.m02) * invS;
+					q.Y = (matrix.m21 + matrix.m12) * invS;
+					q.Z = 0.5f * s;
+					q.W = (matrix.m01 - matrix.m10) * invS;
+				}
+			}
+
+			return q;
+		}
+
+		/// <summary>
+		/// Create a rotation matrix
+		/// </summary>
+		/// <returns></returns>
+		public Matrix4 ToMatrix()
+		{
+			return Matrix4.CreateFromQuaternion(this);
+		}
+
 		/// <inheritdoc/>
 		public override string ToString()
 		{
