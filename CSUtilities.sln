@@ -15,7 +15,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CSMath", "CSMath\CSMath.shp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSMath.Tests", "CSMath.Tests\CSMath.Tests.csproj", "{DE70F0E2-BE42-477B-BAB0-7C3A521C4233}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSMath.Lib", "CSMath.Lib\CSMath.Lib.csproj", "{1CE32FE3-1140-4677-91AE-36F49E05BEA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSMath.Lib", "CSMath.Lib\CSMath.Lib.csproj", "{1CE32FE3-1140-4677-91AE-36F49E05BEA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

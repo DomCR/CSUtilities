@@ -7,5 +7,11 @@
 
 		/// <inheritdoc/>
 		public XYZ Direction { get; set; }
+
+		public Line3D(XYZ origin, XYZ direction)
+		{
+			this.Origin = origin;
+			this.Direction = direction;
+		}
 	}
 }
