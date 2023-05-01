@@ -195,6 +195,12 @@ namespace CSMath
 			return applyFunctionByScalar(left, scalar, (o, x) => o / x);
 		}
 
+		/// <summary>
+		/// Round the vector components
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="vector"></param>
+		/// <returns></returns>
 		public static T Round<T>(this T vector)
 			where T : IVector<T>, new()
 		{
@@ -209,13 +215,26 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Applies a function in all the components of a vector by order
+		/// Round the vector components
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="left"></param>
-		/// <param name="right"></param>
-		/// <param name="op"></param>
+		/// <param name="vector"></param>
+		/// <param name="digits">The number of fractional digits in the return value</param>
 		/// <returns></returns>
+		public static T Round<T>(this T vector, int digits)
+			where T : IVector<T>, new()
+		{
+			double[] components1 = vector.GetComponents();
+
+			for (int i = 0; i < components1.Length; i++)
+			{
+				components1[i] = Math.Round(components1[i], digits);
+			}
+
+			return new T().SetComponents(components1);
+		}
+
+		// Applies a function in all the components of a vector by order
 		private static T applyFunctionByComponentIndex<T>(this T left, T right, Func<double, double, double> op)
 			where T : IVector<T>, new()
 		{

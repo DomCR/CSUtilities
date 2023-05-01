@@ -10,9 +10,24 @@ namespace CSMath
 		public readonly static XYZM AxisZ = new XYZM(0, 0, 1, 0);
 		public readonly static XYZM AxisM = new XYZM(0, 0, 0, 1);
 
+		/// <summary>
+		/// Specifies the X-value of the vector component
+		/// </summary>
 		public double X { get; set; }
+
+		/// <summary>
+		/// Specifies the Y-value of the vector component
+		/// </summary>
 		public double Y { get; set; }
+
+		/// <summary>
+		/// Specifies the Z-value of the vector component
+		/// </summary>
 		public double Z { get; set; }
+
+		/// <summary>
+		/// Specifies the M-value of the vector component
+		/// </summary>
 		public double M { get; set; }
 
 		public XYZM(double x, double y, double z, double m)

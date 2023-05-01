@@ -9,8 +9,19 @@ namespace CSMath
 		public readonly static XYZ AxisY = new XYZ(0, 1, 0);
 		public readonly static XYZ AxisZ = new XYZ(0, 0, 1);
 
+		/// <summary>
+		/// Specifies the X-value of the vector component
+		/// </summary>
 		public double X { get; set; }
+
+		/// <summary>
+		/// Specifies the Y-value of the vector component
+		/// </summary>
 		public double Y { get; set; }
+
+		/// <summary>
+		/// Specifies the Z-value of the vector component
+		/// </summary>
 		public double Z { get; set; }
 
 		public XYZ(double x, double y, double z)

@@ -8,7 +8,14 @@ namespace CSMath
 		public readonly static XY AxisX = new XY(1, 0);
 		public readonly static XY AxisY = new XY(0, 1);
 
+		/// <summary>
+		/// Specifies the X-value of the vector component
+		/// </summary>
 		public double X { get; set; }
+
+		/// <summary>
+		/// Specifies the Y-value of the vector component
+		/// </summary>
 		public double Y { get; set; }
 
 		public XY(double x, double y)
