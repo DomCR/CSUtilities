@@ -109,9 +109,9 @@ namespace CSMath
 		/// </summary>
 		/// <param name="left">The first vector to compare.</param>
 		/// <param name="right">The second vector to compare.</param>
-		/// <param name="digits">Number of decimals digits to be set as precision.</param>
+		/// <param name="ndecimals">Number of decimals digits to be set as precision.</param>
 		/// <returns>True if the vectors are equal; False otherwise.</returns>
-		public static bool IsEqual<T>(this T left, T right, int digits)
+		public static bool IsEqual<T>(this T left, T right, int ndecimals)
 			where T : IVector<T>
 		{
 			var components1 = left.GetComponents();
@@ -119,7 +119,7 @@ namespace CSMath
 
 			for (int i = 0; i < components1.Length; i++)
 			{
-				if (Math.Round(components1[i], digits) != Math.Round(components2[i], digits))
+				if (Math.Round(components1[i], ndecimals) != Math.Round(components2[i], ndecimals))
 					return false;
 			}
 

@@ -5,7 +5,7 @@ namespace CSMath
 	/// <summary>
 	/// Four dimensional vector which is used to efficiently rotate an object about the (x,y,z) vector by the angle theta, where w = cos(theta/2).
 	/// </summary>
-	public struct Quaternion
+	public struct Quaternion : IEquatable<Quaternion>
 	{
 		/// <summary>
 		/// Specifies the X-value of the vector component of the Quaternion.
@@ -66,10 +66,7 @@ namespace CSMath
 		/// <summary>
 		/// Creates a new Quaternion from the given yaw, pitch, and roll, in radians.
 		/// </summary>
-		/// <param name="xyz">The yaw angle, in radians, around the Y-axis.</param>
-		/// <param name="yaw">The yaw angle, in radians, around the Y-axis.</param>
-		/// <param name="pitch">The pitch angle, in radians, around the X-axis.</param>
-		/// <param name="roll">The roll angle, in radians, around the Z-axis.</param>
+		/// <param name="xyz">X as pitch, Y as yaw and Z as roll</param>
 		/// <returns></returns>
 		public static Quaternion CreateFromYawPitchRoll(XYZ xyz)
 		{
@@ -180,6 +177,29 @@ namespace CSMath
 		public override string ToString()
 		{
 			return $"{X},{Y},{Z},{W}";
+		}
+
+		/// <inheritdoc/>
+		public bool Equals(Quaternion other)
+		{
+			return (X == other.X &&
+					Y == other.Y &&
+					Z == other.Z &&
+					W == other.W);
+		}
+
+		/// <summary>
+		/// Indicates whether the current object is equal to another object of the same type.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="ndecimals">Number of decimals digits to be set as precision.</param>
+		/// <returns></returns>
+		public bool Equals(Quaternion other, int ndecimals)
+		{
+			return (Math.Round(X, ndecimals) == Math.Round(other.X, ndecimals) &&
+					Math.Round(Y, ndecimals) == Math.Round(other.Y, ndecimals) &&
+					Math.Round(Z, ndecimals) == Math.Round(other.Z, ndecimals) &&
+					Math.Round(W, ndecimals) == Math.Round(other.W, ndecimals));
 		}
 	}
 }
