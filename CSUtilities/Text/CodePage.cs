@@ -203,6 +203,7 @@ namespace CSUtilities.Text
 		Iso88597 = 28597, //Greek (ISO)
 		Iso88598 = 28598, //Hebrew (ISO-Visual)
 		Iso88599 = 28599, //Turkish (ISO)
+		Iso885910 = 28600, //Latin-6 (ISO)
 		Iso885913 = 28603, //Estonian (ISO)
 		Iso885915 = 28605, //Latin 9 (ISO)
 		XEuropa = 29001, //Europa
