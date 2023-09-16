@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\StringValueAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BigEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Text\CodePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DefaultEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EndianConverter.cs" />
