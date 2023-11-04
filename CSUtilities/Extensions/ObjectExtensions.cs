@@ -1,4 +1,6 @@
-﻿namespace CSUtilities.Extensions
+﻿using System;
+
+namespace CSUtilities.Extensions
 {
 	internal static class ObjectExtensions
 	{
