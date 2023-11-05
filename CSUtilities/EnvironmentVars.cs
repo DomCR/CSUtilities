@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 
 namespace CSUtilities
 {
@@ -35,6 +34,12 @@ namespace CSUtilities
 		public static string Get(string name, EnvironmentVariableTarget target)
 		{
 			return Environment.GetEnvironmentVariable(name, target);
+		}
+
+		public static T Get<T>(string name)
+		{
+			string value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
+			return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(value);
 		}
 
 		public static void Delete(string name)
