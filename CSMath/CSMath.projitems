@@ -9,6 +9,7 @@
     <Import_RootNamespace>CSMath</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BoundingBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\ILine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\Line3D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\LineExtensions.cs" />
