@@ -45,7 +45,7 @@ namespace CSMath.Tests
 			var test = Factory.CreateOperationCase<T>((o, x) => o - x);
 			writeTest(test);
 
-			Assert.Equal(test.Item3, test.Item1.Substract(test.Item2));
+			Assert.Equal(test.Item3, test.Item1.Subtract(test.Item2));
 		}
 
 		[Fact]

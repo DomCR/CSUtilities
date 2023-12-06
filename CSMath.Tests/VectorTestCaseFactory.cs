@@ -25,11 +25,9 @@ namespace CSMath.Tests
 		{
 			T pt = new T();
 
-			int n = pt.GetComponents().Length;
-
 			List<double> c1 = new List<double>();
 
-			for (int i = 0; i < n; i++)
+			for (int i = 0; i < pt.Dimension; i++)
 			{
 				if (def.HasValue)
 				{
@@ -51,13 +49,11 @@ namespace CSMath.Tests
 			T v2 = new T();
 			T result = new T();
 
-			int n = v1.GetComponents().Length;
-
 			List<double> components1 = new List<double>();
 			List<double> components2 = new List<double>();
 			List<double> components3 = new List<double>();
 
-			for (int i = 0; i < n; i++)
+			for (int i = 0; i < v1.Dimension; i++)
 			{
 				var a = _random.Next(-100, 100);
 				var b = _random.Next(-100, 100);

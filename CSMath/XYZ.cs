@@ -24,6 +24,51 @@ namespace CSMath
 		/// </summary>
 		public double Z { get; set; }
 
+		/// <inheritdoc/>
+		public uint Dimension { get { return 3; } }
+
+		/// <inheritdoc/>
+		public double this[uint index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return X;
+					case 1:
+						return Y;
+					case 2:
+						return Z;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="z"></param>
 		public XYZ(double x, double y, double z)
 		{
 			X = x;
@@ -37,6 +82,7 @@ namespace CSMath
 		/// <param name="value">The element to fill the vector with.</param>
 		public XYZ(double value) : this(value, value, value) { }
 
+		[Obsolete("Deprecated")]
 		public XYZ(double[] components) : this(components[0], components[1], components[2]) { }
 
 		public static XYZ CreateFrom(double[] arr)
@@ -71,8 +117,8 @@ namespace CSMath
 
 		public static XYZ FindNormal(XYZ point1, XYZ point2, XYZ point3)
 		{
-			XYZ a = point2.Substract(point1);
-			XYZ b = point3.Substract(point1);
+			XYZ a = point2.Subtract(point1);
+			XYZ b = point3.Subtract(point1);
 
 			// N = Cross(a, b)
 			XYZ n = XYZ.Cross(a, b);
@@ -152,7 +198,7 @@ namespace CSMath
 		/// <returns>The difference vector.</returns>
 		public static XYZ operator -(XYZ left, XYZ right)
 		{
-			return left.Substract(right);
+			return left.Subtract(right);
 		}
 
 		/// <summary>
@@ -236,7 +282,7 @@ namespace CSMath
 		/// <returns>The negated vector.</returns>
 		public static XYZ operator -(XYZ value)
 		{
-			return Zero.Substract(value);
+			return Zero.Subtract(value);
 		}
 
 		/// <summary>

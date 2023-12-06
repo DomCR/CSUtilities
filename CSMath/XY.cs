@@ -18,6 +18,40 @@ namespace CSMath
 		/// </summary>
 		public double Y { get; set; }
 
+		/// <inheritdoc/>
+		public uint Dimension { get { return 2; } }
+
+		/// <inheritdoc/>
+		public double this[uint index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return X;
+					case 1:
+						return Y;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+		}
+
 		public XY(double x, double y)
 		{
 			X = x;
@@ -30,6 +64,7 @@ namespace CSMath
 		/// <param name="value">The element to fill the vector with.</param>
 		public XY(double value) : this(value, value) { }
 
+		[Obsolete("Deprecated")]
 		public XY(double[] components) : this(components[0], components[1]) { }
 
 		/// <summary>
@@ -50,7 +85,12 @@ namespace CSMath
 		/// <inheritdoc/>
 		public XY SetComponents(double[] components)
 		{
-			return new XY(components);
+			if (components.Length != this.Dimension)
+			{
+				throw new ArgumentOutOfRangeException(nameof(components), $"The components array must be formed by {this.Dimension} values");
+			}
+
+			return new XY(components[0], components[1]);
 		}
 
 		/// <inheritdoc/>
@@ -99,7 +139,7 @@ namespace CSMath
 		/// <returns>angle in radians</returns>
 		public static double GetAngle(XY u, XY v)
 		{
-			XY dir = v.Substract(u);
+			XY dir = v.Subtract(u);
 			return dir.GetAngle();
 		}
 
@@ -124,7 +164,7 @@ namespace CSMath
 		/// <returns>The difference vector.</returns>
 		public static XY operator -(XY left, XY right)
 		{
-			return left.Substract(right);
+			return left.Subtract(right);
 		}
 
 		/// <summary>
@@ -206,7 +246,7 @@ namespace CSMath
 		/// <returns>The negated vector.</returns>
 		public static XY operator -(XY value)
 		{
-			return Zero.Substract(value);
+			return Zero.Subtract(value);
 		}
 
 		/// <summary>

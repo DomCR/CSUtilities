@@ -30,6 +30,50 @@ namespace CSMath
 		/// </summary>
 		public double M { get; set; }
 
+		/// <inheritdoc/>
+		public uint Dimension { get { return 4; } }
+
+		/// <inheritdoc/>
+		public double this[uint index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return X;
+					case 1:
+						return Y;
+					case 2:
+						return Z;
+					case 3:
+						return M;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					case 3:
+						M = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+		}
+
 		public XYZM(double x, double y, double z, double m)
 		{
 			X = x;
@@ -44,6 +88,7 @@ namespace CSMath
 		/// <param name="value">The element to fill the vector with.</param>
 		public XYZM(double value) : this(value, value, value, value) { }
 
+		[Obsolete("Deprecated")]
 		public XYZM(double[] components) : this(components[0], components[1], components[2], components[3]) { }
 
 		/// <inheritdoc/>
@@ -116,7 +161,7 @@ namespace CSMath
 		/// <returns>The difference vector.</returns>
 		public static XYZM operator -(XYZM left, XYZM right)
 		{
-			return left.Substract(right);
+			return left.Subtract(right);
 		}
 
 		/// <summary>
@@ -181,7 +226,7 @@ namespace CSMath
 		/// <returns>The negated vector.</returns>
 		public static XYZM operator -(XYZM value)
 		{
-			return Zero.Substract(value);
+			return Zero.Subtract(value);
 		}
 
 		/// <summary>
