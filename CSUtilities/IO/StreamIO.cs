@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CSUtilities.IO
 {
@@ -67,13 +69,17 @@ namespace CSUtilities.IO
 				byte[] buffer = new byte[stream.Length];
 				stream.Read(buffer, 0, buffer.Length);
 				_stream = (Stream)new MemoryStream(buffer);
-
-				if (resetPosition)
-					//Reset the position to the begining
-					_stream.Position = 0L;
 			}
 			else
+			{
 				this._stream = stream;
+			}
+
+			if (resetPosition)
+			{
+				//Reset the position to the begining
+				_stream.Position = 0L;
+			}
 
 			stream.Position = position;
 		}
@@ -121,6 +127,26 @@ namespace CSUtilities.IO
 			return buffer;
 		}
 
+		public async Task<byte[]> GetBytesAsync(int offset, int length)
+		{
+			if (length < 0)
+				throw new ArgumentOutOfRangeException("Length cannot be negative.");
+
+			//Save the current position
+			long save = this.Position;
+			//Set the position to the begining
+			this.Position = offset;
+
+			byte[] buffer = await this.ReadBytesAsync(length);
+			//if (this.m_stream.Read(buffer, offset, length) < length)
+			//	throw new EndOfStreamException();
+
+			//Reset the position
+			this.Position = save;
+
+			return buffer;
+		}
+
 		/// <summary>
 		/// Look into a byte without moving the position of the stream.
 		/// </summary>
@@ -156,6 +182,15 @@ namespace CSUtilities.IO
 			return b;
 		}
 
+		public virtual async Task<byte> ReadByteAsync(CancellationToken cancellationToken = default)
+		{
+			byte[] arr = new byte[1];
+			byte b = await _stream.ReadAsync(arr, 0, 1, cancellationToken) == 1 ?
+				arr[0] : throw new EndOfStreamException();
+
+			return b;
+		}
+
 		/// <summary>
 		/// Read a character from the stream
 		/// </summary>
@@ -181,6 +216,19 @@ namespace CSUtilities.IO
 			byte[] buffer = new byte[length];
 
 			if (this._stream.Read(buffer, 0, length) < length)
+				throw new EndOfStreamException();
+
+			return buffer;
+		}
+
+		public virtual async Task<byte[]> ReadBytesAsync(int length, CancellationToken cancellationToken = default)
+		{
+			if (length < 0)
+				throw new ArgumentOutOfRangeException("Length cannot be negative.");
+
+			byte[] buffer = new byte[length];
+
+			if (await this._stream.ReadAsync(buffer, 0, length, cancellationToken) < length)
 				throw new EndOfStreamException();
 
 			return buffer;
