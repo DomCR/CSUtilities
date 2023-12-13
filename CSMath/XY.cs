@@ -2,7 +2,7 @@
 
 namespace CSMath
 {
-	public struct XY : IVector<XY>, IEquatable<XY>
+	public struct XY : IVector, IEquatable<XY>
 	{
 		public readonly static XY Zero = new XY(0, 0);
 		public readonly static XY AxisX = new XY(1, 0);
@@ -22,7 +22,7 @@ namespace CSMath
 		public uint Dimension { get { return 2; } }
 
 		/// <inheritdoc/>
-		public double this[uint index]
+		public double this[int index]
 		{
 			get
 			{
@@ -77,24 +77,7 @@ namespace CSMath
 		}
 
 		/// <inheritdoc/>
-		public double[] GetComponents()
-		{
-			return new double[] { X, Y };
-		}
-
-		/// <inheritdoc/>
-		public XY SetComponents(double[] components)
-		{
-			if (components.Length != this.Dimension)
-			{
-				throw new ArgumentOutOfRangeException(nameof(components), $"The components array must be formed by {this.Dimension} values");
-			}
-
-			return new XY(components[0], components[1]);
-		}
-
-		/// <inheritdoc/>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (!(obj is XY other))
 				return false;

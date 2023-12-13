@@ -52,7 +52,7 @@ namespace CSMath
 		{
 			double length = 0;
 
-			for (uint i = 0; i < vector.Dimension; i++)
+			for (int i = 0; i < vector.Dimension; i++)
 			{
 				length += Math.Pow(vector[i], 2);
 			}
@@ -71,7 +71,7 @@ namespace CSMath
 			double length = vector.GetLength();
 			T result = new T();
 
-			for (uint i = 0; i < result.Dimension; i++)
+			for (int i = 0; i < result.Dimension; i++)
 			{
 				result[i] = vector[i] / length;
 			}
@@ -89,7 +89,7 @@ namespace CSMath
 			where T : IVector
 		{
 			double result = 0;
-			for (uint i = 0; i < left.Dimension; ++i)
+			for (int i = 0; i < left.Dimension; ++i)
 			{
 				result += left[i] * right[i];
 			}
@@ -100,13 +100,18 @@ namespace CSMath
 		public static double Cross<T>(this T left, T right)
 			where T : IVector
 		{
-			var components1 = left.GetComponents();
-			var components2 = right.GetComponents();
 			double result = 0;
 
-
-
 			return result;
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether the <see cref="IVector" /> is normalized, or not.
+		/// </summary>
+		public static bool IsNormalized<T>(this T v)
+			where T : IVector
+		{
+			return v.GetLength() == 1;
 		}
 
 		/// <summary>
@@ -144,12 +149,9 @@ namespace CSMath
 		public static bool IsEqual<T>(this T left, T right)
 			where T : IVector
 		{
-			var components1 = left.GetComponents();
-			var components2 = right.GetComponents();
-
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < left.Dimension; i++)
 			{
-				if (components1[i] != components2[i])
+				if (left[i] != right[i])
 					return false;
 			}
 
@@ -166,12 +168,9 @@ namespace CSMath
 		public static bool IsEqual<T>(this T left, T right, int ndecimals)
 			where T : IVector
 		{
-			var components1 = left.GetComponents();
-			var components2 = right.GetComponents();
-
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < left.Dimension; i++)
 			{
-				if (Math.Round(components1[i], ndecimals) != Math.Round(components2[i], ndecimals))
+				if (Math.Round(left[i], ndecimals) != Math.Round(right[i], ndecimals))
 					return false;
 			}
 
@@ -258,7 +257,7 @@ namespace CSMath
 		{
 			T result = new T();
 
-			for (uint i = 0; i < result.Dimension; i++)
+			for (int i = 0; i < result.Dimension; i++)
 			{
 				result[i] = Math.Round(vector[i]);
 			}
@@ -278,7 +277,7 @@ namespace CSMath
 		{
 			T result = new T();
 
-			for (uint i = 0; i < result.Dimension; i++)
+			for (int i = 0; i < result.Dimension; i++)
 			{
 				result[i] = Math.Round(vector[i], digits);
 			}
@@ -292,7 +291,7 @@ namespace CSMath
 		{
 			T result = new T();
 
-			for (uint i = 0; i < left.Dimension; i++)
+			for (int i = 0; i < left.Dimension; i++)
 			{
 				result[i] = op(left[i], right[i]);
 			}
@@ -305,7 +304,7 @@ namespace CSMath
 		{
 			T result = new T();
 
-			for (uint i = 0; i < v.Dimension; i++)
+			for (int i = 0; i < v.Dimension; i++)
 			{
 				result[i] = op(v[i], scalar);
 			}

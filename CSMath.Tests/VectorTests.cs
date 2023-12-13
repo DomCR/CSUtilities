@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 namespace CSMath.Tests
 {
 	public abstract class VectorTests<T>
-		where T : IVector<T>, new()
+		where T : IVector, new()
 	{
 		public VectorTestCaseFactory Factory { get; set; }
 
@@ -36,7 +36,7 @@ namespace CSMath.Tests
 
 			double dist = pt1.DistanceFrom(pt2);
 
-			Assert.Equal(Math.Sqrt(pt1.GetComponents().Length), dist);
+			Assert.Equal(Math.Sqrt(pt1.Dimension), dist);
 		}
 
 		[Fact]

@@ -21,9 +21,9 @@ namespace CSMath.Geometry
 		{
 			double lambda = 0;
 
-			for (uint i = 0; i < point.Dimension; ++i)
+			for (int i = 0; i < point.Dimension; ++i)
 			{
-				var value = (point[i] - line.Origin.GetComponents()[i]) / line.Direction.GetComponents()[i];
+				var value = (point[i] - line.Origin[i]) / line.Direction[i];
 				if (i != 0 && (value != lambda))
 				{
 					return false;

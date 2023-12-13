@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CSMath
 {
-	public partial struct XYZ : IVector<XYZ>, IEquatable<XYZ>
+	public partial struct XYZ : IVector, IEquatable<XYZ>
 	{
 		public readonly static XYZ Zero = new XYZ(0, 0, 0);
 		public readonly static XYZ AxisX = new XYZ(1, 0, 0);
@@ -28,7 +29,7 @@ namespace CSMath
 		public uint Dimension { get { return 3; } }
 
 		/// <inheritdoc/>
-		public double this[uint index]
+		public double this[int index]
 		{
 			get
 			{
@@ -128,19 +129,7 @@ namespace CSMath
 		}
 
 		/// <inheritdoc/>
-		public double[] GetComponents()
-		{
-			return new double[] { X, Y, Z };
-		}
-
-		/// <inheritdoc/>
-		public XYZ SetComponents(double[] components)
-		{
-			return new XYZ(components);
-		}
-
-		/// <inheritdoc/>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (!(obj is XYZ other))
 				return false;

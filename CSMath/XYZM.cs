@@ -2,7 +2,7 @@
 
 namespace CSMath
 {
-	public struct XYZM : IVector<XYZM>, IEquatable<XYZM>
+	public struct XYZM : IVector, IEquatable<XYZM>
 	{
 		public readonly static XYZM Zero = new XYZM(0, 0, 0, 0);
 		public readonly static XYZM AxisX = new XYZM(1, 0, 0, 0);
@@ -34,7 +34,7 @@ namespace CSMath
 		public uint Dimension { get { return 4; } }
 
 		/// <inheritdoc/>
-		public double this[uint index]
+		public double this[int index]
 		{
 			get
 			{
@@ -88,23 +88,8 @@ namespace CSMath
 		/// <param name="value">The element to fill the vector with.</param>
 		public XYZM(double value) : this(value, value, value, value) { }
 
-		[Obsolete("Deprecated")]
-		public XYZM(double[] components) : this(components[0], components[1], components[2], components[3]) { }
-
 		/// <inheritdoc/>
-		public double[] GetComponents()
-		{
-			return new double[] { X, Y, Z, M };
-		}
-
-		/// <inheritdoc/>
-		public XYZM SetComponents(double[] components)
-		{
-			return new XYZM(components);
-		}
-
-		/// <inheritdoc/>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (!(obj is XYZM other))
 				return false;
