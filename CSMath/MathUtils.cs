@@ -14,6 +14,9 @@ namespace CSMath
 		/// </summary>
 		public const double DegToRadFactor = (Math.PI / 180);
 
+		/// <summary>
+		/// Default tolerance
+		/// </summary>
 		public const double Epsilon = 1e-12;
 
 		/// <summary>
@@ -55,6 +58,28 @@ namespace CSMath
 		public static double DegToRad(double value)
 		{
 			return value * DegToRadFactor;
+		}
+
+		/// <summary>
+		/// Returns the sine of specific angle in radians adjusting the value to 0 using <see cref="Epsilon"/> as tolerance.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static double Sin(double value)
+		{
+			double result = Math.Sin(value);
+			return IsZero(result) ? 0 : result;
+		}
+
+		/// <summary>
+		/// Returns the cosine of specific angle in radians adjusting the value to 0 using <see cref="Epsilon"/> as tolerance.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static double Cos(double value)
+		{
+			double result = Math.Cos(value);
+			return IsZero(result) ? 0 : result;
 		}
 	}
 }
