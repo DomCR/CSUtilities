@@ -28,29 +28,37 @@ namespace CSUtilities.Extensions
 			return Enum.GetValues(typeof(T)).Cast<T>().FirstOrDefault(o => o.ToString() == name);
 		}
 
+		/// <summary>
+		/// Converts the string representation of the name or numeric value of one or more
+		/// enumerated constants to an equivalent enumerated object
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name="ignoreCase"></param>
+		/// <returns></returns>
 		public static T Parse<T>(string value, bool ignoreCase = false)
 			where T : Enum
 		{
 			return (T)Enum.Parse(typeof(T), value, ignoreCase);
 		}
 
+		/// <summary>
+		/// Converts the string representation of the name or numeric value of one or more
+		/// enumerated constants to an equivalent enumerated object
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name="result"></param>
+		/// <param name="ignoreCase"></param>
+		/// <returns></returns>
 		public static bool TryParse<T>(string value, out T result, bool ignoreCase = false)
-			where T : Enum
+			where T : struct
 		{
-			try
-			{
-				result = Parse<T>(value, ignoreCase);
-				return true;
-			}
-			catch (Exception)
-			{
-				result = default(T);
-				return false;
-			}
+			return Enum.TryParse(value, ignoreCase, out result);
 		}
 
 		/// <summary>
-		/// Gets a string value for a particular enum value.
+		/// Gets a string value for a particular enum value
 		/// </summary>
 		/// <param name="value">enum value</param>
 		/// <returns>String Value associated via a <see cref="StringValueAttribute"/> attribute, or null if not found.</returns>
