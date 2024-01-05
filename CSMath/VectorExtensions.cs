@@ -25,7 +25,7 @@ namespace CSMath
 		/// <param name="v"></param>
 		/// <returns></returns>
 		public static bool IsZero<T>(this T v)
-			where T : IVector, new()
+			where T : IVector
 		{
 			return v.GetLength() == 0;
 		}
@@ -97,14 +97,6 @@ namespace CSMath
 			return result;
 		}
 
-		public static double Cross<T>(this T left, T right)
-			where T : IVector
-		{
-			double result = 0;
-
-			return result;
-		}
-
 		/// <summary>
 		/// Gets a value indicating whether the <see cref="IVector" /> is normalized, or not.
 		/// </summary>
@@ -124,7 +116,25 @@ namespace CSMath
 		public static bool IsParallel<T>(this T left, T right)
 			where T : IVector
 		{
-			return Cross<T>(left, right) == 0;
+			if (left.IsZero() || right.IsZero())
+				return false;
+
+			double firstResult = 0;
+			for (int i = 0; i < left.Dimension; ++i)
+				if (i == 0)
+				{
+					firstResult = right[i] / left[i];
+				}
+				else
+				{
+					double curr = right[i] / left[i];
+					if (!curr.Equals(firstResult))
+					{
+						return false;
+					}
+				}
+
+			return true;
 		}
 
 		/// <summary>

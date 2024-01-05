@@ -69,9 +69,6 @@ namespace CSMath
 		/// <param name="value">The element to fill the vector with.</param>
 		public XY(double value) : this(value, value) { }
 
-		[Obsolete("Deprecated")]
-		public XY(double[] components) : this(components[0], components[1]) { }
-
 		/// <summary>
 		/// Get the angle
 		/// </summary>
