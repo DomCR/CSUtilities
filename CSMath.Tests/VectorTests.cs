@@ -91,6 +91,28 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
+		public void IsZeroTest()
+		{
+			Assert.True(XY.Zero.IsZero());
+			Assert.True(XYZ.Zero.IsZero());
+			Assert.True(XYZM.Zero.IsZero());
+		}
+
+		[Fact]
+		public void IsNormalizedTest()
+		{
+			T v = new T();
+			v[0] = 1;
+
+			Assert.True(v.IsNormalized());
+		}
+
+		[Fact]
+		public virtual void IsParallelTest()
+		{
+		}
+
+		[Fact]
 		public void GetAngleTest()
 		{
 			var v = new T();
