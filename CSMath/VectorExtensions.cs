@@ -9,7 +9,7 @@ namespace CSMath
 		/// </summary>
 		/// <param name="v">The first <see cref="IVector" />.</param>
 		/// <param name="u">The second <see cref="IVector" />.</param>
-		public static double Angle<T>(this T v, T u)
+		public static double AngleFrom<T>(this T v, T u)
 			where T : IVector, new()
 		{
 			if (v.IsZero() || u.IsZero())

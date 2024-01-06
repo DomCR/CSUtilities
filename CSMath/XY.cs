@@ -72,7 +72,7 @@ namespace CSMath
 		/// <summary>
 		/// Get the angle
 		/// </summary>
-		/// <returns>angle in radians</returns>
+		/// <returns>Angle in radians</returns>
 		public double GetAngle()
 		{
 			return Math.Atan2(Y, X);
@@ -114,18 +114,6 @@ namespace CSMath
 		public override string ToString()
 		{
 			return $"{X},{Y}";
-		}
-
-		/// <summary>
-		/// Get the angle from 2 vectors
-		/// </summary>
-		/// <param name="u"></param>
-		/// <param name="v"></param>
-		/// <returns>angle in radians</returns>
-		public static double GetAngle(XY u, XY v)
-		{
-			XY dir = v.Subtract(u);
-			return dir.GetAngle();
 		}
 	}
 }

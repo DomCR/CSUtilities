@@ -90,6 +90,19 @@ namespace CSMath.Tests
 			Assert.True(pt1.IsEqual(pt2, 2));
 		}
 
+		[Fact]
+		public void GetAngleTest()
+		{
+			var v = new T();
+			var u = new T();
+
+			v[0] = 1;
+			u[1] = 1;
+
+			Assert.Equal(Math.PI / 2, v.AngleFrom(u));
+			Assert.True(v.IsPerpendicular(u));
+		}
+
 		protected void writeTest((T, T, T) test)
 		{
 			output.WriteLine($"Item 1 : {test.Item1}");
