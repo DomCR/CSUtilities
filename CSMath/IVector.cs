@@ -1,21 +1,19 @@
-﻿namespace CSMath
+﻿using System;
+
+namespace CSMath
 {
 	public interface IVector
 	{
 		/// <summary>
-		/// Get the diferent components of a dimensional vector.
+		/// Get the dimension of the <see cref="IVector"/>.
 		/// </summary>
-		/// <returns>Array with the vector components.</returns>
-		double[] GetComponents();
-	}
+		uint Dimension { get; }
 
-	public interface IVector<T> : IVector
-	{
 		/// <summary>
-		/// Create a new instance of the same type with the given components.
+		/// Value of the coordinate at the specified index.
 		/// </summary>
-		/// <param name="components">Components to create the new IVector</param>
-		/// <returns>A new instance of a dimensional vector.</returns>
-		T SetComponents(double[] components);
+		/// <param name="index">The index.</param>
+		/// <returns>The value of the coordinate at the specified index.</returns>
+		public double this[int index] { get; set; }
 	}
 }

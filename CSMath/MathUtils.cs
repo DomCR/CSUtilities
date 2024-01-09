@@ -7,69 +7,79 @@ namespace CSMath
 		/// <summary>
 		/// Factor for converting radians to degrees.
 		/// </summary>
-		public const double RadToDeg = (180 / Math.PI);
+		public const double RadToDegFactor = (180 / Math.PI);
 
 		/// <summary>
 		/// Factor for converting degrees to radians.
 		/// </summary>
-		public const double DegToRad = (Math.PI / 180);
+		public const double DegToRadFactor = (Math.PI / 180);
+
+		/// <summary>
+		/// Default tolerance
+		/// </summary>
+		public const double Epsilon = 1e-12;
+
+		/// <summary>
+		/// Checks if a number is close to zero.
+		/// </summary>
+		/// <param name="number">Double precision number.</param>
+		/// <returns>True if its close to one or false in any other case.</returns>
+		public static bool IsZero(double number)
+		{
+			return IsZero(number, Epsilon);
+		}
+
+		/// <summary>
+		/// Checks if a number is close to zero.
+		/// </summary>
+		/// <param name="number">Double precision number.</param>
+		/// <param name="threshold">Tolerance.</param>
+		/// <returns>True if its close to one or false in any other case.</returns>
+		public static bool IsZero(double number, double threshold)
+		{
+			return number >= -threshold && number <= threshold;
+		}
+
+		/// <summary>
+		/// Convert a value from radian to degree
+		/// </summary>
+		/// <param name="degree">Value in radians</param>
+		/// <returns>The radian value</returns>
+		public static double RadToDeg(double value)
+		{
+			return value * RadToDegFactor;
+		}
 
 		/// <summary>
 		/// Convert a value from degree to radian
 		/// </summary>
 		/// <param name="degree">Value in degrees</param>
 		/// <returns>The radian value</returns>
-		public static double ToRadian(double degree)
+		public static double DegToRad(double value)
 		{
-			return degree * DegToRad;
+			return value * DegToRadFactor;
 		}
 
 		/// <summary>
-		/// Convert a vector from degree to radian
+		/// Returns the sine of specific angle in radians adjusting the value to 0 using <see cref="Epsilon"/> as tolerance.
 		/// </summary>
-		/// <typeparam name="T">Vector in degrees</typeparam>
-		/// <param name="vector"></param>
+		/// <param name="value"></param>
 		/// <returns></returns>
-		public static T ToRadian<T>(T vector)
-			where T : IVector<T>, new()
+		public static double Sin(double value)
 		{
-			double[] components = vector.GetComponents();
-
-			for (int i = 0; i < components.Length; i++)
-			{
-				components[i] = ToRadian(components[i]);
-			}
-
-			return new T().SetComponents(components);
+			double result = Math.Sin(value);
+			return IsZero(result) ? 0 : result;
 		}
 
 		/// <summary>
-		/// Convert a value from radian to degree
+		/// Returns the cosine of specific angle in radians adjusting the value to 0 using <see cref="Epsilon"/> as tolerance.
 		/// </summary>
-		/// <param name="radian">Value in radians</param>
-		/// <returns>The degree value</returns>
-		public static double ToDegree(double radian)
-		{
-			return radian * RadToDeg;
-		}
-
-		/// <summary>
-		/// Convert a vector from radian to degree
-		/// </summary>
-		/// <typeparam name="T">Vector in radians</typeparam>
-		/// <param name="vector"></param>
+		/// <param name="value"></param>
 		/// <returns></returns>
-		public static T ToDegree<T>(T vector)
-			where T : IVector<T>, new()
+		public static double Cos(double value)
 		{
-			double[] components = vector.GetComponents();
-
-			for (int i = 0; i < components.Length; i++)
-			{
-				components[i] = ToDegree(components[i]);
-			}
-
-			return new T().SetComponents(components);
+			double result = Math.Cos(value);
+			return IsZero(result) ? 0 : result;
 		}
 	}
 }

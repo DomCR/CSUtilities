@@ -2,7 +2,7 @@
 
 namespace CSMath
 {
-	public struct XYZM : IVector<XYZM>, IEquatable<XYZM>
+	public partial struct XYZM : IVector, IEquatable<XYZM>
 	{
 		public readonly static XYZM Zero = new XYZM(0, 0, 0, 0);
 		public readonly static XYZM AxisX = new XYZM(1, 0, 0, 0);
@@ -30,6 +30,57 @@ namespace CSMath
 		/// </summary>
 		public double M { get; set; }
 
+		/// <inheritdoc/>
+		public uint Dimension { get { return 4; } }
+
+		/// <inheritdoc/>
+		public double this[int index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return X;
+					case 1:
+						return Y;
+					case 2:
+						return Z;
+					case 3:
+						return M;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					case 3:
+						M = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+		}
+
+		/// <summary>
+		/// Constructor with the coordinate components
+		/// </summary>
+		/// <param name="x">Value of the X-coordinate</param>
+		/// <param name="y">Value of the Y-coordinate</param>
+		/// <param name="z">Value of the Z-coordinate</param>
+		/// <param name="m">Value of the M-coordinate</param>
 		public XYZM(double x, double y, double z, double m)
 		{
 			X = x;
@@ -44,22 +95,8 @@ namespace CSMath
 		/// <param name="value">The element to fill the vector with.</param>
 		public XYZM(double value) : this(value, value, value, value) { }
 
-		public XYZM(double[] components) : this(components[0], components[1], components[2], components[3]) { }
-
 		/// <inheritdoc/>
-		public double[] GetComponents()
-		{
-			return new double[] { X, Y, Z, M };
-		}
-
-		/// <inheritdoc/>
-		public XYZM SetComponents(double[] components)
-		{
-			return new XYZM(components);
-		}
-
-		/// <inheritdoc/>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (!(obj is XYZM other))
 				return false;
@@ -95,116 +132,5 @@ namespace CSMath
 		{
 			return $"{X},{Y},{Z},{M}";
 		}
-
-		#region Operators
-		/// <summary>
-		/// Adds two vectors together.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The summed vector.</returns>
-		public static XYZM operator +(XYZM left, XYZM right)
-		{
-			return left.Add(right);
-		}
-
-		/// <summary>
-		/// Subtracts the second vector from the first.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The difference vector.</returns>
-		public static XYZM operator -(XYZM left, XYZM right)
-		{
-			return left.Substract(right);
-		}
-
-		/// <summary>
-		/// Multiplies two vectors together.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The product vector.</returns>
-		public static XYZM operator *(XYZM left, XYZM right)
-		{
-			return left.Multiply(right);
-		}
-
-		/// <summary>
-		/// Multiplies a vector by the given scalar.
-		/// </summary>
-		/// <param name="left">The source vector.</param>
-		/// <param name="scalar">The scalar value.</param>
-		/// <returns>The scaled vector.</returns>
-		public static XYZM operator *(XYZM left, double scalar)
-		{
-			return left * new XYZM(scalar);
-		}
-
-		/// <summary>
-		/// Multiplies a vector by the given scalar.
-		/// </summary>
-		/// <param name="scalar">The scalar value.</param>
-		/// <param name="vector">The source vector.</param>
-		/// <returns>The scaled vector.</returns>
-		public static XYZM operator *(double scalar, XYZM vector)
-		{
-			return new XYZM(scalar) * vector;
-		}
-
-		/// <summary>
-		/// Divides the first vector by the second.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The vector resulting from the division.</returns>
-		public static XYZM operator /(XYZM left, XYZM right)
-		{
-			return left.Divide(right);
-		}
-
-		/// <summary>
-		/// Divides the vector by the given scalar.
-		/// </summary>
-		/// <param name="xyzm">The source vector.</param>
-		/// <param name="value">The scalar value.</param>
-		/// <returns>The result of the division.</returns>
-		public static XYZM operator /(XYZM xyzm, double value)
-		{
-			return xyzm.Divide(new XYZM(value));
-		}
-
-		/// <summary>
-		/// Negates a given vector.
-		/// </summary>
-		/// <param name="value">The source vector.</param>
-		/// <returns>The negated vector.</returns>
-		public static XYZM operator -(XYZM value)
-		{
-			return Zero.Substract(value);
-		}
-
-		/// <summary>
-		/// Returns a boolean indicating whether the two given vectors are equal.
-		/// </summary>
-		/// <param name="left">The first vector to compare.</param>
-		/// <param name="right">The second vector to compare.</param>
-		/// <returns>True if the vectors are equal; False otherwise.</returns>
-		public static bool operator ==(XYZM left, XYZM right)
-		{
-			return left.IsEqual(right);
-		}
-
-		/// <summary>
-		/// Returns a boolean indicating whether the two given vectors are not equal.
-		/// </summary>
-		/// <param name="left">The first vector to compare.</param>
-		/// <param name="right">The second vector to compare.</param>
-		/// <returns>True if the vectors are not equal; False if they are equal.</returns>
-		public static bool operator !=(XYZM left, XYZM right)
-		{
-			return !left.IsEqual(right);
-		}
-		#endregion
 	}
 }

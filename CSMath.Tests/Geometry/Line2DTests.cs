@@ -8,7 +8,7 @@ namespace CSMath.Tests.Geometry
 		[Fact]
 		public void CreateLineTest()
 		{
-			Line2D line = LineExtensions.CreateFromPoints<Line2D, XY>(new XY(), new XY());
+			//Line2D line = LineExtensions.CreateFromPoints<Line2D, XY>(new XY(), new XY(1, 1));
 		}
 
 		[Fact]

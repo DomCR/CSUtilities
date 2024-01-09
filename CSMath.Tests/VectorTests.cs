@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 namespace CSMath.Tests
 {
 	public abstract class VectorTests<T>
-		where T : IVector<T>, new()
+		where T : IVector, new()
 	{
 		public VectorTestCaseFactory Factory { get; set; }
 
@@ -36,7 +36,7 @@ namespace CSMath.Tests
 
 			double dist = pt1.DistanceFrom(pt2);
 
-			Assert.Equal(Math.Sqrt(pt1.GetComponents().Length), dist);
+			Assert.Equal(Math.Sqrt(pt1.Dimension), dist);
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ namespace CSMath.Tests
 			var test = Factory.CreateOperationCase<T>((o, x) => o - x);
 			writeTest(test);
 
-			Assert.Equal(test.Item3, test.Item1.Substract(test.Item2));
+			Assert.Equal(test.Item3, test.Item1.Subtract(test.Item2));
 		}
 
 		[Fact]
@@ -88,6 +88,41 @@ namespace CSMath.Tests
 			var pt2 = Factory.CreatePoint<T>(def);
 
 			Assert.True(pt1.IsEqual(pt2, 2));
+		}
+
+		[Fact]
+		public void IsZeroTest()
+		{
+			Assert.True(XY.Zero.IsZero());
+			Assert.True(XYZ.Zero.IsZero());
+			Assert.True(XYZM.Zero.IsZero());
+		}
+
+		[Fact]
+		public void IsNormalizedTest()
+		{
+			T v = new T();
+			v[0] = 1;
+
+			Assert.True(v.IsNormalized());
+		}
+
+		[Fact]
+		public virtual void IsParallelTest()
+		{
+		}
+
+		[Fact]
+		public void GetAngleTest()
+		{
+			var v = new T();
+			var u = new T();
+
+			v[0] = 1;
+			u[1] = 1;
+
+			Assert.Equal(Math.PI / 2, v.AngleFrom(u));
+			Assert.True(v.IsPerpendicular(u));
 		}
 
 		protected void writeTest((T, T, T) test)

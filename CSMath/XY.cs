@@ -2,7 +2,7 @@
 
 namespace CSMath
 {
-	public struct XY : IVector<XY>, IEquatable<XY>
+	public partial struct XY : IVector, IEquatable<XY>
 	{
 		public readonly static XY Zero = new XY(0, 0);
 		public readonly static XY AxisX = new XY(1, 0);
@@ -18,6 +18,45 @@ namespace CSMath
 		/// </summary>
 		public double Y { get; set; }
 
+		/// <inheritdoc/>
+		public uint Dimension { get { return 2; } }
+
+		/// <inheritdoc/>
+		public double this[int index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return X;
+					case 1:
+						return Y;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+		}
+
+		/// <summary>
+		/// Constructor with the coordinate components
+		/// </summary>
+		/// <param name="x">Value of the X-coordinate</param>
+		/// <param name="y">Value of the Y-coordinate</param>
 		public XY(double x, double y)
 		{
 			X = x;
@@ -25,36 +64,22 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Constructs a vector whose elements are all the single specified value.
+		/// Constructs a vector whose components are all the single specified value.
 		/// </summary>
 		/// <param name="value">The element to fill the vector with.</param>
 		public XY(double value) : this(value, value) { }
 
-		public XY(double[] components) : this(components[0], components[1]) { }
-
 		/// <summary>
 		/// Get the angle
 		/// </summary>
-		/// <returns>angle in radians</returns>
+		/// <returns>Angle in radians</returns>
 		public double GetAngle()
 		{
 			return Math.Atan2(Y, X);
 		}
 
 		/// <inheritdoc/>
-		public double[] GetComponents()
-		{
-			return new double[] { X, Y };
-		}
-
-		/// <inheritdoc/>
-		public XY SetComponents(double[] components)
-		{
-			return new XY(components);
-		}
-
-		/// <inheritdoc/>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (!(obj is XY other))
 				return false;
@@ -90,154 +115,5 @@ namespace CSMath
 		{
 			return $"{X},{Y}";
 		}
-
-		/// <summary>
-		/// Get the angle from 2 vectors
-		/// </summary>
-		/// <param name="u"></param>
-		/// <param name="v"></param>
-		/// <returns>angle in radians</returns>
-		public static double GetAngle(XY u, XY v)
-		{
-			XY dir = v.Substract(u);
-			return dir.GetAngle();
-		}
-
-		#region operators 
-
-		/// <summary>
-		/// Adds two vectors together.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The summed vector.</returns>
-		public static XY operator +(XY left, XY right)
-		{
-			return left.Add(right);
-		}
-
-		/// <summary>
-		/// Subtracts the second vector from the first.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The difference vector.</returns>
-		public static XY operator -(XY left, XY right)
-		{
-			return left.Substract(right);
-		}
-
-		/// <summary>
-		/// Multiplies two vectors together.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The product vector.</returns>
-		public static XY operator *(XY left, XY right)
-		{
-			return left.Multiply(right);
-		}
-
-		/// <summary>
-		/// Multiplies a vector by the given scalar.
-		/// </summary>
-		/// <param name="left">The source vector.</param>
-		/// <param name="scalar">The scalar value.</param>
-		/// <returns>The scaled vector.</returns>
-		public static XY operator *(XY left, double scalar)
-		{
-			return left * new XY(scalar);
-		}
-
-		/// <summary>
-		/// Multiplies a vector by the given scalar.
-		/// </summary>
-		/// <param name="scalar">The scalar value.</param>
-		/// <param name="vector">The source vector.</param>
-		/// <returns>The scaled vector.</returns>
-		public static XY operator *(double scalar, XY vector)
-		{
-			return new XY(scalar) * vector;
-		}
-
-		/// <summary>
-		/// Divides the first vector by the second.
-		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>The vector resulting from the division.</returns>
-		public static XY operator /(XY left, XY right)
-		{
-			return left.Divide(right);
-		}
-
-		/// <summary>
-		/// Divides the vector by the given scalar.
-		/// </summary>
-		/// <param name="XY">The source vector.</param>
-		/// <param name="value">The scalar value.</param>
-		/// <returns>The result of the division.</returns>
-		public static XY operator /(XY XY, float value)
-		{
-			float invDiv = 1.0f / value;
-
-			return new XY(XY.X * invDiv,
-							XY.Y * invDiv);
-		}
-
-		/// <summary>
-		/// Divides the vector by the given scalar.
-		/// </summary>
-		/// <param name="XY">The source vector.</param>
-		/// <param name="value">The scalar value.</param>
-		/// <returns>The result of the division.</returns>
-		public static XY operator /(XY XY, double value)
-		{
-			double invDiv = 1.0f / value;
-
-			return new XY(XY.X * invDiv,
-							XY.Y * invDiv);
-		}
-
-		/// <summary>
-		/// Negates a given vector.
-		/// </summary>
-		/// <param name="value">The source vector.</param>
-		/// <returns>The negated vector.</returns>
-		public static XY operator -(XY value)
-		{
-			return Zero.Substract(value);
-		}
-
-		/// <summary>
-		/// Returns a boolean indicating whether the two given vectors are equal.
-		/// </summary>
-		/// <param name="left">The first vector to compare.</param>
-		/// <param name="right">The second vector to compare.</param>
-		/// <returns>True if the vectors are equal; False otherwise.</returns>
-		public static bool operator ==(XY left, XY right)
-		{
-			return (left.X == right.X &&
-					left.Y == right.Y);
-		}
-
-		/// <summary>
-		/// Returns a boolean indicating whether the two given vectors are not equal.
-		/// </summary>
-		/// <param name="left">The first vector to compare.</param>
-		/// <param name="right">The second vector to compare.</param>
-		/// <returns>True if the vectors are not equal; False if they are equal.</returns>
-		public static bool operator !=(XY left, XY right)
-		{
-			return (left.X != right.X ||
-					left.Y != right.Y);
-		}
-
-		public static explicit operator XY(XYZ xyz)
-		{
-			return new XY(xyz.X, xyz.Y);
-		}
-
-		#endregion
 	}
 }
