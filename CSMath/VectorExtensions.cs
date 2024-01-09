@@ -44,6 +44,43 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Copy the component values from a source using the smallest dimension of both parameters
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="v"></param>
+		/// <param name="source"></param>
+		/// <returns>A copy of the <see cref="IVector"/> with the copied components</returns>
+		public static T CopyValues<T>(this T v, IVector source)
+			where T : IVector, new()
+		{
+			for (int i = 0; i < Math.Min(v.Dimension, source.Dimension); i++)
+			{
+				v[i] = source[i];
+			}
+
+			return v;
+		}
+
+		/// <summary>
+		/// Converts an <see cref="IVector" /> into an equivalent <see cref="IVector" />
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static T Convert<T>(this IVector v)
+			where T : IVector, new()
+		{
+			T result = new T();
+
+			for (int i = 0; i < Math.Min(result.Dimension, v.Dimension); i++)
+			{
+				result[i] = v[i];
+			}
+
+			return result;
+		}
+
+		/// <summary>
 		/// Returns the length of the vector.
 		/// </summary>
 		/// <returns>The vector's length.</returns>

@@ -40,6 +40,23 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
+		public void CopyValuesTest()
+		{
+			var pt1 = Factory.CreatePoint<T>(0);
+			var pt2 = Factory.CreatePoint<T>(1);
+
+			pt1 = pt1.CopyValues(pt2);
+
+			Assert.Equal(pt2, pt1);
+		}
+
+
+		[Fact]
+		public virtual void ConvertTest()
+		{
+		}
+
+		[Fact]
 		public void SubsctractTest()
 		{
 			var test = Factory.CreateOperationCase<T>((o, x) => o - x);
