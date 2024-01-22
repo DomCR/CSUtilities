@@ -19,8 +19,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)MathUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Quaternion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VectorExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XY.operators.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XY.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XYZ.operators.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XYZ.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XYZM.operators.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XYZM.cs" />
   </ItemGroup>
   <ItemGroup>
