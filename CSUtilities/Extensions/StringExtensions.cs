@@ -12,12 +12,17 @@ namespace CSUtilities.Extensions
 	{
 		public static bool IsNull(this string str)
 		{
-			throw new NotImplementedException();
+			return str == null;
 		}
 
 		public static bool IsNullOrEmpty(this string str)
 		{
-			throw new NotImplementedException();
+			return string.IsNullOrEmpty(str);
+		}
+
+		public static bool IsNullOrWhiteSpace(this string str)
+		{
+			return string.IsNullOrWhiteSpace(str);
 		}
 
 		/// <summary>
