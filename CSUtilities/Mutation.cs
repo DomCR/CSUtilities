@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET7_0_OR_GREATER
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -179,3 +180,4 @@ namespace CSUtilities
 		}
 	}
 }
+#endif
