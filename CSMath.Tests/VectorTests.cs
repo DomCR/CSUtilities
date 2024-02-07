@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -127,6 +128,18 @@ namespace CSMath.Tests
 		[Fact]
 		public virtual void IsParallelTest()
 		{
+		}
+
+		[Fact]
+		public void ToEnumerableTest()
+		{
+			T pt = Factory.CreatePoint<T>();
+			var arr = pt.ToEnumerable().ToArray();
+
+			for (int i = 0; i < pt.Dimension; i++)
+			{
+				Assert.Equal(pt[i], arr[i]);
+			}
 		}
 
 		[Fact]

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CSMath
 {
@@ -330,6 +331,21 @@ namespace CSMath
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Get an enumerable with the components of the <see cref="IVector"/>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static IEnumerable<double> ToEnumerable<T>(this T v)
+			where T : IVector
+		{
+			for (int i = 0; i < v.Dimension; i++)
+			{
+				yield return v[i];
+			}
 		}
 
 		// Applies a function in all the components of a vector by order
