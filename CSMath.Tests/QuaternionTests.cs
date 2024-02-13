@@ -7,8 +7,8 @@ namespace CSMath.Tests
 		[Fact]
 		public void CreateFromYawPitchRollTest()
 		{
-			XYZ xyz = new XYZ(90, 0, 0);
-			var q = Quaternion.CreateFromYawPitchRoll(MathUtils.ToRadian(xyz));
+			XYZ xyz = new XYZ(MathUtils.DegToRad(90), 0, 0);
+			Quaternion q = Quaternion.CreateFromYawPitchRoll(xyz);
 		}
 	}
 }

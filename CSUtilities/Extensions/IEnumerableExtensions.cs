@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CSUtilities.Extensions
 {
@@ -29,6 +27,26 @@ namespace CSUtilities.Extensions
 		public static Queue<T> ToQueue<T>(this IEnumerable<T> enumerable)
 		{
 			return new Queue<T>(enumerable);
+		}
+
+		/// <summary>
+		/// Gets the element in an specific index or it's default value
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumerable"></param>
+		/// <param name="index"></param>
+		/// <param name="result"></param>
+		/// <returns></returns>
+		public static bool TryGet<T>(this IEnumerable<T> enumerable, int index, out T result)
+		{
+			if (enumerable.Count() < index)
+			{
+				result = default(T);
+				return false;
+			}
+
+			result = enumerable.ElementAt(index);
+			return true;
 		}
 
 		public static IEnumerable<T> RemoveLastEquals<T>(this IEnumerable<T> enumerable, T element)

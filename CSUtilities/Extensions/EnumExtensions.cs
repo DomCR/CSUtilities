@@ -27,6 +27,24 @@ namespace CSUtilities.Extensions
 		}
 
 		/// <summary>
+		/// Adds a flag value to enum
+		/// </summary>
+		public static T AddFlag<T>(this T value, T flag)
+			where T : Enum
+		{
+			return (T)(object)((int)(object)value | (int)(object)flag);
+		}
+
+		/// <summary>
+		/// Removes the flag value from enum
+		/// </summary>
+		public static T RemoveFlag<T>(this T value, T flag)
+			where T : Enum
+		{
+			return (T)(object)((int)(object)value & ~(int)(object)flag);
+		}
+
+		/// <summary>
 		/// Gets a string value for a particular enum value.
 		/// </summary>
 		/// <param name="value">enum value</param>

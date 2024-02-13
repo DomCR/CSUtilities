@@ -8,7 +8,6 @@ namespace CSMath.Geometry
 			where T : ILine<R>
 			where R : IVector
 		{
-
 			throw new NotImplementedException();
 		}
 
@@ -21,11 +20,10 @@ namespace CSMath.Geometry
 			where T : IVector
 		{
 			double lambda = 0;
-			double[] components = point.GetComponents();
 
-			for (int i = 0; i < components.Length; ++i)
+			for (int i = 0; i < point.Dimension; ++i)
 			{
-				var value = (components[i] - line.Origin.GetComponents()[i]) / line.Direction.GetComponents()[i];
+				var value = (point[i] - line.Origin[i]) / line.Direction[i];
 				if (i != 0 && (value != lambda))
 				{
 					return false;

@@ -1,29 +1,84 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CSMath
 {
 	public static class VectorExtensions
 	{
 		/// <summary>
-		/// Distance between two points
+		/// Angle between two <see cref="IVector"/>.
+		/// </summary>
+		/// <param name="v">The first <see cref="IVector" />.</param>
+		/// <param name="u">The second <see cref="IVector" />.</param>
+		public static double AngleFrom<T>(this T v, T u)
+			where T : IVector, new()
+		{
+			if (v.IsZero() || u.IsZero())
+				throw new InvalidOperationException("Cannot calculate the angle between two vectors, if one is zero.");
+
+			return Math.Acos(v.Dot(u) / (v.GetLength() * u.GetLength()));
+		}
+
+		/// <summary>
+		/// Returns true if the magnitude of the <see cref="IVector"/> is zero.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="u"></param>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		public static double DistanceFrom<T>(this T u, T v)
-			where T : IVector<T>
+		public static bool IsZero<T>(this T v)
+			where T : IVector
 		{
-			double value = 0;
-			var c1 = u.GetComponents();
-			var c2 = v.GetComponents();
+			return v.GetLength() == 0;
+		}
 
-			for (int i = 0; i < c1.Length; i++)
+		/// <summary>
+		/// Distance between two <see cref="IVector"/>.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="v"></param>
+		/// <param name="u"></param>
+		/// <returns></returns>
+		public static double DistanceFrom<T>(this T v, T u)
+			where T : IVector, new()
+		{
+			return Subtract(v, u).GetLength();
+		}
+
+		/// <summary>
+		/// Copy the component values from a source using the smallest dimension of both parameters
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="v"></param>
+		/// <param name="source"></param>
+		/// <returns>A copy of the <see cref="IVector"/> with the copied components</returns>
+		public static T CopyValues<T>(this T v, IVector source)
+			where T : IVector, new()
+		{
+			for (int i = 0; i < Math.Min(v.Dimension, source.Dimension); i++)
 			{
-				value += Math.Pow(c1[i] - c2[i], 2);
+				v[i] = source[i];
 			}
 
-			return Math.Sqrt(value);
+			return v;
+		}
+
+		/// <summary>
+		/// Converts an <see cref="IVector" /> into an equivalent <see cref="IVector" />
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static T Convert<T>(this IVector v)
+			where T : IVector, new()
+		{
+			T result = new T();
+
+			for (int i = 0; i < Math.Min(result.Dimension, v.Dimension); i++)
+			{
+				result[i] = v[i];
+			}
+
+			return result;
 		}
 
 		/// <summary>
@@ -31,13 +86,13 @@ namespace CSMath
 		/// </summary>
 		/// <returns>The vector's length.</returns>
 		public static double GetLength<T>(this T vector)
-			where T : IVector<T>
+			where T : IVector
 		{
 			double length = 0;
 
-			foreach (var item in vector.GetComponents())
+			for (int i = 0; i < vector.Dimension; i++)
 			{
-				length += item * item;
+				length += Math.Pow(vector[i], 2);
 			}
 
 			return Math.Sqrt(length);
@@ -49,17 +104,17 @@ namespace CSMath
 		/// <param name="vector">The vector to normalize.</param>
 		/// <returns>The normalized vector.</returns>
 		public static T Normalize<T>(this T vector)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
 			double length = vector.GetLength();
-			double[] components = vector.GetComponents();
+			T result = new T();
 
-			for (int i = 0; i < components.Length; i++)
+			for (int i = 0; i < result.Dimension; i++)
 			{
-				components[i] /= length;
+				result[i] = vector[i] / length;
 			}
 
-			return new T().SetComponents(components);
+			return result;
 		}
 
 		/// <summary>
@@ -69,18 +124,68 @@ namespace CSMath
 		/// <param name="right">The second vector.</param>
 		/// <returns>The dot product.</returns>
 		public static double Dot<T>(this T left, T right)
-			where T : IVector<T>
+			where T : IVector
 		{
-			var components1 = left.GetComponents();
-			var components2 = right.GetComponents();
 			double result = 0;
-
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < left.Dimension; ++i)
 			{
-				result += components1[i] * components2[i];
+				result += left[i] * right[i];
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether the <see cref="IVector" /> is normalized, or not.
+		/// </summary>
+		public static bool IsNormalized<T>(this T v)
+			where T : IVector
+		{
+			return v.GetLength() == 1;
+		}
+
+		/// <summary>
+		/// Returns a boolean indicating whether the two given vectors are parallel.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="left">The first vector.</param>
+		/// <param name="right">The second vector.</param>
+		/// <returns></returns>
+		public static bool IsParallel<T>(this T left, T right)
+			where T : IVector
+		{
+			if (left.IsZero() || right.IsZero())
+				return false;
+
+			double firstResult = 0;
+			for (int i = 0; i < left.Dimension; ++i)
+				if (i == 0)
+				{
+					firstResult = right[i] / left[i];
+				}
+				else
+				{
+					double curr = right[i] / left[i];
+					if (!curr.Equals(firstResult))
+					{
+						return false;
+					}
+				}
+
+			return true;
+		}
+
+		/// <summary>
+		/// Returns a boolean indicating whether the two given vectors are perpendicular.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="left">The first vector.</param>
+		/// <param name="right">The second vector.</param>
+		/// <returns></returns>
+		public static bool IsPerpendicular<T>(this T left, T right)
+			where T : IVector
+		{
+			return Dot<T>(left, right) == 0;
 		}
 
 		/// <summary>
@@ -90,14 +195,11 @@ namespace CSMath
 		/// <param name="right">The second vector to compare.</param>
 		/// <returns>True if the vectors are equal; False otherwise.</returns>
 		public static bool IsEqual<T>(this T left, T right)
-			where T : IVector<T>
+			where T : IVector
 		{
-			var components1 = left.GetComponents();
-			var components2 = right.GetComponents();
-
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < left.Dimension; i++)
 			{
-				if (components1[i] != components2[i])
+				if (left[i] != right[i])
 					return false;
 			}
 
@@ -112,14 +214,11 @@ namespace CSMath
 		/// <param name="ndecimals">Number of decimals digits to be set as precision.</param>
 		/// <returns>True if the vectors are equal; False otherwise.</returns>
 		public static bool IsEqual<T>(this T left, T right, int ndecimals)
-			where T : IVector<T>
+			where T : IVector
 		{
-			var components1 = left.GetComponents();
-			var components2 = right.GetComponents();
-
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < left.Dimension; i++)
 			{
-				if (Math.Round(components1[i], ndecimals) != Math.Round(components2[i], ndecimals))
+				if (Math.Round(left[i], ndecimals) != Math.Round(right[i], ndecimals))
 					return false;
 			}
 
@@ -133,7 +232,7 @@ namespace CSMath
 		/// <param name="right">The second source vector.</param>
 		/// <returns>The summed vector.</returns>
 		public static T Add<T>(this T left, T right)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
 			return applyFunctionByComponentIndex(left, right, (o, x) => o + x);
 		}
@@ -144,8 +243,8 @@ namespace CSMath
 		/// <param name="left">The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
 		/// <returns>The difference vector.</returns>
-		public static T Substract<T>(this T left, T right)
-			where T : IVector<T>, new()
+		public static T Subtract<T>(this T left, T right)
+			where T : IVector, new()
 		{
 			return applyFunctionByComponentIndex(left, right, (o, x) => o - x);
 		}
@@ -157,7 +256,7 @@ namespace CSMath
 		/// <param name="right">The second source vector.</param>
 		/// <returns>The product vector.</returns>
 		public static T Multiply<T>(this T left, T right)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
 			return applyFunctionByComponentIndex(left, right, (o, x) => o * x);
 		}
@@ -169,7 +268,7 @@ namespace CSMath
 		/// <param name="right">The second source vector.</param>
 		/// <returns>The product vector.</returns>
 		public static T Multiply<T>(this T left, double scalar)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
 			return applyFunctionByScalar(left, scalar, (o, x) => o * x);
 		}
@@ -181,7 +280,7 @@ namespace CSMath
 		/// <param name="right">The second source vector.</param>
 		/// <returns>The vector resulting from the division.</returns>
 		public static T Divide<T>(this T left, T right)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
 			return applyFunctionByComponentIndex(left, right, (o, x) => o / x);
 		}
@@ -190,7 +289,7 @@ namespace CSMath
 		/// Divides a vector with an scalar.
 		/// </summary>
 		public static T Divide<T>(this T left, double scalar)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
 			return applyFunctionByScalar(left, scalar, (o, x) => o / x);
 		}
@@ -202,16 +301,16 @@ namespace CSMath
 		/// <param name="vector"></param>
 		/// <returns></returns>
 		public static T Round<T>(this T vector)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
-			double[] components1 = vector.GetComponents();
+			T result = new T();
 
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < result.Dimension; i++)
 			{
-				components1[i] = Math.Round(components1[i]);
+				result[i] = Math.Round(vector[i]);
 			}
 
-			return new T().SetComponents(components1);
+			return result;
 		}
 
 		/// <summary>
@@ -222,46 +321,58 @@ namespace CSMath
 		/// <param name="digits">The number of fractional digits in the return value</param>
 		/// <returns></returns>
 		public static T Round<T>(this T vector, int digits)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
-			double[] components1 = vector.GetComponents();
+			T result = new T();
 
-			for (int i = 0; i < components1.Length; i++)
+			for (int i = 0; i < result.Dimension; i++)
 			{
-				components1[i] = Math.Round(components1[i], digits);
+				result[i] = Math.Round(vector[i], digits);
 			}
 
-			return new T().SetComponents(components1);
+			return result;
+		}
+
+		/// <summary>
+		/// Get an enumerable with the components of the <see cref="IVector"/>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static IEnumerable<double> ToEnumerable<T>(this T v)
+			where T : IVector
+		{
+			for (int i = 0; i < v.Dimension; i++)
+			{
+				yield return v[i];
+			}
 		}
 
 		// Applies a function in all the components of a vector by order
 		private static T applyFunctionByComponentIndex<T>(this T left, T right, Func<double, double, double> op)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
-			double[] c1 = left.GetComponents();
-			double[] c2 = right.GetComponents();
-			double[] result = new double[c1.Length];
+			T result = new T();
 
-			for (int i = 0; i < c1.Length; i++)
+			for (int i = 0; i < left.Dimension; i++)
 			{
-				result[i] = op(c1[i], c2[i]);
+				result[i] = op(left[i], right[i]);
 			}
 
-			return new T().SetComponents(result);
+			return result;
 		}
 
 		private static T applyFunctionByScalar<T>(this T v, double scalar, Func<double, double, double> op)
-			where T : IVector<T>, new()
+			where T : IVector, new()
 		{
-			double[] c1 = v.GetComponents();
-			double[] result = new double[c1.Length];
+			T result = new T();
 
-			for (int i = 0; i < c1.Length; i++)
+			for (int i = 0; i < v.Dimension; i++)
 			{
-				result[i] = op(c1[i], scalar);
+				result[i] = op(v[i], scalar);
 			}
 
-			return new T().SetComponents(result);
+			return result;
 		}
 	}
 }
