@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace CSUtilities.Extensions
 {
@@ -29,6 +27,20 @@ namespace CSUtilities.Extensions
 				throw new ArgumentException("Generic type is not an interface");
 
 			return type.GetInterface(it.FullName) != null;
+		}
+
+		/// <summary>
+		/// Tries to retrive a custom attribute of a specific type to a specified type member.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="member"></param>
+		/// <param name="attribute"></param>
+		/// <returns></returns>
+		public static bool TryGetAttribute<T>(this MemberInfo member, out T attribute)
+			 where T : Attribute
+		{
+			attribute = member.GetCustomAttribute<T>();
+			return attribute != null;
 		}
 	}
 }
