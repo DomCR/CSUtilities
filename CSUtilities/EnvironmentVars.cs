@@ -39,6 +39,11 @@ namespace CSUtilities
 		public static T Get<T>(string name)
 		{
 			string value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
+			if (value == null)
+			{
+				return default;
+			}
+
 			return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(value);
 		}
 
