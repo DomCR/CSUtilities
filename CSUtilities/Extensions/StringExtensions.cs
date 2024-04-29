@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace CSUtilities.Extensions
 {
@@ -10,27 +9,53 @@ namespace CSUtilities.Extensions
 	/// </summary>
 	internal static class StringExtensions
 	{
+		/// <summary>
+		/// Indicates if the specified string is null
+		/// </summary>
+		/// <param name="str">The string to test.</param>
+		/// <returns></returns>
 		public static bool IsNull(this string str)
 		{
 			return str == null;
 		}
 
+		/// <summary>
+		/// Indicates whether the specified string is null or an empty string ("").
+		/// </summary>
+		/// <param name="str">The string to test.</param>
+		/// <returns>true if the value parameter is null or an empty string (""); otherwise, false.</returns>
 		public static bool IsNullOrEmpty(this string str)
 		{
 			return string.IsNullOrEmpty(str);
 		}
 
+		/// <summary>
+		/// Indicates whether a specified string is null, empty, or consists only of white-space characters.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns>true if the value parameter is null or System.String.Empty, or if value consists exclusively of white-space characters.</returns>
 		public static bool IsNullOrWhiteSpace(this string str)
 		{
 			return string.IsNullOrWhiteSpace(str);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="str"></param>
+		/// <exception cref="ArgumentException"></exception>
 		public static void TrowIfNullOrEmpty(this string str)
 		{
 			str.TrowIfNullOrEmpty("String cannot be null or empty");
 		}
 
-		public static void TrowIfNullOrEmpty(this string str, string message = null)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="str"></param>
+		/// <param name="message"></param>
+		/// <exception cref="ArgumentException"></exception>
+		public static void TrowIfNullOrEmpty(this string str, string message)
 		{
 			if (string.IsNullOrEmpty(str))
 			{
