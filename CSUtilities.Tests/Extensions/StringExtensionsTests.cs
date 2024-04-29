@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CSUtilities.Extensions;
 using Xunit;
 
 namespace CSUtilities.Tests.Extensions
@@ -10,9 +6,10 @@ namespace CSUtilities.Tests.Extensions
 	public class StringExtensionsTests
 	{
 		[Fact]
-		public void GetStringValueTest()
+		public void IsNullOrEmptyTest()
 		{
-
+			string n = null;
+			Assert.True(n.IsNullOrEmpty());
 		}
 	}
 }

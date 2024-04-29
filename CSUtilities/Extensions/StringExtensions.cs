@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace CSUtilities.Extensions
 {
-	//TODO: refactor extensions
 	/// <summary>
 	/// String utility extensions.
 	/// </summary>
@@ -23,6 +23,14 @@ namespace CSUtilities.Extensions
 		public static bool IsNullOrWhiteSpace(this string str)
 		{
 			return string.IsNullOrWhiteSpace(str);
+		}
+
+		public static void TrowIfNullOrEmpty(this string str, [CallerMemberName] string name = null)
+		{
+			if (string.IsNullOrEmpty(str))
+			{
+				throw new ArgumentException("", name);
+			}
 		}
 
 		/// <summary>
