@@ -25,11 +25,16 @@ namespace CSUtilities.Extensions
 			return string.IsNullOrWhiteSpace(str);
 		}
 
-		public static void TrowIfNullOrEmpty(this string str, [CallerMemberName] string name = null)
+		public static void TrowIfNullOrEmpty(this string str)
+		{
+			str.TrowIfNullOrEmpty("String cannot be null or empty");
+		}
+
+		public static void TrowIfNullOrEmpty(this string str, string message = null)
 		{
 			if (string.IsNullOrEmpty(str))
 			{
-				throw new ArgumentException("", name);
+				throw new ArgumentException(message);
 			}
 		}
 
