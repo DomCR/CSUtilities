@@ -6,25 +6,27 @@ namespace CSUtilities.Tests.Extensions
 {
 	public class StringExtensionsTests
 	{
-		[Fact]
-		public void IsNullOrEmptyTest()
+		public static TheoryData<string> NullEmpy { get; } = new();
+
+		static StringExtensionsTests()
 		{
-			string n = null;
-			Assert.True(n.IsNullOrEmpty());
+			NullEmpy.Add(null);
+			NullEmpy.Add(string.Empty);
 		}
 
-		[Fact]
-		public void TrowIfNullOrEmptyTest()
+		[Theory]
+		[MemberData(nameof(NullEmpy))]
+		public void IsNullOrEmptyTest(string value)
 		{
-			string n = null;
+			Assert.True(value.IsNullOrEmpty());
+		}
 
-			Assert.Throws<ArgumentException>(n.TrowIfNullOrEmpty);
-			Assert.Throws<ArgumentException>(() => n.TrowIfNullOrEmpty("Message in case of null or empty"));
-
-			string empty = string.Empty;
-
-			Assert.Throws<ArgumentException>(empty.TrowIfNullOrEmpty);
-			Assert.Throws<ArgumentException>(() => empty.TrowIfNullOrEmpty("Message in case of null or empty"));
+		[Theory]
+		[MemberData(nameof(NullEmpy))]
+		public void TrowIfNullOrEmptyTest(string value)
+		{
+			Assert.Throws<ArgumentException>(value.TrowIfNullOrEmpty);
+			Assert.Throws<ArgumentException>(() => value.TrowIfNullOrEmpty("Message in case of null or empty"));
 		}
 	}
 }
