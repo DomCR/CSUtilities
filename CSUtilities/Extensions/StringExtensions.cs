@@ -7,7 +7,12 @@ namespace CSUtilities.Extensions
 	/// <summary>
 	/// String utility extensions.
 	/// </summary>
-	internal static class StringExtensions
+#if PUBLIC
+	public
+#else
+	internal
+#endif
+	static class StringExtensions
 	{
 		/// <summary>
 		/// Indicates if the specified string is null

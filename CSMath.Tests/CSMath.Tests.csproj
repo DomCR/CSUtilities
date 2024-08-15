@@ -22,6 +22,8 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<Import Project="..\CSMath\CSMath.projitems" Label="Shared" />
+	<ItemGroup>
+	  <ProjectReference Include="..\CSMath.Lib\CSMath.Lib.csproj" />
+	</ItemGroup>
 
 </Project>

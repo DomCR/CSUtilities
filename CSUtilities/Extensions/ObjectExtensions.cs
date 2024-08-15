@@ -2,7 +2,12 @@
 
 namespace CSUtilities.Extensions
 {
-	internal static class ObjectExtensions
+#if PUBLIC
+	public
+#else
+	internal
+#endif
+	static class ObjectExtensions
 	{
 		public delegate bool Check<T>(T obj);
 

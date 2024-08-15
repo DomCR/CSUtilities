@@ -22,6 +22,8 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<Import Project="..\CSUtilities\CSUtilities.projitems" Label="Shared" />
+	<ItemGroup>
+	  <ProjectReference Include="..\CSUtilities.Lib\CSUtilities.Lib.csproj" />
+	</ItemGroup>
 
 </Project>

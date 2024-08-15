@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\build_n_test.yml = .github\workflows\build_n_test.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSUtilities.Lib", "CSUtilities.Lib\CSUtilities.Lib.csproj", "{63185900-EEB0-4367-BE14-15A678CB5651}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1CE32FE3-1140-4677-91AE-36F49E05BEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CE32FE3-1140-4677-91AE-36F49E05BEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CE32FE3-1140-4677-91AE-36F49E05BEA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63185900-EEB0-4367-BE14-15A678CB5651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63185900-EEB0-4367-BE14-15A678CB5651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63185900-EEB0-4367-BE14-15A678CB5651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63185900-EEB0-4367-BE14-15A678CB5651}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,8 +58,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CSMath\CSMath.projitems*{1ce32fe3-1140-4677-91ae-36f49e05bea1}*SharedItemsImports = 5
 		CSMath\CSMath.projitems*{411b6122-5ef6-46db-a8f2-43e9c1841e4a}*SharedItemsImports = 13
-		CSUtilities\CSUtilities.projitems*{709b24f9-f586-4770-a1d3-180bf90d9f09}*SharedItemsImports = 5
+		CSUtilities\CSUtilities.projitems*{63185900-eeb0-4367-be14-15a678cb5651}*SharedItemsImports = 5
 		CSUtilities\CSUtilities.projitems*{80357b65-e301-49fd-94c2-d04eb965fd1f}*SharedItemsImports = 13
-		CSMath\CSMath.projitems*{de70f0e2-be42-477b-bab0-7c3a521c4233}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

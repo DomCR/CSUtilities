@@ -1,12 +1,14 @@
 ﻿using CSUtilities.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace CSUtilities.Extensions
 {
-	internal static class EnumExtensions
+#if PUBLIC
+	public 
+#else
+	internal
+#endif
+	static class EnumExtensions
 	{
 		[Obsolete("Use Type.GetValues()")]
 		public static IEnumerable<T> GetValues<T>()
