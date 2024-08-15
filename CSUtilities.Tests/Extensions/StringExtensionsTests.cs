@@ -37,10 +37,10 @@ namespace CSUtilities.Tests.Extensions
 		{
 			int zero = 0;
 
-			zero.ThrowIf<int, ArgumentOutOfRangeException>((value) =>
-			{
-				return value == 0;
-			});
+			Assert.Throws<ArgumentOutOfRangeException>(() => zero.ThrowIf<int, ArgumentOutOfRangeException>((value) =>
+				{
+					return value == 0;
+				}));
 		}
 	}
 }
