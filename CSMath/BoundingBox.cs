@@ -73,7 +73,7 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Bounding box contructor.
+		/// Bounding box constructor.
 		/// </summary>
 		/// <param name="minX"></param>
 		/// <param name="minY"></param>
@@ -84,6 +84,16 @@ namespace CSMath
 		public BoundingBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
 		{
 			this = new BoundingBox(new XYZ(minX, minY, minZ), new XYZ(maxX, maxY, maxZ));
+		}
+
+		/// <summary>
+		/// Move the bounding box the amount of specified units.
+		/// </summary>
+		/// <param name="xyz"></param>
+		/// <returns></returns>
+		public BoundingBox Move(XYZ xyz)
+		{
+			return new BoundingBox(this.Min + xyz, this.Max + xyz);
 		}
 
 		/// <summary>
@@ -104,6 +114,24 @@ namespace CSMath
 
 			return new BoundingBox(min, max);
 		}
+
+		/// <summary>
+		/// Merge Multiple boxes into the common one.
+		/// </summary>
+		/// <param name="boxes"></param>
+		/// <returns>The merged box.</returns>
+		public static BoundingBox Merge(IEnumerable<BoundingBox> boxes)
+		{
+			BoundingBox b = BoundingBox.Null;
+
+			foreach (var box in boxes)
+			{
+				b = b.Merge(box);
+			}
+
+			return b;
+		}
+
 
 		/// <summary>
 		/// Create a bounding box from a collection of points.
