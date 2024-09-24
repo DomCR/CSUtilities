@@ -21,13 +21,34 @@ namespace CSMath.Tests
 		[Fact()]
 		public void ScaleTest()
 		{
+			XYZ xyz = _random.Next<XYZ>();
+
 			XYZ translation = _random.Next<XYZ>();
 			XYZ scale = _random.Next<XYZ>();
 			XYZ rotation = _random.Next<XYZ>();
 
+			XYZ result = xyz * scale;
+
 			Transform transform = new Transform(translation, scale, rotation);
 
-			Assert.Equal(scale.X, transform.Scale.X, 15);
+			AssertUtils.AreEqual(scale, transform.Scale, "Scale");
+		}
+
+		[Fact()]
+		public void ApplyScaleTest()
+		{
+			XYZ xyz = new XYZ(1, 1, 1);
+
+			XYZ translation = XYZ.Zero;
+			XYZ scale = _random.Next<XYZ>();
+			XYZ rotation = XYZ.Zero;
+
+			XYZ expected = xyz * scale;
+
+			Transform transform = new Transform(translation, scale, rotation);
+			XYZ result = transform.ApplyTransform(xyz);
+
+			AssertUtils.AreEqual(expected, result);
 		}
 
 		[Fact]
