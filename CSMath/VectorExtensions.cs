@@ -348,6 +348,25 @@ namespace CSMath
 			}
 		}
 
+		/// <summary>
+		/// Round the zeros within the threshold defined by <see cref="MathUtils.Epsilon"/>.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="vector"></param>
+		/// <returns></returns>
+		public static T RoundZero<T>(this T vector)
+			where T : IVector, new()
+		{
+			T result = new T();
+
+			for (int i = 0; i < result.Dimension; i++)
+			{
+				result[i] = MathUtils.IsZero(vector[i]) ? 0 : vector[i];
+			}
+
+			return result;
+		}
+
 		// Applies a function in all the components of a vector by order
 		private static T applyFunctionByComponentIndex<T>(this T left, T right, Func<double, double, double> op)
 			where T : IVector, new()
