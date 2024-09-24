@@ -2,7 +2,7 @@
 
 namespace CSMath
 {
-	public static class MathUtils
+	public static class Utilities
 	{
 		/// <summary>
 		/// Factor for converting radians to degrees.
@@ -43,7 +43,7 @@ namespace CSMath
 		/// <summary>
 		/// Convert a value from radian to degree
 		/// </summary>
-		/// <param name="degree">Value in radians</param>
+		/// <param name="value">Value in radians</param>
 		/// <returns>The radian value</returns>
 		public static double RadToDeg(double value)
 		{
@@ -53,7 +53,7 @@ namespace CSMath
 		/// <summary>
 		/// Convert a value from degree to radian
 		/// </summary>
-		/// <param name="degree">Value in degrees</param>
+		/// <param name="value">Value in degrees</param>
 		/// <returns>The radian value</returns>
 		public static double DegToRad(double value)
 		{

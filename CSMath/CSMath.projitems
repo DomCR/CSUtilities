@@ -17,7 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix4.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix4.Operators.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MathUtils.cs" />
+    <Compile Include="..\CSUtilities\CSMath\Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Quaternion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Transform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VectorExtensions.cs" />

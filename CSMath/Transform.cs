@@ -1,4 +1,6 @@
-﻿namespace CSMath
+﻿using System;
+
+namespace CSMath
 {
 	/// <summary>
 	/// Contains the information for translate/scale/rotation or transform matrix to apply to a geometric shape.
@@ -58,9 +60,9 @@
 			get
 			{
 				XYZ rot = new XYZ();
-				rot[0] = MathUtils.DegToRad(this._rotation.X);
-				rot[1] = MathUtils.DegToRad(this._rotation.Y);
-				rot[2] = MathUtils.DegToRad(this._rotation.Z);
+				rot[0] = Utilities.DegToRad(this._rotation.X);
+				rot[1] = Utilities.DegToRad(this._rotation.Y);
+				rot[2] = Utilities.DegToRad(this._rotation.Z);
 				return Quaternion.CreateFromYawPitchRoll(rot);
 			}
 		}

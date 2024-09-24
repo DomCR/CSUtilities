@@ -361,7 +361,7 @@ namespace CSMath
 
 			for (int i = 0; i < result.Dimension; i++)
 			{
-				result[i] = MathUtils.IsZero(vector[i]) ? 0 : vector[i];
+				result[i] = Utilities.IsZero(vector[i]) ? 0 : vector[i];
 			}
 
 			return result;
