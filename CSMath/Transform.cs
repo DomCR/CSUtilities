@@ -91,7 +91,7 @@
 		/// </summary>
 		/// <param name="translation"></param>
 		/// <param name="scale"></param>
-		/// <param name="rotation"></param>
+		/// <param name="rotation">Rotation value in degrees.</param>
 		public Transform(XYZ translation, XYZ scale, XYZ rotation) : this()
 		{
 			this.Translation = translation;
@@ -113,9 +113,16 @@
 		/// </summary>
 		/// <param name="xyz"></param>
 		/// <returns></returns>
-		public XYZ ApplyTransform(XYZ xyz)
+		public XYZ ApplyTransform(XYZ xyz, bool roundZero = true)
 		{
-			return this._matrix * xyz;
+			XYZ value = this._matrix * xyz;
+
+			if (roundZero)
+			{
+				return value.RoundZero();
+			}
+
+			return value;
 		}
 
 		/// <summary>

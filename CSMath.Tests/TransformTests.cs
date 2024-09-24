@@ -19,15 +19,28 @@ namespace CSMath.Tests
 		}
 
 		[Fact()]
+		public void ApplyTranslationTest()
+		{
+			XYZ xyz = XYZ.Zero;
+
+			XYZ translation = XYZ.Zero;
+			XYZ scale = new XYZ(1, 1, 1);
+			XYZ rotation = XYZ.Zero;
+
+			XYZ expected = xyz + translation;
+
+			Transform transform = new Transform(translation, scale, rotation);
+			XYZ result = transform.ApplyTransform(xyz);
+
+			AssertUtils.AreEqual(expected, result);
+		}
+
+		[Fact()]
 		public void ScaleTest()
 		{
-			XYZ xyz = _random.Next<XYZ>();
-
 			XYZ translation = _random.Next<XYZ>();
 			XYZ scale = _random.Next<XYZ>();
 			XYZ rotation = _random.Next<XYZ>();
-
-			XYZ result = xyz * scale;
 
 			Transform transform = new Transform(translation, scale, rotation);
 
@@ -61,6 +74,23 @@ namespace CSMath.Tests
 			Transform transform = new Transform(translation, scale, rotation);
 
 			Assert.Equal(rotation, transform.EulerRotation);
+		}
+
+		[Fact()]
+		public void ApplyRotationTest()
+		{
+			XYZ xyz = XYZ.AxisX;
+
+			XYZ translation = XYZ.Zero;
+			XYZ scale = new XYZ(1, 1, 1);
+			XYZ rotation = new XYZ(0, 0, 90);
+
+			XYZ expected = new XYZ(0, 1, 0);
+
+			Transform transform = new Transform(translation, scale, rotation);
+			XYZ result = transform.ApplyTransform(xyz);
+
+			AssertUtils.AreEqual(expected, result);
 		}
 
 		[Fact()]

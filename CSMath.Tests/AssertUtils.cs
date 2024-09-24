@@ -15,7 +15,7 @@ namespace CSMath.Tests
 					Assert.True(xy1.IsEqual(xy2, TestVariables.DecimalPrecision), $"Different {varname}");
 					break;
 				case (XYZ xyz1, XYZ xyz2):
-					Assert.True(xyz1.IsEqual(xyz2, TestVariables.DecimalPrecision), $"Different {varname}");
+					Assert.True(xyz1.IsEqual(xyz2, TestVariables.DecimalPrecision), $"Different {varname}: expected {xyz1} actual {xyz2}");
 					break;
 				case (Quaternion q1, Quaternion q2):
 					Assert.True(q1.Equals(q2, TestVariables.DecimalPrecision), $"Different {varname}");
