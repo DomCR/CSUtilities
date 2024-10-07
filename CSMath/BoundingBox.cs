@@ -119,14 +119,24 @@ namespace CSMath
 		/// Checks if the given box is in the bounds of this box.
 		/// </summary>
 		/// <param name="box"></param>
-		/// <param name="partial">Flag to notify that on part of the box is inside but not completely.</param>
 		/// <returns></returns>
-		public bool IsIn(BoundingBox box, out bool partial)
+		public bool IsIn(BoundingBox box)
+		{
+			return this.IsIn(box, out _);
+		}
+
+		/// <summary>
+		/// Checks if the given box is in the bounds of this box.
+		/// </summary>
+		/// <param name="box"></param>
+		/// <param name="partialInside">Flag to notify that on part of the box is inside but not completely.</param>
+		/// <returns></returns>
+		public bool IsIn(BoundingBox box, out bool partialInside)
 		{
 			bool min = this.IsIn(box.Min);
 			bool max = this.IsIn(box.Max);
 
-			partial = min || max;
+			partialInside = min || max;
 
 			return min && max;
 		}
