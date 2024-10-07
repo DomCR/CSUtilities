@@ -115,6 +115,30 @@ namespace CSMath
 			return new BoundingBox(min, max);
 		}
 
+		public bool IsIn(BoundingBox box, out bool partial)
+		{
+			bool min = this.IsIn(box.Min);
+			bool max = this.IsIn(box.Max);
+
+			partial = min || max;
+
+			return min && max;
+		}
+
+		public bool IsIn(XYZ point)
+		{
+			if (this.Min.X <= point.X || this.Min.Y <= point.Y || this.Min.Z <= point.Z)
+			{
+				return false;
+			}
+			if (this.Max.X <= point.X || this.Max.Y <= point.Y || this.Max.Z <= point.Z)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 		/// <summary>
 		/// Merge Multiple boxes into the common one.
 		/// </summary>
