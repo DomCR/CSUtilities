@@ -115,6 +115,12 @@ namespace CSMath
 			return new BoundingBox(min, max);
 		}
 
+		/// <summary>
+		/// Checks if the given box is in the bounds of this box.
+		/// </summary>
+		/// <param name="box"></param>
+		/// <param name="partial">Flag to notify that on part of the box is inside but not completely.</param>
+		/// <returns></returns>
 		public bool IsIn(BoundingBox box, out bool partial)
 		{
 			bool min = this.IsIn(box.Min);
@@ -125,13 +131,19 @@ namespace CSMath
 			return min && max;
 		}
 
+		/// <summary>
+		/// Checks if the point is in the bounds of the box.
+		/// </summary>
+		/// <param name="point"></param>
+		/// <returns></returns>
 		public bool IsIn(XYZ point)
 		{
-			if (this.Min.X <= point.X || this.Min.Y <= point.Y || this.Min.Z <= point.Z)
+			if (this.Min.X > point.X || this.Min.Y > point.Y || this.Min.Z > point.Z)
 			{
 				return false;
 			}
-			if (this.Max.X <= point.X || this.Max.Y <= point.Y || this.Max.Z <= point.Z)
+
+			if (this.Max.X < point.X || this.Max.Y < point.Y || this.Max.Z < point.Z)
 			{
 				return false;
 			}

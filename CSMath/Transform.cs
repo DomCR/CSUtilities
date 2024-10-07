@@ -60,9 +60,9 @@ namespace CSMath
 			get
 			{
 				XYZ rot = new XYZ();
-				rot[0] = Utilities.DegToRad(this._rotation.X);
-				rot[1] = Utilities.DegToRad(this._rotation.Y);
-				rot[2] = Utilities.DegToRad(this._rotation.Z);
+				rot[0] = MathHelper.DegToRad(this._rotation.X);
+				rot[1] = MathHelper.DegToRad(this._rotation.Y);
+				rot[2] = MathHelper.DegToRad(this._rotation.Z);
 				return Quaternion.CreateFromYawPitchRoll(rot);
 			}
 		}
