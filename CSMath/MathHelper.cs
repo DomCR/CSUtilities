@@ -2,7 +2,7 @@
 
 namespace CSMath
 {
-	public static class Utilities
+	public static class MathHelper
 	{
 		/// <summary>
 		/// Factor for converting radians to degrees.

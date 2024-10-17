@@ -116,6 +116,52 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Checks if the given box is in the bounds of this box.
+		/// </summary>
+		/// <param name="box"></param>
+		/// <returns></returns>
+		public bool IsIn(BoundingBox box)
+		{
+			return this.IsIn(box, out _);
+		}
+
+		/// <summary>
+		/// Checks if the given box is in the bounds of this box.
+		/// </summary>
+		/// <param name="box"></param>
+		/// <param name="partialIn">Flag to notify that on part of the box is inside but not completely.</param>
+		/// <returns></returns>
+		public bool IsIn(BoundingBox box, out bool partialIn)
+		{
+			bool min = this.IsIn(box.Min);
+			bool max = this.IsIn(box.Max);
+
+			partialIn = min || max;
+
+			return min && max;
+		}
+
+		/// <summary>
+		/// Checks if the point is in the bounds of the box.
+		/// </summary>
+		/// <param name="point"></param>
+		/// <returns></returns>
+		public bool IsIn(XYZ point)
+		{
+			if (this.Min.X > point.X || this.Min.Y > point.Y || this.Min.Z > point.Z)
+			{
+				return false;
+			}
+
+			if (this.Max.X < point.X || this.Max.Y < point.Y || this.Max.Z < point.Z)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		/// <summary>
 		/// Merge Multiple boxes into the common one.
 		/// </summary>
 		/// <param name="boxes"></param>
