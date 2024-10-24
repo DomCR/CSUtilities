@@ -40,6 +40,22 @@ namespace CSMath
 			}
 		}
 
+		public double Width
+		{
+			get
+			{
+				return this.Max.X - this.Min.X;
+			}
+		}
+
+		public double Height
+		{
+			get
+			{
+				return this.Max.Y - this.Min.Y;
+			}
+		}
+
 		private BoundingBox(BoundingBoxExtent extent)
 		{
 			this.Extent = extent;
