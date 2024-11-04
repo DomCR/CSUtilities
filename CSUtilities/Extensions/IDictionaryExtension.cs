@@ -3,7 +3,7 @@
 namespace CSUtilities.Extensions
 {
 	/// <summary>
-	/// Estensions for <see cref="IDictionary{TKey, TValue}"/>
+	/// Extensions for <see cref="IDictionary{TKey, TValue}"/>
 	/// </summary>
 	public static class IDictionaryExtension
 	{
