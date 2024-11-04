@@ -16,7 +16,7 @@ namespace CSUtilities.Extensions
 	{
 #if NETFRAMEWORK
 		/// <summary>
-		/// 
+		/// Concatenates and appends the members of a collection, using the specified separator between each member.
 		/// </summary>
 		public static StringBuilder AppendJoin<T>(this StringBuilder sb, string? separator, IEnumerable<T> values)
 		{

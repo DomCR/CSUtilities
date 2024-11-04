@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)EnvironmentVars.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StreamExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringBuilderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Text\CodePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DefaultEndianConverter.cs" />
