@@ -52,5 +52,17 @@ namespace CSUtilities.Extensions
 				throw Activator.CreateInstance(typeof(E), message) as E;
 			}
 		}
+
+		public static void InRange<T, E>(this T parameter, T min, T max, string message, bool inclusive = true)
+			where T : struct, IComparable<T>
+			where E : Exception, new()
+		{
+			int up = parameter.CompareTo(max);
+
+			if (up < 0)
+			{
+				throw Activator.CreateInstance(typeof(E), message) as E;
+			}
+		}
 	}
 }
