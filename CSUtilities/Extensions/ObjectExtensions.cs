@@ -54,14 +54,12 @@ namespace CSUtilities.Extensions
 			}
 		}
 
-		public static void InRange<T>(this T parameter, T min, T max, string message, bool inclusive = true, [CallerMemberName] string name = null)
+		public static void InRange<T>(this T value, T min, T max, string message, bool inclusive = true, [CallerMemberName] string name = null)
 			where T : struct, IComparable<T>
 		{
-			int up = parameter.CompareTo(max);
-
-			if (up < 0)
+			if (value.CompareTo(max) >= 1 && value.CompareTo(min) <= -1)
 			{
-				throw new ArgumentOutOfRangeException(name, parameter, message);
+				throw new ArgumentOutOfRangeException(name, value, message);
 			}
 		}
 	}
