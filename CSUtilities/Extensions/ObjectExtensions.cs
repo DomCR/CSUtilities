@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace CSUtilities.Extensions
 {
@@ -50,6 +51,17 @@ namespace CSUtilities.Extensions
 			if (check(parameter))
 			{
 				throw Activator.CreateInstance(typeof(E), message) as E;
+			}
+		}
+
+		public static void InRange<T>(this T parameter, T min, T max, string message, bool inclusive = true, [CallerMemberName] string name = null)
+			where T : struct, IComparable<T>
+		{
+			int up = parameter.CompareTo(max);
+
+			if (up < 0)
+			{
+				throw new ArgumentOutOfRangeException(name, parameter, message);
 			}
 		}
 	}
