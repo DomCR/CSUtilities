@@ -7,7 +7,7 @@ namespace CSUtilities.Extensions
 	/// </summary>
 	public static class IDictionaryExtension
 	{
-#if NETFRAMEWORK
+#if NETFRAMEWORK || NETSTANDARD2_0
 		/// <summary>
 		/// Removes the value with the specified key from the <see cref="IDictionary{TKey, TValue}"/>, and copies the element to the value parameter
 		/// </summary>
