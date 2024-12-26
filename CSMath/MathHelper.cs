@@ -40,6 +40,35 @@ namespace CSMath
 			return number >= -threshold && number <= threshold;
 		}
 
+		public static double FixZero(double number)
+		{
+			return FixZero(number, Epsilon);
+		}
+
+		public static double FixZero(double number, double threshold)
+		{
+			return IsZero(number, threshold) ? 0 : number;
+		}
+
+		public static T FixZero<T>(T vector)
+			where T : IVector, new()
+		{
+			return FixZero(vector, Epsilon);
+		}
+
+		public static T FixZero<T>(T vector, double threshold)
+			where T : IVector, new()
+		{
+			T result = new T();
+
+			for (int i = 0; i < vector.Dimension; i++)
+			{
+				result[i] = FixZero(vector[i], threshold);
+			}
+
+			return result;
+		}
+
 		/// <summary>
 		/// Convert a value from radian to degree
 		/// </summary>
