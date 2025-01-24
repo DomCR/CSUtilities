@@ -132,5 +132,16 @@ namespace CSMath
 		{
 			return $"{X},{Y},{Z},{M}";
 		}
+
+		/// <summary>
+		/// Converts the numeric value of this instance to its equivalent string representation
+		/// using the specified culture-specific format information.
+		/// </summary>
+		/// <param name="cultureInfo">An object that supplies culture-specific formatting information.</param>
+		/// <returns>The string representation of the value of this instance as specified by provider.</returns>
+		public string ToString(IFormatProvider? cultureInfo)
+		{
+			return $"{X.ToString(cultureInfo)},{Y.ToString(cultureInfo)},{Z.ToString(cultureInfo)},{M.ToString(cultureInfo)}";
+		}
 	}
 }

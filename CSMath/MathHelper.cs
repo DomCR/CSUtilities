@@ -73,10 +73,20 @@ namespace CSMath
 		/// Convert a value from radian to degree
 		/// </summary>
 		/// <param name="value">Value in radians</param>
+		/// <param name="absolute">Calculates the negative values in a 0-360 range.</param>
 		/// <returns>The radian value</returns>
-		public static double RadToDeg(double value)
+		public static double RadToDeg(double value, bool absolute = true)
 		{
-			return value * RadToDegFactor;
+			var result = value * RadToDegFactor;
+
+			result %= 360;
+
+			if (result < 0)
+			{
+				result = 360 + result;
+			}
+
+			return result;
 		}
 
 		/// <summary>
