@@ -19,6 +19,8 @@ namespace CSMath
 		/// </summary>
 		public const double Epsilon = 1e-12;
 
+		public const double TwoPI = Math.PI * 2;
+
 		/// <summary>
 		/// Checks if a number is close to zero.
 		/// </summary>
