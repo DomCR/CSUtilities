@@ -79,6 +79,11 @@ namespace CSMath
 			return Math.Atan2(Y, X);
 		}
 
+		public XY Perpendicular()
+		{
+			return new XY(-this.Y, this.X);
+		}
+
 		/// <inheritdoc/>
 		public override bool Equals(object? obj)
 		{

@@ -63,6 +63,26 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Calculates the middle point between a start and end.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="start">Start point.</param>
+		/// <param name="end">End point.</param>
+		/// <returns>Middle point.</returns>
+		public static T Mid<T>(this T start, T end)
+			where T : IVector, new()
+		{
+			T result = new();
+
+			for (int i = 0; i < start.Dimension; i++)
+			{
+				result[i] = (start[i] + end[i]) * 0.5;
+			}
+
+			return result;
+		}
+
+		/// <summary>
 		/// Converts an <see cref="IVector" /> into an equivalent <see cref="IVector" />
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
