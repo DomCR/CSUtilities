@@ -79,6 +79,10 @@ namespace CSMath
 			return Math.Atan2(Y, X);
 		}
 
+		/// <summary>
+		/// Get the perpendicular vector.
+		/// </summary>
+		/// <returns></returns>
 		public XY Perpendicular()
 		{
 			return new XY(-this.Y, this.X);
