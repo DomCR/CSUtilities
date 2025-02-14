@@ -88,6 +88,18 @@ namespace CSMath
 			return new XY(-this.Y, this.X);
 		}
 
+		/// <summary>
+		/// Obtains the polar point of another point. 
+		/// </summary>
+		/// <param name="distance">Distance from point u.</param>
+		/// <param name="angle">Angle in radians.</param>
+		/// <returns>The polar point of the specified point.</returns>
+		public XY Polar(double distance, double angle)
+		{
+			XY dir = new(Math.Cos(angle), Math.Sin(angle));
+			return this + dir * distance;
+		}
+
 		/// <inheritdoc/>
 		public override bool Equals(object? obj)
 		{
