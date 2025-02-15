@@ -151,7 +151,7 @@ namespace CSMath.Tests
 			v[0] = 1;
 			u[1] = 1;
 
-			Assert.Equal(Math.PI / 2, v.AngleFrom(u));
+			Assert.Equal(Math.PI / 2, v.AngleBetweenVectors(u));
 			Assert.True(v.IsPerpendicular(u));
 		}
 
