@@ -655,6 +655,7 @@ namespace CSMath
 			// M = [ xy-cosa*yx+sina*z    yy+cosa(1-yy)  yz-cosa*yz-sina*x ]
 			//     [ zx-cosa*zx-sina*y zy-cosa*zy+sina*x   zz+cosa*(1-zz)  ]
 			//
+			axis = axis.Normalize();
 			double x = axis.X, y = axis.Y, z = axis.Z;
 			double sa = (double)Math.Sin(angle), ca = (double)Math.Cos(angle);
 			double xx = x * x, yy = y * y, zz = z * z;
