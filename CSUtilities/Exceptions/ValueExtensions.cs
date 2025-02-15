@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace CSUtilities.Extensions
+namespace CSUtilities.Exceptions
 {
 #if PUBLIC
 	public
 #else
 	internal
 #endif
-	static class ObjectExtensions
+	static class ValueExtensions
 	{
 		public delegate bool Check<T>(T obj);
 
@@ -50,6 +52,18 @@ namespace CSUtilities.Extensions
 			if (check(parameter))
 			{
 				throw Activator.CreateInstance(typeof(E), message) as E;
+			}
+		}
+
+		public static void InRange<T>(this T parameter, T min, T max, string? message = null, bool inclusive = true)
+			where T : IComparable<T>
+		{
+			int down = parameter.CompareTo(min);
+			int up = parameter.CompareTo(max);
+
+			if (up > 0 && down < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(parameter), message);
 			}
 		}
 	}
