@@ -30,6 +30,7 @@ namespace CSMath
 			0.0, 0.0, 0.0, 1.0);
 
 		#region Public Fields
+
 		/// <summary>
 		/// Value at column 0, row 0 of the matrix.
 		/// </summary>
@@ -97,6 +98,7 @@ namespace CSMath
 		/// Value at column 3, row 3 of the matrix.
 		/// </summary>
 		public double m33;
+
 		#endregion Public Fields
 
 		public Matrix4(
