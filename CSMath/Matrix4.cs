@@ -696,5 +696,38 @@ namespace CSMath
 				0.0, 0.0, z, 0.0,
 				0.0, 0.0, 0.0, 1.0);
 		}
+
+		/// <summary>
+		/// Gets the rotation matrix from the normal vector.
+		/// </summary>
+		/// <param name="zaxis">Normal vector.</param>
+		/// <returns>Rotation matrix.</returns>
+		public static Matrix4 GetArbitraryAxis(XYZ zaxis)
+		{
+			zaxis.Normalize();
+
+			if (zaxis.Equals(XYZ.AxisZ))
+			{
+				return Matrix4.Identity;
+			}
+
+			XYZ xaxis = ((!(System.Math.Abs(zaxis.X) < (1 / 64)) || !(System.Math.Abs(zaxis.Y) < (1 / 64)))
+				? XYZ.Cross(XYZ.AxisZ, zaxis)
+				: XYZ.Cross(XYZ.AxisY, zaxis));
+			xaxis.Normalize();
+			return GetArbitraryAxis(xaxis, zaxis);
+		}
+
+		/// <summary>
+		/// Gets the rotation matrix from the normal vector.
+		/// </summary>
+		/// <param name="xaxis">X axis.</param>
+		/// <param name="zaxis">Normal vector.</param>
+		/// <returns>Rotation matrix.</returns>
+		public static Matrix4 GetArbitraryAxis(XYZ xaxis, XYZ zaxis)
+		{
+			XYZ cross = XYZ.Cross(zaxis, xaxis);
+			return new Matrix4(xaxis.X, cross.X, zaxis.X, 0.0, xaxis.Y, cross.Y, zaxis.Y, 0.0, xaxis.Z, cross.Z, zaxis.Z, 0.0, 0.0, 0.0, 0.0, 1.0);
+		}
 	}
 }
