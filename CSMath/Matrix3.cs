@@ -145,6 +145,21 @@ namespace CSMath
 			return new Matrix3(aX.X, aY.X, zAxis.X, aX.Y, aY.Y, zAxis.Y, aX.Z, aY.Z, zAxis.Z);
 		}
 
+		/// <summary>
+		/// Builds a rotation matrix for a rotation around the z-axis.
+		/// </summary>
+		/// <param name="angle">The counter-clockwise angle in radians.</param>
+		/// <returns>The resulting Matrix3 instance.</returns>
+		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		public static Matrix3 RotationZ(double angle)
+		{
+			double cos = Math.Cos(angle);
+			double sin = Math.Sin(angle);
+			return new Matrix3(cos, -sin, 0.0,
+							   sin, cos, 0.0,
+							   0.0, 0.0, 1.0);
+		}
+
 		/// <inheritdoc/>
 		public override string ToString()
 		{

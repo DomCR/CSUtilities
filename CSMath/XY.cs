@@ -80,6 +80,19 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Rotates a vector.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="angle">Rotation angles in radians.</param>
+		/// <returns>The rotated vector.</returns>
+		public static XY Rotate(XY value, double angle)
+		{
+			double sin = Math.Sin(angle);
+			double cos = Math.Cos(angle);
+			return new XY(value.X * cos - value.Y * sin, value.X * sin + value.Y * cos);
+		}
+
+		/// <summary>
 		/// Get the perpendicular vector.
 		/// </summary>
 		/// <returns></returns>
