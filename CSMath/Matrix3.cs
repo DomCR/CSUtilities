@@ -1,4 +1,8 @@
-﻿namespace CSMath
+﻿using System;
+using System.Text;
+using System.Threading;
+
+namespace CSMath
 {
 	public partial struct Matrix3
 	{
@@ -80,6 +84,76 @@
 			this.m20 = m20;
 			this.m21 = m21;
 			this.m22 = m22;
+		}
+
+		public Matrix3(Matrix4 matrix)
+		{
+			this.m00 = matrix.m00;
+			this.m01 = matrix.m01;
+			this.m02 = matrix.m02;
+			this.m10 = matrix.m10;
+			this.m11 = matrix.m11;
+			this.m12 = matrix.m12;
+			this.m20 = matrix.m20;
+			this.m21 = matrix.m21;
+			this.m22 = matrix.m22;
+		}
+
+		/// <summary>
+		/// Obtains the transpose matrix.
+		/// </summary>
+		/// <returns>Transpose matrix.</returns>
+		public Matrix3 Transpose()
+		{
+			return new Matrix3(this.m00, this.m10, this.m20,
+							this.m01, this.m11, this.m21,
+							this.m02, this.m12, this.m22);
+		}
+
+		/// <summary>
+		/// Gets the rotation matrix from the normal vector (extrusion direction) of an entity.
+		/// </summary>
+		/// <param name="zAxis">Normal vector.</param>
+		/// <returns>Rotation matrix.</returns>
+		public static Matrix3 ArbitraryAxis(XYZ zAxis)
+		{
+			zAxis.Normalize();
+
+			if (zAxis.Equals(XYZ.AxisZ))
+			{
+				return Matrix3.Identity;
+			}
+
+			XYZ wY = XYZ.AxisY;
+			XYZ wZ = XYZ.AxisZ;
+			XYZ aX;
+
+			if ((Math.Abs(zAxis.X) < 1 / 64.0) && (Math.Abs(zAxis.Y) < 1 / 64.0))
+			{
+				aX = XYZ.Cross(wY, zAxis);
+			}
+			else
+			{
+				aX = XYZ.Cross(wZ, zAxis);
+			}
+
+			aX.Normalize();
+
+			XYZ aY = XYZ.Cross(zAxis, aX);
+			aY.Normalize();
+
+			return new Matrix3(aX.X, aY.X, zAxis.X, aX.Y, aY.Y, zAxis.Y, aX.Z, aY.Z, zAxis.Z);
+		}
+
+		/// <inheritdoc/>
+		public override string ToString()
+		{
+			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
+			StringBuilder s = new StringBuilder();
+			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.m00, this.m01, this.m02, separator));
+			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.m10, this.m11, this.m12, separator));
+			s.Append(string.Format("|{0}{2} {0}{2} {1}|", this.m20, this.m21, this.m22, separator));
+			return s.ToString();
 		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading;
 
 namespace CSMath
 {
@@ -469,6 +471,18 @@ namespace CSMath
 				m10 == other.m10 && m12 == other.m12 && m13 == other.m13 &&
 				m20 == other.m20 && m21 == other.m21 && m23 == other.m23 &&
 				m30 == other.m30 && m31 == other.m31 && m32 == other.m32;
+		}
+
+		/// <inheritdoc/>
+		public override string ToString()
+		{
+			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
+			StringBuilder s = new StringBuilder();
+			s.Append(string.Format("|{0}{4} {1}{4} {2}{4} {3}|" + Environment.NewLine, this.m00, this.m01, this.m02, this.m03, separator));
+			s.Append(string.Format("|{0}{4} {1}{4} {2}{4} {3}|" + Environment.NewLine, this.m10, this.m11, this.m12, this.m13, separator));
+			s.Append(string.Format("|{0}{4} {1}{4} {2}{4} {3}|" + Environment.NewLine, this.m20, this.m21, this.m22, this.m23, separator));
+			s.Append(string.Format("|{0}{4} {1}{4} {2}{4} {3}|", this.m30, this.m31, this.m32, this.m33, separator));
+			return s.ToString();
 		}
 
 		/// <summary>

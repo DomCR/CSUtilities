@@ -52,7 +52,7 @@ namespace CSMath
 		public static XYZ operator *(Matrix4 matrix, XYZ value)
 		{
 			XYZM xyzm = new XYZM(value.X, value.Y, value.Z, 1);
-			var rows = matrix.GetRows();
+			List<XYZM> rows = matrix.GetRows();
 
 			XYZ result = new XYZ
 			{
