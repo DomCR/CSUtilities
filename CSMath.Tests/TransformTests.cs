@@ -83,7 +83,7 @@ namespace CSMath.Tests
 
 			XYZ translation = XYZ.Zero;
 			XYZ scale = new XYZ(1, 1, 1);
-			XYZ rotation = new XYZ(0, 0, 90);
+			XYZ rotation = new XYZ(0, 0, MathHelper.DegToRad(90));
 
 			XYZ expected = new XYZ(0, 1, 0);
 
