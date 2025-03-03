@@ -1,3 +1,5 @@
+using System;
+
 namespace CSMath.Geometry
 {
 	public struct Line2D : ILine<XY>, IEquatable<Line2D>
