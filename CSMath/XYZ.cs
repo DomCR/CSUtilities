@@ -86,12 +86,6 @@ namespace CSMath
 		public XYZ(double[] components) : this(components[0], components[1], components[2]) { }
 
 		[Obsolete("Deprecated")]
-		public static XYZ CreateFrom(double[] arr)
-		{
-			return CreateFrom(arr, 0);
-		}
-
-		[Obsolete("Deprecated")]
 		public static XYZ CreateFrom(double[] arr, int offset)
 		{
 			double[] values = new double[3];

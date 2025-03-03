@@ -372,7 +372,7 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Round the zeros within the threshold defined by <see cref="MathUtils.Epsilon"/>.
+		/// Round the zeros within the threshold defined by <see cref="MathHelper.Epsilon"/>.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="vector"></param>

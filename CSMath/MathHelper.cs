@@ -72,6 +72,51 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Normalizes the value of an angle in degrees between 0-360.
+		/// </summary>
+		/// <param name="angle">Angle in degrees.</param>
+		/// <returns>The equivalent angle in the range 0-360.</returns>
+		/// <remarks>Negative angles will be converted to its positive equivalent.</remarks>
+		public static double NormalizeAngle(double angle)
+		{
+			double normalized = angle % 360.0;
+			if (IsZero(normalized) || IsEqual(Math.Abs(normalized), 360.0))
+			{
+				return 0.0;
+			}
+
+			if (normalized < 0)
+			{
+				return 360.0 + normalized;
+			}
+
+			return normalized;
+		}
+
+		/// <summary>
+		/// Checks if a number is equal to another.
+		/// </summary>
+		/// <param name="a">Double precision number.</param>
+		/// <param name="b">Double precision number.</param>
+		/// <returns>True if its close to one or false in any other case.</returns>
+		public static bool IsEqual(double a, double b)
+		{
+			return IsEqual(a, b, Epsilon);
+		}
+
+		/// <summary>
+		/// Checks if a number is equal to another.
+		/// </summary>
+		/// <param name="a">Double precision number.</param>
+		/// <param name="b">Double precision number.</param>
+		/// <param name="threshold">Tolerance.</param>
+		/// <returns>True if its close to one or false in any other case.</returns>
+		public static bool IsEqual(double a, double b, double threshold)
+		{
+			return IsZero(a - b, threshold);
+		}
+
+		/// <summary>
 		/// Convert a value from radian to degree
 		/// </summary>
 		/// <param name="value">Value in radians</param>
@@ -80,15 +125,7 @@ namespace CSMath
 		public static double RadToDeg(double value, bool absolute = true)
 		{
 			var result = value * RadToDegFactor;
-
-			result %= 360;
-
-			if (result < 0)
-			{
-				result = 360 + result;
-			}
-
-			return result;
+			return NormalizeAngle(result);
 		}
 
 		/// <summary>

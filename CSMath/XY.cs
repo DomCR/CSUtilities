@@ -80,6 +80,17 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Computes the cross product of two coordinates.
+		/// </summary>
+		/// <param name="xy1">The first coordinate.</param>
+		/// <param name="xy2">The second coordinate.</param>
+		/// <returns>The cross product.</returns>
+		public static double Cross(XY xy1, XY xy2)
+		{
+			return xy1.X * xy2.Y - xy1.Y * xy2.X;
+		}
+
+		/// <summary>
 		/// Rotates a vector.
 		/// </summary>
 		/// <param name="value"></param>
