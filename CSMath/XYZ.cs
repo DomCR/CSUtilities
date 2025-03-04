@@ -4,6 +4,7 @@ namespace CSMath
 {
 	public partial struct XYZ : IVector, IEquatable<XYZ>
 	{
+		public readonly static XYZ NaN = new XYZ(double.NaN);
 		public readonly static XYZ Zero = new XYZ(0, 0, 0);
 		public readonly static XYZ AxisX = new XYZ(1, 0, 0);
 		public readonly static XYZ AxisY = new XYZ(0, 1, 0);

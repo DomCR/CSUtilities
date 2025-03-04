@@ -21,6 +21,8 @@ namespace CSMath
 
 		public const double TwoPI = Math.PI * 2;
 
+		public const double HalfPI = Math.PI / 2;
+
 		/// <summary>
 		/// Checks if a number is close to zero.
 		/// </summary>

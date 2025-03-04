@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Globalization;
 
 namespace CSMath
 {
 	public partial struct XY : IVector, IEquatable<XY>
 	{
+		public readonly static XY NaN = new XY(double.NaN);
 		public readonly static XY Zero = new XY(0, 0);
 		public readonly static XY AxisX = new XY(1, 0);
 		public readonly static XY AxisY = new XY(0, 1);
