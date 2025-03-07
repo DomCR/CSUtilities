@@ -8,15 +8,32 @@ namespace CSMath
 	public class Transform
 	{
 		/// <summary>
-		/// Translation applied in the transformation.
+		/// Rotation in Euler angles, the value is in radians.
 		/// </summary>
-		public XYZ Translation
+		public XYZ EulerRotation
 		{
-			get { return this._translation; }
+			get { return this._rotation; }
 			set
 			{
-				this._translation = value;
+				this._rotation = value;
 				this.updateMatrix();
+			}
+		}
+
+		/// <summary>
+		/// Transform matrix.
+		/// </summary>
+		public Matrix4 Matrix
+		{ get { return this._matrix; } }
+
+		/// <summary>
+		/// Rotation represented in quaternion form.
+		/// </summary>
+		public Quaternion Quaternion
+		{
+			get
+			{
+				return Quaternion.CreateFromYawPitchRoll(this._rotation);
 			}
 		}
 
@@ -42,12 +59,12 @@ namespace CSMath
 		/// <summary>
 		/// Rotation in Euler angles, the value is in radians.
 		/// </summary>
-		public XYZ EulerRotation
+		public XYZ Translation
 		{
-			get { return this._rotation; }
+			get { return this._translation; }
 			set
 			{
-				this._rotation = value;
+				this._translation = value;
 				this.updateMatrix();
 			}
 		}
@@ -63,16 +80,11 @@ namespace CSMath
 			}
 		}
 
-		/// <summary>
-		/// Transform matrix.
-		/// </summary>
-		public Matrix4 Matrix { get { return this._matrix; } }
-
-		private XYZ _translation = XYZ.Zero;
-		private XYZ _scale = new XYZ(1, 1, 1);
 		private XYZ _rotation = XYZ.Zero;
 
-		private Matrix4 _matrix;
+		private XYZ _scale = new XYZ(1, 1, 1);
+
+		private XYZ _translation = XYZ.Zero;
 
 		/// <summary>
 		/// Default constructor.
