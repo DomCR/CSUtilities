@@ -8,15 +8,31 @@ namespace CSMath
 	public class Transform
 	{
 		/// <summary>
-		/// Translation applied in the transformation.
+		/// Rotation in Euler angles, the value is in radians.
 		/// </summary>
-		public XYZ Translation
+		public XYZ EulerRotation
 		{
-			get { return this._translation; }
+			get { return this._rotation; }
 			set
 			{
-				this._translation = value;
+				this._rotation = value;
 				this.updateMatrix();
+			}
+		}
+
+		/// <summary>
+		/// Transform matrix.
+		/// </summary>
+		public Matrix4 Matrix { get { return this._matrix; } }
+
+		/// <summary>
+		/// Rotation represented in quaternion form.
+		/// </summary>
+		public Quaternion Quaternion
+		{
+			get
+			{
+				return Quaternion.CreateFromYawPitchRoll(this._rotation);
 			}
 		}
 
@@ -40,43 +56,25 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Rotation in Euler angles, the value is in degrees.
+		/// Rotation in Euler angles, the value is in radians.
 		/// </summary>
-		public XYZ EulerRotation
+		public XYZ Translation
 		{
-			get { return this._rotation; }
+			get { return this._translation; }
 			set
 			{
-				this._rotation = value;
+				this._translation = value;
 				this.updateMatrix();
 			}
 		}
 
-		/// <summary>
-		/// Rotation represented in quaternion form.
-		/// </summary>
-		public Quaternion Quaternion
-		{
-			get
-			{
-				XYZ rot = new XYZ();
-				rot[0] = MathHelper.DegToRad(this._rotation.X);
-				rot[1] = MathHelper.DegToRad(this._rotation.Y);
-				rot[2] = MathHelper.DegToRad(this._rotation.Z);
-				return Quaternion.CreateFromYawPitchRoll(rot);
-			}
-		}
+		private Matrix4 _matrix;
 
-		/// <summary>
-		/// Transform matrix.
-		/// </summary>
-		public Matrix4 Matrix { get { return this._matrix; } }
-
-		private XYZ _translation = XYZ.Zero;
-		private XYZ _scale = new XYZ(1, 1, 1);
 		private XYZ _rotation = XYZ.Zero;
 
-		private Matrix4 _matrix;
+		private XYZ _scale = new XYZ(1, 1, 1);
+
+		private XYZ _translation = XYZ.Zero;
 
 		/// <summary>
 		/// Default constructor.
@@ -108,12 +106,42 @@ namespace CSMath
 		public Transform(Matrix4 matrix)
 		{
 			this._matrix = matrix;
+			this.TryDecompose(out XYZ translation, out XYZ scaling, out Quaternion rotation);
+			this._translation = translation;
+			this._scale = scaling;
+			this._rotation = rotation.ToEulerAngles();
+		}
+
+		public static Transform CreateTranslation(XYZ translation)
+		{
+			return new Transform(translation, new XYZ(1, 1, 1), XYZ.Zero);
+		}
+
+		public static Transform CreateRotation(XYZ angles)
+		{
+			return new Transform(Matrix4.CreateRotationMatrix(angles));
+		}
+
+		public static Transform CreateRotation(XYZ axis, double angle)
+		{
+			return new Transform(Matrix4.CreateFromAxisAngle(axis, angle));
+		}
+
+		public static Transform CreateScaling(XYZ scale)
+		{
+			return new Transform(Matrix4.CreateScale(scale));
+		}
+
+		public static Transform CreateScaling(XYZ scale, XYZ origin)
+		{
+			return new Transform(Matrix4.CreateScale(scale, origin));
 		}
 
 		/// <summary>
 		/// Apply transform to a <see cref="XYZ"/>.
 		/// </summary>
 		/// <param name="xyz"></param>
+		/// <param name="roundZero"></param>
 		/// <returns></returns>
 		public XYZ ApplyTransform(XYZ xyz, bool roundZero = true)
 		{
@@ -125,6 +153,17 @@ namespace CSMath
 			}
 
 			return value;
+		}
+
+		public XYZ Translate(XYZ xyz)
+		{
+			return xyz + this.Translation;
+		}
+
+		public XYZ Rotate(XYZ xyz)
+		{
+			var rotation = CreateRotation(this._rotation);
+			return rotation.ApplyTransform(xyz);
 		}
 
 		/// <summary>

@@ -5,7 +5,7 @@ namespace CSMath
 	/// <summary>
 	/// Four dimensional vector which is used to efficiently rotate an object about the (x,y,z) vector by the angle theta, where w = cos(theta/2).
 	/// </summary>
-	public struct Quaternion : IEquatable<Quaternion>
+	public struct Quaternion : IVector, IEquatable<Quaternion>
 	{
 		/// <summary>
 		/// Specifies the X-value of the vector component of the Quaternion.
@@ -26,6 +26,49 @@ namespace CSMath
 		/// Specifies the rotation component of the Quaternion.
 		/// </summary>
 		public double W { get; set; }
+		/// <inheritdoc/>
+		public uint Dimension { get { return 4; } }
+
+		/// <inheritdoc/>
+		public double this[int index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return X;
+					case 1:
+						return Y;
+					case 2:
+						return Z;
+					case 3:
+						return W;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					case 3:
+						W = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+		}
 
 		/// <summary>
 		/// Returns a Quaternion representing no rotation. 
@@ -71,6 +114,39 @@ namespace CSMath
 		public static Quaternion CreateFromYawPitchRoll(XYZ xyz)
 		{
 			return CreateFromYawPitchRoll(xyz.X, xyz.Y, xyz.Z);
+		}
+
+		/// <summary>
+		/// Get the Euler angles, in radians, for this quaternion.
+		/// </summary>
+		/// <returns></returns>
+		public XYZ ToEulerAngles()
+		{
+			Quaternion q = this.Normalize();
+			XYZ angles = new();
+
+			// roll / x
+			double sinr_cosp = 2 * (q.W * q.X + q.Y * q.Z);
+			double cosr_cosp = 1 - 2 * (q.X * q.X + q.Y * q.Y);
+			angles.X = (double)Math.Atan2(sinr_cosp, cosr_cosp);
+
+			// pitch / y
+			double sinp = 2 * (q.W * q.Y - q.Z * q.X);
+			if (Math.Abs(sinp) >= 1)
+			{
+				angles.Y = Math.PI / 2 * Math.Sign(sinp);
+			}
+			else
+			{
+				angles.Y = (double)Math.Asin(sinp);
+			}
+
+			// yaw / z
+			double siny_cosp = 2 * (q.W * q.Z + q.X * q.Y);
+			double cosy_cosp = 1 - 2 * (q.Y * q.Y + q.Z * q.Z);
+			angles.Z = (double)Math.Atan2(siny_cosp, cosy_cosp);
+
+			return angles;
 		}
 
 		/// <summary>
@@ -123,7 +199,7 @@ namespace CSMath
 
 			if (trace > 0.0f)
 			{
-				float s = (float)Math.Sqrt(trace + 1.0f);
+				double s = (double)Math.Sqrt(trace + 1.0f);
 				q.W = s * 0.5f;
 				s = 0.5f / s;
 				q.X = (matrix.m12 - matrix.m21) * s;
@@ -134,8 +210,8 @@ namespace CSMath
 			{
 				if (matrix.m00 >= matrix.m11 && matrix.m00 >= matrix.m22)
 				{
-					float s = (float)Math.Sqrt(1.0f + matrix.m00 - matrix.m11 - matrix.m22);
-					float invS = 0.5f / s;
+					double s = (double)Math.Sqrt(1.0f + matrix.m00 - matrix.m11 - matrix.m22);
+					double invS = 0.5f / s;
 					q.X = 0.5f * s;
 					q.Y = (matrix.m01 + matrix.m10) * invS;
 					q.Z = (matrix.m02 + matrix.m20) * invS;
@@ -143,8 +219,8 @@ namespace CSMath
 				}
 				else if (matrix.m11 > matrix.m22)
 				{
-					float s = (float)Math.Sqrt(1.0f + matrix.m11 - matrix.m00 - matrix.m22);
-					float invS = 0.5f / s;
+					double s = (double)Math.Sqrt(1.0f + matrix.m11 - matrix.m00 - matrix.m22);
+					double invS = 0.5f / s;
 					q.X = (matrix.m10 + matrix.m01) * invS;
 					q.Y = 0.5f * s;
 					q.Z = (matrix.m21 + matrix.m12) * invS;
@@ -152,8 +228,8 @@ namespace CSMath
 				}
 				else
 				{
-					float s = (float)Math.Sqrt(1.0f + matrix.m22 - matrix.m00 - matrix.m11);
-					float invS = 0.5f / s;
+					double s = (double)Math.Sqrt(1.0f + matrix.m22 - matrix.m00 - matrix.m11);
+					double invS = 0.5f / s;
 					q.X = (matrix.m20 + matrix.m02) * invS;
 					q.Y = (matrix.m21 + matrix.m12) * invS;
 					q.Z = 0.5f * s;

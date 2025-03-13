@@ -4,6 +4,7 @@ namespace CSMath
 {
 	public partial struct XYZ : IVector, IEquatable<XYZ>
 	{
+		public readonly static XYZ NaN = new XYZ(double.NaN);
 		public readonly static XYZ Zero = new XYZ(0, 0, 0);
 		public readonly static XYZ AxisX = new XYZ(1, 0, 0);
 		public readonly static XYZ AxisY = new XYZ(0, 1, 0);
@@ -84,12 +85,6 @@ namespace CSMath
 
 		[Obsolete("Deprecated")]
 		public XYZ(double[] components) : this(components[0], components[1], components[2]) { }
-
-		[Obsolete("Deprecated")]
-		public static XYZ CreateFrom(double[] arr)
-		{
-			return CreateFrom(arr, 0);
-		}
 
 		[Obsolete("Deprecated")]
 		public static XYZ CreateFrom(double[] arr, int offset)
