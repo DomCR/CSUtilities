@@ -23,8 +23,7 @@ namespace CSMath
 		/// <summary>
 		/// Transform matrix.
 		/// </summary>
-		public Matrix4 Matrix
-		{ get { return this._matrix; } }
+		public Matrix4 Matrix { get { return this._matrix; } }
 
 		/// <summary>
 		/// Rotation represented in quaternion form.
@@ -69,16 +68,7 @@ namespace CSMath
 			}
 		}
 
-		/// <summary>
-		/// Rotation represented in quaternion form.
-		/// </summary>
-		public Quaternion Quaternion
-		{
-			get
-			{
-				return Quaternion.CreateFromYawPitchRoll(this._rotation);
-			}
-		}
+		private Matrix4 _matrix;
 
 		private XYZ _rotation = XYZ.Zero;
 
@@ -163,6 +153,11 @@ namespace CSMath
 			}
 
 			return value;
+		}
+
+		public XYZ Translate(XYZ xyz)
+		{
+			return xyz + this.Translation;
 		}
 
 		public XYZ Rotate(XYZ xyz)
