@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CSMath
 {
@@ -59,6 +60,21 @@ namespace CSMath
 		private BoundingBox(BoundingBoxExtent extent)
 		{
 			this.Extent = extent;
+			switch (extent)
+			{
+				case BoundingBoxExtent.Null:
+					this.Max = new XYZ(double.NaN);
+					this.Min = new XYZ(double.NaN);
+					break;
+				case BoundingBoxExtent.Infinite:
+					this.Min = new XYZ(double.NegativeInfinity);
+					this.Max = new XYZ(double.PositiveInfinity);
+					break;
+				case BoundingBoxExtent.Finite:
+				case BoundingBoxExtent.Point:
+				default:
+					break;
+			}
 		}
 
 		public BoundingBox(XYZ point)
@@ -119,6 +135,20 @@ namespace CSMath
 		/// <returns>The merged box.</returns>
 		public BoundingBox Merge(BoundingBox box)
 		{
+			if (this.Extent == BoundingBoxExtent.Infinite
+				|| box.Extent == BoundingBoxExtent.Infinite)
+			{
+				return BoundingBox.Infinite;
+			}
+			else if (this.Extent == BoundingBoxExtent.Null)
+			{
+				return box;
+			}
+			else if (box.Extent == BoundingBoxExtent.Null)
+			{
+				return this;
+			}
+
 			var min = new XYZ(
 				System.Math.Min(this.Min.X, box.Min.X),
 				System.Math.Min(this.Min.Y, box.Min.Y),
