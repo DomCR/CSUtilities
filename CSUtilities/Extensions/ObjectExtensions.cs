@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace CSUtilities.Extensions
@@ -54,10 +55,31 @@ namespace CSUtilities.Extensions
 			}
 		}
 
+		public static void GreaterThan<T>(this T value, T min, bool inclusive = true, [CallerMemberName] string name = null)
+			where T : struct, IComparable<T>
+		{
+			var down = value.CompareTo(min);
+
+			if (down <= -1 || (!inclusive && down == 0))
+			{
+				throw new ArgumentOutOfRangeException(name, value, $"{name} valid values are from {min}.");
+			}
+		}
+
+		public static void InRange<T>(this T value, T min, T max, bool inclusive = true, [CallerMemberName] string name = null)
+			where T : struct, IComparable<T>
+		{
+			InRange(value, min, max, $"{name} valid values are from {min} to {max}.", inclusive, name);
+		}
+
 		public static void InRange<T>(this T value, T min, T max, string message, bool inclusive = true, [CallerMemberName] string name = null)
 			where T : struct, IComparable<T>
 		{
-			if (value.CompareTo(max) >= 1 && value.CompareTo(min) <= -1)
+			var up = value.CompareTo(max);
+			var down = value.CompareTo(min);
+			bool error = !inclusive && (up == 0 || down == 0);
+
+			if (up >= 1 || down <= -1 || error)
 			{
 				throw new ArgumentOutOfRangeException(name, value, message);
 			}

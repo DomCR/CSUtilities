@@ -29,18 +29,4 @@ namespace CSUtilities.Tests.Extensions
 			Assert.Throws<ArgumentException>(() => value.TrowIfNullOrEmpty("Message in case of null or empty"));
 		}
 	}
-
-	public class ObjectExtensionsTests
-	{
-		[Fact]
-		public void ThrowIfTest()
-		{
-			int zero = 0;
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => zero.ThrowIf<int, ArgumentOutOfRangeException>((value) =>
-				{
-					return value == 0;
-				}));
-		}
-	}
 }
