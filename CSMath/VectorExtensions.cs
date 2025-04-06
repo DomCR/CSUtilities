@@ -35,6 +35,25 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Returns a value indicating if any component of the specified vector evaluates to a value that is not a number <see cref="double.NaN"/>.
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns>Returns true if any component of the specified vector evaluates to <see cref="double.NaN"/>; otherwise, false.</returns>
+		public static bool IsNaN<T>(this T v)
+			where T : IVector
+		{
+			for (int i = 0; i < v.Dimension; i++)
+			{
+				if (double.IsNaN(v[i]))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
 		/// Distance between two <see cref="IVector"/>.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -372,7 +391,7 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Round the zeros within the threshold defined by <see cref="MathUtils.Epsilon"/>.
+		/// Round the zeros within the threshold defined by <see cref="MathHelper.Epsilon"/>.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="vector"></param>

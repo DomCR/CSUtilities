@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Globalization;
 
 namespace CSMath
 {
 	public partial struct XY : IVector, IEquatable<XY>
 	{
+		public readonly static XY NaN = new XY(double.NaN);
 		public readonly static XY Zero = new XY(0, 0);
 		public readonly static XY AxisX = new XY(1, 0);
 		public readonly static XY AxisY = new XY(0, 1);
@@ -77,6 +77,30 @@ namespace CSMath
 		public double GetAngle()
 		{
 			return Math.Atan2(Y, X);
+		}
+
+		/// <summary>
+		/// Computes the cross product of two coordinates.
+		/// </summary>
+		/// <param name="xy1">The first coordinate.</param>
+		/// <param name="xy2">The second coordinate.</param>
+		/// <returns>The cross product.</returns>
+		public static double Cross(XY xy1, XY xy2)
+		{
+			return xy1.X * xy2.Y - xy1.Y * xy2.X;
+		}
+
+		/// <summary>
+		/// Rotates a vector.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="angle">Rotation angles in radians.</param>
+		/// <returns>The rotated vector.</returns>
+		public static XY Rotate(XY value, double angle)
+		{
+			double sin = Math.Sin(angle);
+			double cos = Math.Cos(angle);
+			return new XY(value.X * cos - value.Y * sin, value.X * sin + value.Y * cos);
 		}
 
 		/// <summary>
