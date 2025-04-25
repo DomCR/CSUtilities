@@ -395,15 +395,16 @@ namespace CSMath
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="vector"></param>
+		/// <param name="threshold"></param>
 		/// <returns></returns>
-		public static T RoundZero<T>(this T vector)
+		public static T RoundZero<T>(this T vector, double threshold = MathHelper.Epsilon)
 			where T : IVector, new()
 		{
 			T result = new T();
 
 			for (int i = 0; i < result.Dimension; i++)
 			{
-				result[i] = MathHelper.IsZero(vector[i]) ? 0 : vector[i];
+				result[i] = MathHelper.IsZero(vector[i], threshold) ? 0 : vector[i];
 			}
 
 			return result;

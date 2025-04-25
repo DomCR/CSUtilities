@@ -12,6 +12,18 @@ namespace CSMath.Geometry
 			return radius * (Math.Cos(angle) * startPoint + (double)ratio * Math.Sin(angle) * prep) + center;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="precision"></param>
+		/// <param name="center"></param>
+		/// <param name="startAngle"></param>
+		/// <param name="endAngle"></param>
+		/// <param name="normal"></param>
+		/// <param name="startPoint">Start point of the curve relative to center.</param>
+		/// <param name="ratio"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		public static List<XYZ> PolygonalVertexes(int precision, XYZ center, double startAngle, double endAngle, XYZ normal, XYZ startPoint, double ratio = 1)
 		{
 			if (precision < 2)
@@ -37,7 +49,7 @@ namespace CSMath.Geometry
 
 			for (int i = 0; i < precision; i++, start += delta)
 			{
-				points.Add(portion * Math.Cos(start) * startPoint + radius * Math.Sin(start) * prep + center);
+				points.Add(portion * MathHelper.Cos(start) * startPoint + radius * MathHelper.Sin(start) * prep + center);
 			}
 
 			return points;
