@@ -5,11 +5,6 @@ namespace CSMath
 	public static class MathHelper
 	{
 		/// <summary>
-		/// Factor for converting radians to degrees.
-		/// </summary>
-		public const double RadToDegFactor = (180 / Math.PI);
-
-		/// <summary>
 		/// Factor for converting degrees to radians.
 		/// </summary>
 		public const double DegToRadFactor = (Math.PI / 180);
@@ -19,29 +14,34 @@ namespace CSMath
 		/// </summary>
 		public const double Epsilon = 1e-12;
 
-		public const double TwoPI = Math.PI * 2;
-
 		public const double HalfPI = Math.PI / 2;
 
 		/// <summary>
-		/// Checks if a number is close to zero.
+		/// Factor for converting radians to degrees.
 		/// </summary>
-		/// <param name="number">Double precision number.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
-		public static bool IsZero(double number)
+		public const double RadToDegFactor = (180 / Math.PI);
+
+		public const double TwoPI = Math.PI * 2;
+
+		/// <summary>
+		/// Returns the cosine of specific angle in radians adjusting the value to 0 using <see cref="Epsilon"/> as tolerance.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static double Cos(double value)
 		{
-			return IsZero(number, Epsilon);
+			double result = Math.Cos(value);
+			return IsZero(result) ? 0 : result;
 		}
 
 		/// <summary>
-		/// Checks if a number is close to zero.
+		/// Convert a value from degree to radian
 		/// </summary>
-		/// <param name="number">Double precision number.</param>
-		/// <param name="threshold">Tolerance.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
-		public static bool IsZero(double number, double threshold)
+		/// <param name="value">Value in degrees</param>
+		/// <returns>The radian value</returns>
+		public static double DegToRad(double value)
 		{
-			return number >= -threshold && number <= threshold;
+			return value * DegToRadFactor;
 		}
 
 		public static double FixZero(double number)
@@ -55,13 +55,13 @@ namespace CSMath
 		}
 
 		public static T FixZero<T>(T vector)
-			where T : IVector, new()
+					where T : IVector, new()
 		{
 			return FixZero(vector, Epsilon);
 		}
 
 		public static T FixZero<T>(T vector, double threshold)
-			where T : IVector, new()
+					where T : IVector, new()
 		{
 			T result = new T();
 
@@ -71,28 +71,6 @@ namespace CSMath
 			}
 
 			return result;
-		}
-
-		/// <summary>
-		/// Normalizes the value of an angle in degrees between 0-360.
-		/// </summary>
-		/// <param name="angle">Angle in degrees.</param>
-		/// <returns>The equivalent angle in the range 0-360.</returns>
-		/// <remarks>Negative angles will be converted to its positive equivalent.</remarks>
-		public static double NormalizeAngle(double angle)
-		{
-			double normalized = angle % 360.0;
-			if (IsZero(normalized) || IsEqual(Math.Abs(normalized), 360.0))
-			{
-				return 0.0;
-			}
-
-			if (normalized < 0)
-			{
-				return 360.0 + normalized;
-			}
-
-			return normalized;
 		}
 
 		/// <summary>
@@ -119,6 +97,49 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Checks if a number is close to zero.
+		/// </summary>
+		/// <param name="number">Double precision number.</param>
+		/// <returns>True if its close to one or false in any other case.</returns>
+		public static bool IsZero(double number)
+		{
+			return IsZero(number, Epsilon);
+		}
+
+		/// <summary>
+		/// Checks if a number is close to zero.
+		/// </summary>
+		/// <param name="number">Double precision number.</param>
+		/// <param name="threshold">Tolerance.</param>
+		/// <returns>True if its close to one or false in any other case.</returns>
+		public static bool IsZero(double number, double threshold)
+		{
+			return number >= -threshold && number <= threshold;
+		}
+
+		/// <summary>
+		/// Normalizes the value of an angle in degrees between 0-360.
+		/// </summary>
+		/// <param name="angle">Angle in degrees.</param>
+		/// <returns>The equivalent angle in the range 0-360.</returns>
+		/// <remarks>Negative angles will be converted to its positive equivalent.</remarks>
+		public static double NormalizeAngle(double angle)
+		{
+			double normalized = angle % 360.0;
+			if (IsZero(normalized) || IsEqual(Math.Abs(normalized), 360.0))
+			{
+				return 0.0;
+			}
+
+			if (normalized < 0)
+			{
+				return 360.0 + normalized;
+			}
+
+			return normalized;
+		}
+
+		/// <summary>
 		/// Convert a value from radian to degree
 		/// </summary>
 		/// <param name="value">Value in radians</param>
@@ -131,13 +152,15 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Convert a value from degree to radian
+		/// Round off a numeric value to the nearest of another value.
 		/// </summary>
-		/// <param name="value">Value in degrees</param>
-		/// <returns>The radian value</returns>
-		public static double DegToRad(double value)
+		/// <param name="number">Number to round off.</param>
+		/// <param name="roundTo">The number will be rounded to the nearest of this value.</param>
+		/// <returns>The number rounded to the nearest value.</returns>
+		public static double RoundToNearest(double number, double roundTo)
 		{
-			return value * DegToRadFactor;
+			double multiplier = Math.Round(number / roundTo, 0);
+			return multiplier * roundTo;
 		}
 
 		/// <summary>
@@ -148,17 +171,6 @@ namespace CSMath
 		public static double Sin(double value)
 		{
 			double result = Math.Sin(value);
-			return IsZero(result) ? 0 : result;
-		}
-
-		/// <summary>
-		/// Returns the cosine of specific angle in radians adjusting the value to 0 using <see cref="Epsilon"/> as tolerance.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static double Cos(double value)
-		{
-			double result = Math.Cos(value);
 			return IsZero(result) ? 0 : result;
 		}
 	}
