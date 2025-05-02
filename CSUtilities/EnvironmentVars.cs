@@ -3,8 +3,18 @@ using System.ComponentModel;
 
 namespace CSUtilities
 {
-	internal static class EnvironmentVars
+#if PUBLIC
+	public
+#else
+	internal
+#endif
+		static class EnvironmentVars
 	{
+		public static void Set(string name, string value, EnvironmentVariableTarget target)
+		{
+			Environment.SetEnvironmentVariable(name, value, target);
+		}
+
 		public static void Set(string name, string value)
 		{
 			Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Process);
@@ -38,7 +48,12 @@ namespace CSUtilities
 
 		public static T Get<T>(string name)
 		{
-			string value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
+			return Get<T>(name, EnvironmentVariableTarget.Process);
+		}
+
+		public static T Get<T>(string name, EnvironmentVariableTarget target)
+		{
+			string value = Environment.GetEnvironmentVariable(name, target);
 			if (value == null)
 			{
 				return default;
