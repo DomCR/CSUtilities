@@ -30,14 +30,8 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
-		public void DistanceTest()
+		public virtual void ConvertTest()
 		{
-			var pt1 = Factory.CreatePoint<T>(0);
-			var pt2 = Factory.CreatePoint<T>(1);
-
-			double dist = pt1.DistanceFrom(pt2);
-
-			Assert.Equal(Math.Sqrt(pt1.Dimension), dist);
 		}
 
 		[Fact]
@@ -51,28 +45,15 @@ namespace CSMath.Tests
 			Assert.Equal(pt2, pt1);
 		}
 
-
 		[Fact]
-		public virtual void ConvertTest()
+		public void DistanceTest()
 		{
-		}
+			var pt1 = Factory.CreatePoint<T>(0);
+			var pt2 = Factory.CreatePoint<T>(1);
 
-		[Fact]
-		public void SubsctractTest()
-		{
-			var test = Factory.CreateOperationCase<T>((o, x) => o - x);
-			writeTest(test);
+			double dist = pt1.DistanceFrom(pt2);
 
-			Assert.Equal(test.Item3, test.Item1.Subtract(test.Item2));
-		}
-
-		[Fact]
-		public void MultiplyTest()
-		{
-			var test = Factory.CreateOperationCase<T>((o, x) => o * x);
-			writeTest(test);
-
-			Assert.Equal(test.Item3, test.Item1.Multiply(test.Item2));
+			Assert.Equal(Math.Sqrt(pt1.Dimension), dist);
 		}
 
 		[Fact]
@@ -85,15 +66,16 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
-		public void IsEqualTest()
+		public void GetAngleTest()
 		{
-			Random random = new Random();
-			double def = random.NextDouble();
+			var v = new T();
+			var u = new T();
 
-			var pt1 = Factory.CreatePoint<T>(def);
-			var pt2 = Factory.CreatePoint<T>(def);
+			v[0] = 1;
+			u[1] = 1;
 
-			Assert.True(pt1.IsEqual(pt2));
+			Assert.Equal(Math.PI / 2, v.AngleBetweenVectors(u));
+			Assert.True(v.IsPerpendicular(u));
 		}
 
 		[Fact]
@@ -109,11 +91,15 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
-		public void IsZeroTest()
+		public void IsEqualTest()
 		{
-			Assert.True(XY.Zero.IsZero());
-			Assert.True(XYZ.Zero.IsZero());
-			Assert.True(XYZM.Zero.IsZero());
+			Random random = new Random();
+			double def = random.NextDouble();
+
+			var pt1 = Factory.CreatePoint<T>(def);
+			var pt2 = Factory.CreatePoint<T>(def);
+
+			Assert.True(pt1.IsEqual(pt2));
 		}
 
 		[Fact]
@@ -131,6 +117,32 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
+		public void IsZeroTest()
+		{
+			Assert.True(XY.Zero.IsZero());
+			Assert.True(XYZ.Zero.IsZero());
+			Assert.True(XYZM.Zero.IsZero());
+		}
+
+		[Fact]
+		public void MultiplyTest()
+		{
+			var test = Factory.CreateOperationCase<T>((o, x) => o * x);
+			writeTest(test);
+
+			Assert.Equal(test.Item3, test.Item1.Multiply(test.Item2));
+		}
+
+		[Fact]
+		public void SubsctractTest()
+		{
+			var test = Factory.CreateOperationCase<T>((o, x) => o - x);
+			writeTest(test);
+
+			Assert.Equal(test.Item3, test.Item1.Subtract(test.Item2));
+		}
+
+		[Fact]
 		public void ToEnumerableTest()
 		{
 			T pt = Factory.CreatePoint<T>();
@@ -140,19 +152,6 @@ namespace CSMath.Tests
 			{
 				Assert.Equal(pt[i], arr[i]);
 			}
-		}
-
-		[Fact]
-		public void GetAngleTest()
-		{
-			var v = new T();
-			var u = new T();
-
-			v[0] = 1;
-			u[1] = 1;
-
-			Assert.Equal(Math.PI / 2, v.AngleBetweenVectors(u));
-			Assert.True(v.IsPerpendicular(u));
 		}
 
 		protected void writeTest((T, T, T) test)
