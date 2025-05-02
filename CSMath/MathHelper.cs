@@ -14,6 +14,9 @@ namespace CSMath
 		/// </summary>
 		public const double Epsilon = 1e-12;
 
+		/// <summary>
+		///  Equivalent to 90 degrees.
+		/// </summary>
 		public const double HalfPI = Math.PI / 2;
 
 		/// <summary>
@@ -21,6 +24,14 @@ namespace CSMath
 		/// </summary>
 		public const double RadToDegFactor = (180 / Math.PI);
 
+		/// <summary>
+		/// Equivalent to 270 degrees.
+		/// </summary>
+		public const double ThreeHalfPI = 3 * Math.PI * 0.5;
+
+		/// <summary>
+		/// Equivalent to 360 degrees.
+		/// </summary>
 		public const double TwoPI = Math.PI * 2;
 
 		/// <summary>
