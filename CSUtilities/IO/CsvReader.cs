@@ -1,4 +1,5 @@
-﻿using CSUtilities.Extensions;
+﻿#if false	//Useful?
+using CSUtilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -181,3 +182,4 @@ namespace CSUtilities.IO
 		}
 	}
 }
+#endif
