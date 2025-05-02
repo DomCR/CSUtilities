@@ -29,7 +29,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\CsvReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mutation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TaskManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AppDomainUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ByteExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />

@@ -6,7 +6,12 @@ using System.Text;
 
 namespace CSUtilities
 {
-	internal static class AppDomainUtils
+#if PUBLIC
+	public
+#else
+	internal
+#endif
+		static class AppDomainUtils
 	{
 		public static IEnumerable<Type> GetTypesOfInterface<T>()
 		{
