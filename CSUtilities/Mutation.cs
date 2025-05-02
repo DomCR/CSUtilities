@@ -1,4 +1,5 @@
-﻿#if !NET7_0_OR_GREATER
+﻿//Check if there is something useful in here
+#if !NET7_0_OR_GREATER && false
 using System;
 using System.Collections.Generic;
 using System.IO;
