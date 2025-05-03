@@ -96,6 +96,34 @@ namespace CSMath
 			return other.IsEqual(this, digits);
 		}
 
+		/// <summary>
+		/// Obtains the angle of a vector.
+		/// </summary>
+		/// <param name="u">A Vector2.</param>
+		/// <returns>Angle in radians.</returns>
+		public static double Angle(XY u)
+		{
+			double angle = Math.Atan2(u.Y, u.X);
+			if (angle < 0)
+			{
+				return MathHelper.TwoPI + angle;
+			}
+
+			return angle;
+		}
+
+		/// <summary>
+		/// Obtains the angle of a line defined by two points.
+		/// </summary>
+		/// <param name="u"></param>
+		/// <param name="v"></param>
+		/// <returns>Angle in radians.</returns>
+		public static double Angle(XY u, XY v)
+		{
+			XY dir = v - u;
+			return Angle(dir);
+		}
+
 		/// <inheritdoc/>
 		public bool Equals(XY other)
 		{
