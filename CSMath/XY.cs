@@ -18,8 +18,11 @@ namespace CSMath
 		public double Y { get; set; }
 
 		public static readonly XY AxisX = new XY(1, 0);
+
 		public static readonly XY AxisY = new XY(0, 1);
+
 		public static readonly XY NaN = new XY(double.NaN);
+
 		public static readonly XY Zero = new XY(0, 0);
 
 		/// <summary>
@@ -96,34 +99,6 @@ namespace CSMath
 			return other.IsEqual(this, digits);
 		}
 
-		/// <summary>
-		/// Obtains the angle of a vector.
-		/// </summary>
-		/// <param name="u">A Vector2.</param>
-		/// <returns>Angle in radians.</returns>
-		public static double Angle(XY u)
-		{
-			double angle = Math.Atan2(u.Y, u.X);
-			if (angle < 0)
-			{
-				return MathHelper.TwoPI + angle;
-			}
-
-			return angle;
-		}
-
-		/// <summary>
-		/// Obtains the angle of a line defined by two points.
-		/// </summary>
-		/// <param name="u"></param>
-		/// <param name="v"></param>
-		/// <returns>Angle in radians.</returns>
-		public static double Angle(XY u, XY v)
-		{
-			XY dir = v - u;
-			return Angle(dir);
-		}
-
 		/// <inheritdoc/>
 		public bool Equals(XY other)
 		{
@@ -131,12 +106,23 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Get the angle
+		/// Get the angle formed by the components of this vector.
 		/// </summary>
-		/// <returns>Angle in radians</returns>
+		/// <returns>Angle in radians.</returns>
 		public double GetAngle()
 		{
 			return Math.Atan2(Y, X);
+		}
+
+		/// <summary>
+		/// Obtains the angle of a line defined by two points.
+		/// </summary>
+		/// <param name="v">Point defining the line.</param>
+		/// <returns>Angle in radians.</returns>
+		public double GetAngle(XY v)
+		{
+			XY dir = v - this;
+			return dir.GetAngle();
 		}
 
 		/// <inheritdoc/>
