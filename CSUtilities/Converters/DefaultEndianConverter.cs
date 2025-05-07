@@ -19,6 +19,8 @@ namespace CSUtilities.Converters
 		{
 			switch (value)
 			{
+				case byte b:
+					return new byte[] { b };
 				case char c:
 					return this.GetBytes(c);
 				case short s:
