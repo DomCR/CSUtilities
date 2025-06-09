@@ -134,7 +134,7 @@ namespace CSMath.Tests
 		}
 
 		[Fact]
-		public void SubsctractTest()
+		public void SubtractTest()
 		{
 			var test = Factory.CreateOperationCase<T>((o, x) => o - x);
 			writeTest(test);
