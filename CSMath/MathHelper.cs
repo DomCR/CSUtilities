@@ -5,6 +5,11 @@ namespace CSMath
 	public static class MathHelper
 	{
 		/// <summary>
+		/// Factor for converting an angle between degrees and gradians.
+		/// </summary>
+		public const double DegToGradFactor = 10.0 / 9.0;
+
+		/// <summary>
 		/// Factor for converting degrees to radians.
 		/// </summary>
 		public const double DegToRadFactor = (Math.PI / 180);
@@ -15,7 +20,17 @@ namespace CSMath
 		public const double Epsilon = 1e-12;
 
 		/// <summary>
-		///  Equivalent to 90 degrees.
+		/// Factor for converting an angle between gradians and degrees.
+		/// </summary>
+		public const double GradToDegFactor = 9.0 / 10.0;
+
+		/// <summary>
+		/// Factor for converting an angle between gradians and radians.
+		/// </summary>
+		public const double GradToRadFactor = Math.PI / 200;
+
+		/// <summary>
+		/// Equivalent to 90 degrees.
 		/// </summary>
 		public const double HalfPI = Math.PI / 2;
 
@@ -23,6 +38,11 @@ namespace CSMath
 		/// Factor for converting radians to degrees.
 		/// </summary>
 		public const double RadToDegFactor = (180 / Math.PI);
+
+		/// <summary>
+		/// Factor for converting radians to gradians.
+		/// </summary>
+		public const double RadToGradFactor = 200 / Math.PI;
 
 		/// <summary>
 		/// Equivalent to 270 degrees.
@@ -46,6 +66,16 @@ namespace CSMath
 		}
 
 		/// <summary>
+		/// Convert a value from degrees to gradian.
+		/// </summary>
+		/// <param name="value">Value in degree.</param>
+		/// <returns>The gradian value.</returns>
+		public static double DegToGrad(double value)
+		{
+			return value * DegToGradFactor;
+		}
+
+		/// <summary>
 		/// Convert a value from degree to radian
 		/// </summary>
 		/// <param name="value">Value in degrees</param>
@@ -66,13 +96,13 @@ namespace CSMath
 		}
 
 		public static T FixZero<T>(T vector)
-					where T : IVector, new()
+							where T : IVector, new()
 		{
 			return FixZero(vector, Epsilon);
 		}
 
 		public static T FixZero<T>(T vector, double threshold)
-					where T : IVector, new()
+							where T : IVector, new()
 		{
 			T result = new T();
 
@@ -82,6 +112,26 @@ namespace CSMath
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Convert a value from gradian to degrees.
+		/// </summary>
+		/// <param name="value">Value in gradians.</param>
+		/// <returns>The gradian value.</returns>
+		public static double GradToDeg(double value)
+		{
+			return value * GradToDegFactor;
+		}
+
+		/// <summary>
+		/// Convert a value from gradian to radian.
+		/// </summary>
+		/// <param name="value">Value in gradians</param>
+		/// <returns>The gradian value.</returns>
+		public static double GradToRad(double value)
+		{
+			return value * GradToRadFactor;
 		}
 
 		/// <summary>
@@ -160,6 +210,16 @@ namespace CSMath
 		{
 			var result = value * RadToDegFactor;
 			return NormalizeAngle(result);
+		}
+
+		/// <summary>
+		/// Convert a value from radian to gradian.
+		/// </summary>
+		/// <param name="value">Value in radians.</param>
+		/// <returns>The radian value.</returns>
+		public static double RadToGrad(double value)
+		{
+			return value * RadToGradFactor;
 		}
 
 		/// <summary>
