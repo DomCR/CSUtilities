@@ -3,7 +3,7 @@
 namespace CSMath.Geometry
 {
 	// Eq: pt = origin + a * Direction
-	public struct Line3D : ILine<XYZ>
+	public struct Line3D : ILine<XYZ>, IEquatable<Line3D>
 	{
 		/// <inheritdoc/>
 		public XYZ Origin { get; set; }
@@ -12,7 +12,7 @@ namespace CSMath.Geometry
 		public XYZ Direction { get; set; }
 
 		/// <summary>
-		/// Initialize a new 
+		/// Initialize a new instance of the <see cref="Line3D" /> class.
 		/// </summary>
 		/// <param name="origin">Origin point on the line.</param>
 		/// <param name="direction">Line direction, must be a none zero vector.</param>
@@ -29,12 +29,13 @@ namespace CSMath.Geometry
 			this.Direction = direction.Normalize();
 		}
 
-		public XYZ FindIntersection(Line3D other)
+		/// <inheritdoc/>
+		public XYZ FindIntersection(ILine<XYZ> line)
 		{
 			var point0 = Origin;
 			var u = Direction;
-			var point1 = other.Origin;
-			var v = other.Direction;
+			var point1 = line.Origin;
+			var v = line.Direction;
 
 			var w0 = point0 - point1;
 			var a = u.Dot(u);
@@ -57,6 +58,12 @@ namespace CSMath.Geometry
 			{
 				return XYZ.NaN;
 			}
+		}
+
+		/// <inheritdoc/>
+		public bool Equals(Line3D other)
+		{
+			return this.IsPointOnLine(other.Origin) && other.Direction == this.Direction;
 		}
 	}
 }

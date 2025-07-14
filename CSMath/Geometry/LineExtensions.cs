@@ -6,9 +6,9 @@ namespace CSMath.Geometry
 	{
 		public static T CreateFromPoints<T, R>(R pt1, R pt2)
 			where T : ILine<R>
-			where R : IVector
+			where R : IVector, new()
 		{
-			throw new NotImplementedException();
+			return (T)Activator.CreateInstance(typeof(T), pt1, pt2.Subtract(pt1));
 		}
 
 		/// <summary>
@@ -33,6 +33,24 @@ namespace CSMath.Geometry
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// Tries to find the intersection between 2 lines.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="R"></typeparam>
+		/// <param name="line1"></param>
+		/// <param name="line2"></param>
+		/// <param name="intersection"></param>
+		/// <returns>True if the intersection is found.</returns>
+		public static bool TryFindIntersection<T, R>(this T line1, T line2, out R intersection)
+			where T : ILine<R>
+			where R : IVector
+		{
+			intersection = line1.FindIntersection(line2);
+
+			return !intersection.IsNaN();
 		}
 	}
 }
