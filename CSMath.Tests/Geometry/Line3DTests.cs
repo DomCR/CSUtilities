@@ -12,14 +12,6 @@ namespace CSMath.Tests.Geometry
 		}
 
 		[Fact]
-		public void IsPointOnLineTest()
-		{
-			Line3D line = new Line3D();
-
-			line.IsPointOnLine(new XYZ());
-		}
-
-		[Fact]
 		public void FindIntersectionTest()
 		{
 			Line3D line1 = new Line3D(XYZ.Zero, XYZ.AxisX);
@@ -28,6 +20,14 @@ namespace CSMath.Tests.Geometry
 			XYZ intersection = line1.FindIntersection(line2);
 
 			Assert.True(intersection.Equals(new XYZ(1, 0, 0)));
+		}
+
+		[Fact]
+		public void IsPointOnLineTest()
+		{
+			Line3D line = new Line3D();
+
+			line.IsPointOnLine(new XYZ());
 		}
 	}
 }
