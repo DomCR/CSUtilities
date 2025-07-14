@@ -6,8 +6,6 @@
 		<DefineConstants>PUBLIC</DefineConstants>
 	</PropertyGroup>
 
-
-
 	<Import Project="..\CSUtilities\CSUtilities.projitems" Label="Shared" />
 
 </Project>
