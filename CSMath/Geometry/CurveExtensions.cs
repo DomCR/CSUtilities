@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace CSMath.Geometry
 {
 	public static class CurveExtensions
 	{
-		public static XYZ PolarCoordinateRelativeToCenter(double angle, XYZ center,  XYZ normal, XYZ startPoint, double ratio = 1)
+		public static XYZ PolarCoordinateRelativeToCenter(double angle, XYZ center, XYZ normal, XYZ startPoint, double ratio = 1)
 		{
 			XYZ prep = XYZ.Cross(normal, startPoint);
 			double radius = startPoint.Normalize().GetLength();
@@ -20,7 +21,7 @@ namespace CSMath.Geometry
 		/// <param name="startAngle"></param>
 		/// <param name="endAngle"></param>
 		/// <param name="normal"></param>
-		/// <param name="startPoint">Start point of the curve relative to center.</param>
+		/// <param name="startPoint">Start point in the curve.</param>
 		/// <param name="ratio"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -33,23 +34,22 @@ namespace CSMath.Geometry
 
 			List<XYZ> points = new();
 
-			double start = startAngle;
 			double end = endAngle;
-			if (end <= start)
+			if (end <= startAngle)
 			{
 				end += MathHelper.TwoPI;
 			}
 
-			XYZ prep = XYZ.Cross(normal, startPoint);
+			XYZ xdir = (startPoint - center).Normalize();
+			XYZ ydir = XYZ.Cross(normal, xdir);
 
-			double portion = startPoint.Normalize().GetLength();
-			double radius = ratio * portion;
+			double delta = (end - startAngle) / (precision - 1);
+			double radius = center.DistanceFrom(startPoint);
 
-			double delta = (end - start) / (precision - 1);
-
+			double start = 0;
 			for (int i = 0; i < precision; i++, start += delta)
 			{
-				points.Add(portion * MathHelper.Cos(start) * startPoint + radius * MathHelper.Sin(start) * prep + center);
+				points.Add(MathHelper.Cos(start) * xdir * radius + (double)ratio * MathHelper.Sin(start) * ydir * radius + center);
 			}
 
 			return points;
