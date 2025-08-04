@@ -193,7 +193,7 @@ namespace CSMath
 		/// <returns>The created Quaternion.</returns>
 		public static Quaternion CreateFromRotationMatrix(Matrix4 matrix)
 		{
-			double trace = matrix.m00 + matrix.m11 + matrix.m22;
+			double trace = matrix.M00 + matrix.M11 + matrix.M22;
 
 			Quaternion q = new Quaternion();
 
@@ -202,38 +202,38 @@ namespace CSMath
 				double s = (double)Math.Sqrt(trace + 1.0f);
 				q.W = s * 0.5f;
 				s = 0.5f / s;
-				q.X = (matrix.m12 - matrix.m21) * s;
-				q.Y = (matrix.m20 - matrix.m02) * s;
-				q.Z = (matrix.m01 - matrix.m10) * s;
+				q.X = (matrix.M12 - matrix.M21) * s;
+				q.Y = (matrix.M20 - matrix.M02) * s;
+				q.Z = (matrix.M01 - matrix.M10) * s;
 			}
 			else
 			{
-				if (matrix.m00 >= matrix.m11 && matrix.m00 >= matrix.m22)
+				if (matrix.M00 >= matrix.M11 && matrix.M00 >= matrix.M22)
 				{
-					double s = (double)Math.Sqrt(1.0f + matrix.m00 - matrix.m11 - matrix.m22);
+					double s = (double)Math.Sqrt(1.0f + matrix.M00 - matrix.M11 - matrix.M22);
 					double invS = 0.5f / s;
 					q.X = 0.5f * s;
-					q.Y = (matrix.m01 + matrix.m10) * invS;
-					q.Z = (matrix.m02 + matrix.m20) * invS;
-					q.W = (matrix.m12 - matrix.m21) * invS;
+					q.Y = (matrix.M01 + matrix.M10) * invS;
+					q.Z = (matrix.M02 + matrix.M20) * invS;
+					q.W = (matrix.M12 - matrix.M21) * invS;
 				}
-				else if (matrix.m11 > matrix.m22)
+				else if (matrix.M11 > matrix.M22)
 				{
-					double s = (double)Math.Sqrt(1.0f + matrix.m11 - matrix.m00 - matrix.m22);
+					double s = (double)Math.Sqrt(1.0f + matrix.M11 - matrix.M00 - matrix.M22);
 					double invS = 0.5f / s;
-					q.X = (matrix.m10 + matrix.m01) * invS;
+					q.X = (matrix.M10 + matrix.M01) * invS;
 					q.Y = 0.5f * s;
-					q.Z = (matrix.m21 + matrix.m12) * invS;
-					q.W = (matrix.m20 - matrix.m02) * invS;
+					q.Z = (matrix.M21 + matrix.M12) * invS;
+					q.W = (matrix.M20 - matrix.M02) * invS;
 				}
 				else
 				{
-					double s = (double)Math.Sqrt(1.0f + matrix.m22 - matrix.m00 - matrix.m11);
+					double s = (double)Math.Sqrt(1.0f + matrix.M22 - matrix.M00 - matrix.M11);
 					double invS = 0.5f / s;
-					q.X = (matrix.m20 + matrix.m02) * invS;
-					q.Y = (matrix.m21 + matrix.m12) * invS;
+					q.X = (matrix.M20 + matrix.M02) * invS;
+					q.Y = (matrix.M21 + matrix.M12) * invS;
 					q.Z = 0.5f * s;
-					q.W = (matrix.m01 - matrix.m10) * invS;
+					q.W = (matrix.M01 - matrix.M10) * invS;
 				}
 			}
 

@@ -16,22 +16,22 @@ namespace CSMath
 			var rows = a.GetRows();
 			var cols = b.GetCols();
 
-			result.m00 = rows[0].Dot(cols[0]);
-			result.m10 = rows[0].Dot(cols[1]);
-			result.m20 = rows[0].Dot(cols[2]);
-			result.m30 = rows[0].Dot(cols[3]);
-			result.m01 = rows[1].Dot(cols[0]);
-			result.m11 = rows[1].Dot(cols[1]);
-			result.m21 = rows[1].Dot(cols[2]);
-			result.m31 = rows[1].Dot(cols[3]);
-			result.m02 = rows[2].Dot(cols[0]);
-			result.m12 = rows[2].Dot(cols[1]);
-			result.m22 = rows[2].Dot(cols[2]);
-			result.m32 = rows[2].Dot(cols[3]);
-			result.m03 = rows[3].Dot(cols[0]);
-			result.m13 = rows[3].Dot(cols[1]);
-			result.m23 = rows[3].Dot(cols[2]);
-			result.m33 = rows[3].Dot(cols[3]);
+			result.M00 = rows[0].Dot(cols[0]);
+			result.M10 = rows[0].Dot(cols[1]);
+			result.M20 = rows[0].Dot(cols[2]);
+			result.M30 = rows[0].Dot(cols[3]);
+			result.M01 = rows[1].Dot(cols[0]);
+			result.M11 = rows[1].Dot(cols[1]);
+			result.M21 = rows[1].Dot(cols[2]);
+			result.M31 = rows[1].Dot(cols[3]);
+			result.M02 = rows[2].Dot(cols[0]);
+			result.M12 = rows[2].Dot(cols[1]);
+			result.M22 = rows[2].Dot(cols[2]);
+			result.M32 = rows[2].Dot(cols[3]);
+			result.M03 = rows[3].Dot(cols[0]);
+			result.M13 = rows[3].Dot(cols[1]);
+			result.M23 = rows[3].Dot(cols[2]);
+			result.M33 = rows[3].Dot(cols[3]);
 
 			return result;
 		}
@@ -71,10 +71,10 @@ namespace CSMath
 		public static XYZM operator *(Matrix4 matrix, XYZM v)
 		{
 			return new XYZM(
-				matrix.m00 * v.X + matrix.m10 * v.Y + matrix.m20 * v.Z + matrix.m30 * v.M,
-				matrix.m01 * v.X + matrix.m11 * v.Y + matrix.m21 * v.Z + matrix.m31 * v.M,
-				matrix.m02 * v.X + matrix.m12 * v.Y + matrix.m22 * v.Z + matrix.m32 * v.M,
-				matrix.m03 * v.X + matrix.m13 * v.Y + matrix.m23 * v.Z + matrix.m33 * v.M);
+				matrix.M00 * v.X + matrix.M10 * v.Y + matrix.M20 * v.Z + matrix.M30 * v.M,
+				matrix.M01 * v.X + matrix.M11 * v.Y + matrix.M21 * v.Z + matrix.M31 * v.M,
+				matrix.M02 * v.X + matrix.M12 * v.Y + matrix.M22 * v.Z + matrix.M32 * v.M,
+				matrix.M03 * v.X + matrix.M13 * v.Y + matrix.M23 * v.Z + matrix.M33 * v.M);
 		}
 	}
 }

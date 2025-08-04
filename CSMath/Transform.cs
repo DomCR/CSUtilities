@@ -182,41 +182,41 @@ namespace CSMath
 			rotation = new Quaternion();
 			var XYZDouble = new XYZ();
 
-			if (matrix.m33 == 0.0)
+			if (matrix.M33 == 0.0)
 				return false;
 
 			Matrix4 matrix4_3 = matrix;
-			matrix4_3.m03 = 0.0;
-			matrix4_3.m13 = 0.0;
-			matrix4_3.m23 = 0.0;
-			matrix4_3.m33 = 1.0;
+			matrix4_3.M03 = 0.0;
+			matrix4_3.M13 = 0.0;
+			matrix4_3.M23 = 0.0;
+			matrix4_3.M33 = 1.0;
 
 			if (matrix4_3.GetDeterminant() == 0.0)
 				return false;
 
-			if (matrix.m03 != 0.0 || matrix.m13 != 0.0 || matrix.m23 != 0.0)
+			if (matrix.M03 != 0.0 || matrix.M13 != 0.0 || matrix.M23 != 0.0)
 			{
 				if (!Matrix4.Inverse(matrix, out Matrix4 inverse))
 				{
 					return false;
 				}
 
-				matrix.m03 = matrix.m13 = matrix.m23 = 0.0;
-				matrix.m33 = 1.0;
+				matrix.M03 = matrix.M13 = matrix.M23 = 0.0;
+				matrix.M33 = 1.0;
 			}
 
-			translation.X = matrix.m30;
-			matrix.m30 = 0.0;
-			translation.Y = matrix.m31;
-			matrix.m31 = 0.0;
-			translation.Z = matrix.m32;
-			matrix.m32 = 0.0;
+			translation.X = matrix.M30;
+			matrix.M30 = 0.0;
+			translation.Y = matrix.M31;
+			matrix.M31 = 0.0;
+			translation.Z = matrix.M32;
+			matrix.M32 = 0.0;
 
 			XYZ[] cols = new XYZ[3]
 			{
-			  new XYZ(matrix.m00, matrix.m01, matrix.m02),
-			  new XYZ(matrix.m10, matrix.m11, matrix.m12),
-			  new XYZ(matrix.m20, matrix.m21, matrix.m22)
+			  new XYZ(matrix.M00, matrix.M01, matrix.M02),
+			  new XYZ(matrix.M10, matrix.M11, matrix.M12),
+			  new XYZ(matrix.M20, matrix.M21, matrix.M22)
 			};
 
 			scaling.X = cols[0].GetLength();

@@ -27,43 +27,120 @@ namespace CSMath
 		/// <summary>
 		/// Value at column 0, row 0 of the matrix.
 		/// </summary>
-		public double m00;
+		public double M00;
 		/// <summary>
 		/// Value at column 0, row 1 of the matrix.
 		/// </summary>
-		public double m01;
+		public double M01;
 		/// <summary>
 		/// Value at column 0, row 2 of the matrix.
 		/// </summary>
-		public double m02;
+		public double M02;
 
 		/// <summary>
 		/// Value at column 1, row 0 of the matrix.
 		/// </summary>
-		public double m10;
+		public double M10;
 		/// <summary>
 		/// Value at column 1, row 1 of the matrix.
 		/// </summary>
-		public double m11;
+		public double M11;
 		/// <summary>
 		/// Value at column 1, row 2 of the matrix.
 		/// </summary>
-		public double m12;
+		public double M12;
 
 		/// <summary>
 		/// Value at column 2, row 0 of the matrix.
 		/// </summary>
-		public double m20;
+		public double M20;
 		/// <summary>
 		/// Value at column 2, row 1 of the matrix.
 		/// </summary>
-		public double m21;
+		public double M21;
 		/// <summary>
 		/// Value at column 2, row 2 of the matrix.
 		/// </summary>
-		public double m22;
+		public double M22;
 
 		#endregion Public Fields
+
+		public double this[int index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return this.M00;
+					case 1:
+						return this.M01;
+					case 2:
+						return this.M02;
+					case 3:
+						return this.M10;
+					case 4:
+						return this.M11;
+					case 5:
+						return this.M12;
+					case 6:
+						return this.M20;
+					case 7:
+						return this.M21;
+					case 8:
+						return this.M22;
+					default:
+						throw new IndexOutOfRangeException();
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						this.M00 = value;
+						break;
+					case 1:
+						this.M01 = value;
+						break;
+					case 2:
+						this.M02 = value;
+						break;
+					case 3:
+						this.M10 = value;
+						break;
+					case 4:
+						this.M11 = value;
+						break;
+					case 5:
+						this.M12 = value;
+						break;
+					case 6:
+						this.M20 = value;
+						break;
+					case 7:
+						this.M21 = value;
+						break;
+					case 8:
+						this.M22 = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException();
+				}
+			}
+		}
+
+		public double this[int column, int row]
+		{
+			get
+			{
+				return this[(column * 3) + row];
+			}
+			set
+			{
+				this[(column * 3) + row] = value;
+			}
+		}
 
 		public Matrix3(
 			double m00, double m10, double m20,
@@ -71,32 +148,32 @@ namespace CSMath
 			double m02, double m12, double m22)
 		{
 			//Col 0
-			this.m00 = m00;
-			this.m01 = m01;
-			this.m02 = m02;
+			this.M00 = m00;
+			this.M01 = m01;
+			this.M02 = m02;
 
 			//Col 1
-			this.m10 = m10;
-			this.m11 = m11;
-			this.m12 = m12;
+			this.M10 = m10;
+			this.M11 = m11;
+			this.M12 = m12;
 
 			//Col 2
-			this.m20 = m20;
-			this.m21 = m21;
-			this.m22 = m22;
+			this.M20 = m20;
+			this.M21 = m21;
+			this.M22 = m22;
 		}
 
 		public Matrix3(Matrix4 matrix)
 		{
-			this.m00 = matrix.m00;
-			this.m01 = matrix.m01;
-			this.m02 = matrix.m02;
-			this.m10 = matrix.m10;
-			this.m11 = matrix.m11;
-			this.m12 = matrix.m12;
-			this.m20 = matrix.m20;
-			this.m21 = matrix.m21;
-			this.m22 = matrix.m22;
+			this.M00 = matrix.M00;
+			this.M01 = matrix.M01;
+			this.M02 = matrix.M02;
+			this.M10 = matrix.M10;
+			this.M11 = matrix.M11;
+			this.M12 = matrix.M12;
+			this.M20 = matrix.M20;
+			this.M21 = matrix.M21;
+			this.M22 = matrix.M22;
 		}
 
 		/// <summary>
@@ -105,9 +182,9 @@ namespace CSMath
 		/// <returns>Transpose matrix.</returns>
 		public Matrix3 Transpose()
 		{
-			return new Matrix3(this.m00, this.m10, this.m20,
-							this.m01, this.m11, this.m21,
-							this.m02, this.m12, this.m22);
+			return new Matrix3(this.M00, this.M10, this.M20,
+							this.M01, this.M11, this.M21,
+							this.M02, this.M12, this.M22);
 		}
 
 		/// <summary>
@@ -165,9 +242,9 @@ namespace CSMath
 		{
 			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
 			StringBuilder s = new StringBuilder();
-			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.m00, this.m01, this.m02, separator));
-			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.m10, this.m11, this.m12, separator));
-			s.Append(string.Format("|{0}{2} {0}{2} {1}|", this.m20, this.m21, this.m22, separator));
+			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.M00, this.M01, this.M02, separator));
+			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.M10, this.M11, this.M12, separator));
+			s.Append(string.Format("|{0}{2} {0}{2} {1}|", this.M20, this.M21, this.M22, separator));
 			return s.ToString();
 		}
 	}
