@@ -1,31 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace CSMath.Geometry
 {
 	public static class CurveExtensions
 	{
-		public static XYZ PolarCoordinateRelativeToCenter(double angle, XYZ center, XYZ normal, XYZ startPoint, double ratio = 1)
+		/// <summary>
+		/// Find a coordinate in a curve.
+		/// </summary>
+		/// <param name="angle"></param>
+		/// <param name="center"></param>
+		/// <param name="normal"></param>
+		/// <param name="startPoint"></param>
+		/// <param name="ratio"></param>
+		/// <returns></returns>
+		public static XYZ PolarCoordinate(double angle, XYZ center, XYZ normal, XYZ startPoint, double ratio = 1)
 		{
 			XYZ prep = XYZ.Cross(normal, startPoint);
-			double radius = startPoint.Normalize().GetLength();
-			return radius * (Math.Cos(angle) * startPoint + (double)ratio * Math.Sin(angle) * prep) + center;
+			return (Math.Cos(angle) * startPoint + (double)ratio * Math.Sin(angle) * prep) + center;
 		}
 
 		/// <summary>
-		/// 
+		/// Converts a curve into a list of vertexes.
 		/// </summary>
 		/// <param name="precision"></param>
 		/// <param name="center"></param>
 		/// <param name="startAngle"></param>
 		/// <param name="endAngle"></param>
+		/// <param name="radius"></param>
 		/// <param name="normal"></param>
-		/// <param name="startPoint">Start point in the curve.</param>
-		/// <param name="ratio"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		public static List<XYZ> PolygonalVertexes(int precision, XYZ center, double startAngle, double endAngle, XYZ normal, XYZ startPoint, double ratio = 1)
+		public static List<XYZ> PolygonalVertexes(int precision, XYZ center, double startAngle, double endAngle, double radius, XYZ normal)
 		{
 			if (precision < 2)
 			{
@@ -34,22 +40,63 @@ namespace CSMath.Geometry
 
 			List<XYZ> points = new();
 
+			double start = startAngle;
 			double end = endAngle;
 			if (end <= startAngle)
 			{
 				end += MathHelper.TwoPI;
 			}
 
-			XYZ xdir = (startPoint - center).Normalize();
-			XYZ ydir = XYZ.Cross(normal, xdir);
+			var t = Matrix4.GetArbitraryAxis(normal);
 
-			double delta = (end - startAngle) / (precision - 1);
-			double radius = center.DistanceFrom(startPoint);
-
-			double start = 0;
+			double delta = (end - start) / (precision - 1);
 			for (int i = 0; i < precision; i++, start += delta)
 			{
-				points.Add(MathHelper.Cos(start) * xdir * radius + (double)ratio * MathHelper.Sin(start) * ydir * radius + center);
+				var pt = new XYZ(MathHelper.Cos(start), MathHelper.Sin(start), 0.0);
+				pt = center + radius * pt;
+				points.Add(t * pt);
+			}
+
+			return points;
+		}
+
+		/// <summary>
+		/// Converts an elliptical curve into a list of vertexes.
+		/// </summary>
+		/// <param name="precision"></param>
+		/// <param name="center"></param>
+		/// <param name="startAngle"></param>
+		/// <param name="endAngle"></param>
+		/// <param name="normal"></param>
+		/// <param name="majorAxisPoint"></param>
+		/// <param name="ratio"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		public static List<XYZ> PolygonalVertexes(int precision, XYZ center, double startAngle, double endAngle, XYZ normal, XYZ majorAxisPoint, double ratio = 1)
+		{
+			if (precision < 2)
+			{
+				throw new ArgumentOutOfRangeException(nameof(precision), precision, "The precision must be equal or greater than two.");
+			}
+
+			List<XYZ> points = new();
+
+			double start = startAngle;
+			double end = endAngle;
+			if (end <= start)
+			{
+				end += MathHelper.TwoPI;
+			}
+
+			XYZ relative = (majorAxisPoint - center);
+			XYZ perp = XYZ.Cross(normal, relative);
+
+			double delta = (end - start) / (precision - 1);
+
+			for (int i = 0; i < precision; i++, start += delta)
+			{
+				points.Add(MathHelper.Cos(start) * relative
+					+ (double)ratio * MathHelper.Sin(start) * perp + center);
 			}
 
 			return points;
