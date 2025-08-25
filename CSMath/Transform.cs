@@ -112,11 +112,6 @@ namespace CSMath
 			this._rotation = rotation.ToEulerAngles();
 		}
 
-		public static Transform CreateTranslation(XYZ translation)
-		{
-			return new Transform(translation, new XYZ(1, 1, 1), XYZ.Zero);
-		}
-
 		public static Transform CreateRotation(XYZ angles)
 		{
 			return new Transform(Matrix4.CreateRotationMatrix(angles));
@@ -137,6 +132,23 @@ namespace CSMath
 			return new Transform(Matrix4.CreateScale(scale, origin));
 		}
 
+		public static Transform CreateTranslation(XYZ translation)
+		{
+			return new Transform(translation, new XYZ(1, 1, 1), XYZ.Zero);
+		}
+
+		public XYZ ApplyRotation(XYZ xyz)
+		{
+			var rotation = CreateRotation(this._rotation);
+			return rotation.ApplyTransform(xyz);
+		}
+
+		public XYZ ApplyScale(XYZ xyz)
+		{
+			var scale = CreateScaling(this._scale);
+			return scale.ApplyTransform(xyz);
+		}
+
 		/// <summary>
 		/// Apply transform to a <see cref="XYZ"/>.
 		/// </summary>
@@ -155,15 +167,9 @@ namespace CSMath
 			return value;
 		}
 
-		public XYZ Translate(XYZ xyz)
+		public XYZ ApplyTranslation(XYZ xyz)
 		{
 			return xyz + this.Translation;
-		}
-
-		public XYZ Rotate(XYZ xyz)
-		{
-			var rotation = CreateRotation(this._rotation);
-			return rotation.ApplyTransform(xyz);
 		}
 
 		/// <summary>
