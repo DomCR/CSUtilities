@@ -1,5 +1,5 @@
-﻿using CSUtilities.Attributes;
-using CSUtilities.Extensions;
+﻿using CSUtilities.Extensions;
+using CSUtilities.Tests.Mock;
 using System;
 using Xunit;
 
@@ -7,18 +7,19 @@ namespace CSUtilities.Tests.Extensions
 {
 	public class EnumExtensionsTests
 	{
-		private enum MockStringValues
+		[Fact]
+		public void AddFlagTest()
 		{
-			[StringValue("Undefined value for enum")]
-			Undefined = 0,
+			MockFlags flags = MockFlags.None;
 
-			[StringValue("Enum String Value 1")]
-			Value1 = 1,
-
-			[StringValue("Enum String Value 2")]
-			Value2,
-
-			NoAttribute,
+			flags.AddFlag(MockFlags.Flag1);
+			Assert.Equal(MockFlags.Flag1, flags);
+			flags.AddFlag(MockFlags.Flag2);
+			Assert.Equal(MockFlags.Flag1 | MockFlags.Flag2, flags);
+			flags.AddFlag(MockFlags.Flag3);
+			Assert.Equal(MockFlags.All, flags);
+			flags.AddFlag(MockFlags.Flag1);
+			Assert.Equal(MockFlags.All, flags);
 		}
 
 		[Fact]
@@ -36,6 +37,19 @@ namespace CSUtilities.Tests.Extensions
 			Assert.Equal(MockStringValues.Value1, EnumExtensions.Parse<MockStringValues>("Value1"));
 			Assert.Equal(MockStringValues.Value1, EnumExtensions.Parse<MockStringValues>("value1", true));
 			Assert.Throws<ArgumentException>(() => EnumExtensions.Parse<MockStringValues>("value1", false));
+		}
+
+		[Fact]
+		public void RemoveFlagTest()
+		{
+			MockFlags flags = MockFlags.All;
+
+			flags.RemoveFlag(MockFlags.Flag1);
+			Assert.Equal(MockFlags.Flag2 | MockFlags.Flag3, flags);
+			flags.RemoveFlag(MockFlags.Flag2);
+			Assert.Equal(MockFlags.Flag3, flags);
+			flags.RemoveFlag(MockFlags.Flag3);
+			Assert.Equal(MockFlags.None, flags);
 		}
 
 		[Fact]

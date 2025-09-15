@@ -32,23 +32,23 @@ namespace CSUtilities.Extensions
 		}
 
 		/// <summary>
-		/// Adds a flag value to enum
+		/// Adds a flag value to enum.
 		/// </summary>
-		public static T AddFlag<T>(this T value, T flag)
+		public static void AddFlag<T>(ref this T value, T flag)
 			where T : struct, Enum
 		{
 			Type type = getEnumType(Convert.GetTypeCode(value));
-			return (T)Convert.ChangeType((Convert.ToUInt64(value) | Convert.ToUInt64(flag)), type);
+			value = (T)Convert.ChangeType((Convert.ToUInt64(value) | Convert.ToUInt64(flag)), type);
 		}
 
 		/// <summary>
-		/// Removes the flag value from enum
+		/// Removes the flag value from enum.
 		/// </summary>
-		public static T RemoveFlag<T>(this T value, T flag)
-			where T : Enum
+		public static void RemoveFlag<T>(ref this T value, T flag)
+			where T : struct, Enum
 		{
 			Type type = getEnumType(Convert.GetTypeCode(value));
-			return (T)Convert.ChangeType((Convert.ToUInt64(value) & ~Convert.ToUInt64(flag)), type);
+			value = (T)Convert.ChangeType((Convert.ToUInt64(value) & ~Convert.ToUInt64(flag)), type);
 		}
 
 		/// <summary>
