@@ -61,6 +61,30 @@ namespace CSMath.Geometry
 		}
 
 		/// <summary>
+		/// Converts a curve into a list of vertexes.
+		/// </summary>
+		/// <param name="length"></param>
+		/// <param name="center"></param>
+		/// <param name="startAngle"></param>
+		/// <param name="endAngle"></param>
+		/// <param name="radius"></param>
+		/// <param name="normal"></param>
+		/// <returns></returns>
+		public static List<XYZ> PolygonalVertexes(double length, XYZ center, double startAngle, double endAngle, double radius, XYZ normal)
+		{
+			var longitude = 2 * Math.PI * radius;
+
+			int nsegments = (int)Math.Ceiling(longitude / length);
+
+			if (nsegments < 2)
+			{
+				nsegments = 3;
+			}
+
+			return PolygonalVertexes(nsegments, center, startAngle, endAngle, radius, normal);
+		}
+
+		/// <summary>
 		/// Converts an elliptical curve into a list of vertexes.
 		/// </summary>
 		/// <param name="precision"></param>
