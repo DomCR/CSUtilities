@@ -35,6 +35,11 @@ namespace CSMath
 		public const double HalfPI = Math.PI / 2;
 
 		/// <summary>
+		/// Equivalent to 180 degrees.
+		/// </summary>
+		public const double PI = Math.PI;
+
+		/// <summary>
 		/// Factor for converting radians to degrees.
 		/// </summary>
 		public const double RadToDegFactor = (180 / Math.PI);
