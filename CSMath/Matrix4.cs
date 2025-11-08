@@ -496,7 +496,7 @@ namespace CSMath
 		/// <returns>The translation matrix.</returns>
 		public static Matrix4 CreateTranslation(XYZ position)
 		{
-			return Matrix4.CreateTranslation(position.X, position.Y, position.Z);
+			return CreateTranslation(position.X, position.Y, position.Z);
 		}
 
 		/// <summary>
@@ -538,17 +538,29 @@ namespace CSMath
 		/// <returns>Rotation matrix.</returns>
 		public static Matrix4 GetArbitraryAxis(XYZ zaxis)
 		{
-			zaxis.Normalize();
+			zaxis = zaxis.Normalize();
 
 			if (zaxis.Equals(XYZ.AxisZ))
 			{
-				return Matrix4.Identity;
+				return Identity;
+			}
+			else if (zaxis.Equals(-XYZ.AxisZ))
+			{
+				return GetArbitraryAxis(-XYZ.AxisX, zaxis);
 			}
 
-			XYZ xaxis = ((!(System.Math.Abs(zaxis.X) < (1 / 64)) || !(System.Math.Abs(zaxis.Y) < (1 / 64)))
-				? XYZ.Cross(XYZ.AxisZ, zaxis)
-				: XYZ.Cross(XYZ.AxisY, zaxis));
-			xaxis.Normalize();
+			XYZ xaxis;
+			if (Math.Abs(zaxis.X) < (1 / 64) && Math.Abs(zaxis.Y) < (1 / 64))
+			{
+				xaxis = XYZ.Cross(XYZ.AxisY, zaxis);
+			}
+			else
+			{
+				xaxis = XYZ.Cross(XYZ.AxisZ, zaxis);
+			}
+
+			xaxis = xaxis.Normalize();
+
 			return GetArbitraryAxis(xaxis, zaxis);
 		}
 
@@ -560,8 +572,12 @@ namespace CSMath
 		/// <returns>Rotation matrix.</returns>
 		public static Matrix4 GetArbitraryAxis(XYZ xaxis, XYZ zaxis)
 		{
-			XYZ cross = XYZ.Cross(zaxis, xaxis);
-			return new Matrix4(xaxis.X, cross.X, zaxis.X, 0.0, xaxis.Y, cross.Y, zaxis.Y, 0.0, xaxis.Z, cross.Z, zaxis.Z, 0.0, 0.0, 0.0, 0.0, 1.0);
+			XYZ yaxis = XYZ.Cross(zaxis, xaxis);
+			return new Matrix4(
+				xaxis.X, yaxis.X, zaxis.X, 0.0,
+				xaxis.Y, yaxis.Y, zaxis.Y, 0.0,
+				xaxis.Z, yaxis.Z, zaxis.Z, 0.0,
+				0.0, 0.0, 0.0, 1.0);
 		}
 
 		/// <summary>
