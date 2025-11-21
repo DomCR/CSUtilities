@@ -159,7 +159,7 @@ namespace CSMath
 		/// <returns>True if its close to one or false in any other case.</returns>
 		public static bool IsEqual(double a, double b, double threshold)
 		{
-			return IsZero(a - b, threshold);
+			return IsZero(Math.Abs(a) - Math.Abs(b), threshold);
 		}
 
 		/// <summary>
