@@ -49,7 +49,7 @@ namespace CSMath.Geometry
 
 			var t = Matrix4.GetArbitraryAxis(normal);
 
-			double delta = (end - start) / (precision - 1);
+			double delta = (end - start) / precision;
 			for (int i = 0; i < precision; i++, start += delta)
 			{
 				var pt = new XYZ(MathHelper.Cos(start), MathHelper.Sin(start), 0.0);
@@ -112,10 +112,10 @@ namespace CSMath.Geometry
 				end += MathHelper.TwoPI;
 			}
 
-			XYZ relative = (majorAxisPoint - center);
+			XYZ relative = (majorAxisPoint - center).Normalize();
 			XYZ perp = XYZ.Cross(normal, relative);
 
-			double delta = (end - start) / (precision - 1);
+			double delta = (end - start) / precision;
 
 			for (int i = 0; i < precision; i++, start += delta)
 			{
