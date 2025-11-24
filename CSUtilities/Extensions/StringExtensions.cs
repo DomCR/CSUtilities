@@ -45,7 +45,7 @@ namespace CSUtilities.Extensions
 		}
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="str"></param>
 		/// <exception cref="ArgumentException"></exception>
@@ -55,7 +55,7 @@ namespace CSUtilities.Extensions
 		}
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="str"></param>
 		/// <param name="message"></param>
@@ -235,7 +235,6 @@ namespace CSUtilities.Extensions
 			}
 
 			return value;
-
 		}
 
 		/// <summary>
@@ -243,7 +242,7 @@ namespace CSUtilities.Extensions
 		/// </summary>
 		/// <param name="str"></param>
 		/// <returns></returns>
-		public static string RemoveStartWhitespaces(this string str)
+		public static string RemoveStartWhiteSpaces(this string str)
 		{
 			while (str.StartsWith(" "))
 			{
@@ -373,6 +372,22 @@ namespace CSUtilities.Extensions
 				args.Add(word);
 
 			return args.ToArray();
+		}
+
+		/// <summary>
+		/// Attempts to retrieve the character at the specified index in the string.
+		/// </summary>
+		/// <param name="str">The string from which to retrieve the character. Cannot be <see langword="null"/>.</param>
+		/// <param name="index">The zero-based index of the character to retrieve.</param>
+		/// <returns>The character at the specified index, or <see langword="null"/> if the index is out of range.</returns>
+		public static char? TryGet(this string str , int index)
+		{
+			if(index < 0 || index >= str.Length)
+			{
+				return null;
+			}
+
+			return str[index];
 		}
 
 		public static string[] ToArgs(this string str, char separator, IDictionary<char, char> groupDelimitiers, bool keepTokens = false)
