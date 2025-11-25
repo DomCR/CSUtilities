@@ -114,7 +114,7 @@ namespace CSMath.Geometry
 				end += MathHelper.TwoPI;
 			}
 
-			XYZ relative = (majorAxisPoint - center).Normalize();
+			XYZ relative = majorAxisPoint - center;
 			XYZ perp = XYZ.Cross(normal, relative);
 
 			var sweep = start - end;
