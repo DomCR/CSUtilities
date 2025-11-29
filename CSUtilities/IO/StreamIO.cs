@@ -69,6 +69,7 @@ namespace CSUtilities.IO
 				byte[] buffer = new byte[stream.Length];
 				stream.Read(buffer, 0, buffer.Length);
 				_stream = (Stream)new MemoryStream(buffer);
+				stream.Position = position;
 			}
 			else
 			{
@@ -80,8 +81,6 @@ namespace CSUtilities.IO
 				//Reset the position to the begining
 				_stream.Position = 0L;
 			}
-
-			stream.Position = position;
 		}
 
 		/// <summary>
