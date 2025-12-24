@@ -101,13 +101,13 @@ namespace CSMath
 		}
 
 		public static T FixZero<T>(T vector)
-							where T : IVector, new()
+			where T : IVector, new()
 		{
 			return FixZero(vector, Epsilon);
 		}
 
 		public static T FixZero<T>(T vector, double threshold)
-							where T : IVector, new()
+			where T : IVector, new()
 		{
 			T result = new T();
 
@@ -137,6 +137,21 @@ namespace CSMath
 		public static double GradToRad(double value)
 		{
 			return value * GradToRadFactor;
+		}
+
+		/// <summary>
+		/// Determines whether the specified double-precision floating-point value is approximately zero, within a small
+		/// tolerance.
+		/// </summary>
+		/// <param name="value">The value to compare to zero.</param>
+		/// <returns>true if the value is within a small range of zero; otherwise, false.</returns>
+		public static bool IsAlmostZero(double value)
+		{
+			if (value > -Epsilon)
+			{
+				return value < Epsilon;
+			}
+			return false;
 		}
 
 		/// <summary>

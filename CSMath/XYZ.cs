@@ -4,11 +4,8 @@ namespace CSMath
 {
 	public partial struct XYZ : IVector, IEquatable<XYZ>
 	{
-		public readonly static XYZ NaN = new XYZ(double.NaN);
-		public readonly static XYZ Zero = new XYZ(0, 0, 0);
-		public readonly static XYZ AxisX = new XYZ(1, 0, 0);
-		public readonly static XYZ AxisY = new XYZ(0, 1, 0);
-		public readonly static XYZ AxisZ = new XYZ(0, 0, 1);
+		/// <inheritdoc/>
+		public uint Dimension { get { return 3; } }
 
 		/// <summary>
 		/// Specifies the X-value of the vector component
@@ -25,44 +22,15 @@ namespace CSMath
 		/// </summary>
 		public double Z { get; set; }
 
-		/// <inheritdoc/>
-		public uint Dimension { get { return 3; } }
+		public static readonly XYZ AxisX = new XYZ(1, 0, 0);
 
-		/// <inheritdoc/>
-		public double this[int index]
-		{
-			get
-			{
-				switch (index)
-				{
-					case 0:
-						return X;
-					case 1:
-						return Y;
-					case 2:
-						return Z;
-					default:
-						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
-				}
-			}
-			set
-			{
-				switch (index)
-				{
-					case 0:
-						X = value;
-						break;
-					case 1:
-						Y = value;
-						break;
-					case 2:
-						Z = value;
-						break;
-					default:
-						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
-				}
-			}
-		}
+		public static readonly XYZ AxisY = new XYZ(0, 1, 0);
+
+		public static readonly XYZ AxisZ = new XYZ(0, 0, 1);
+
+		public static readonly XYZ NaN = new XYZ(double.NaN);
+
+		public static readonly XYZ Zero = new XYZ(0, 0, 0);
 
 		/// <summary>
 		/// Constructor with the coordinate components
@@ -134,7 +102,7 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Indicates whether this instance and a specified object are equal with in a specific precison.
+		/// Indicates whether this instance and a specified object are equal with in a specific precision.
 		/// </summary>
 		/// <param name="other"></param>
 		/// <param name="digits">number of decimals</param>
@@ -148,6 +116,61 @@ namespace CSMath
 		public bool Equals(XYZ other)
 		{
 			return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
+		}
+
+		/// <summary>
+		/// Calculates the angle, in radians, between this vector and the specified vector.
+		/// </summary>
+		/// <remarks>If either vector has zero length, the result may not be meaningful. The method returns 0 if the
+		/// vectors are parallel and point in the same direction, and π if they are parallel and point in opposite
+		/// directions.</remarks>
+		/// <param name="dir">The vector to which the angle is measured.</param>
+		/// <returns>The angle, in radians, between this vector and <paramref name="dir"/>. The value is in the range [0, π].</returns>
+		public double GetAngle(XYZ dir)
+		{
+			double t = this.Dot(dir) / Math.Sqrt(this.GetLengthSquared() * dir.GetLengthSquared());
+			if (MathHelper.IsAlmostZero(Math.Abs(t) - 1.0d))
+			{
+				if (!((double)t > 0.0))
+				{
+					return Math.PI;
+				}
+				return 0.0;
+			}
+			return Math.Acos((double)t);
+		}
+
+		/// <summary>
+		/// Calculates the signed angle, in radians, between this vector and the specified direction vector, using the given
+		/// normal to determine the sign.
+		/// </summary>
+		/// <remarks>The returned angle is measured in the plane defined by this vector and <paramref name="dir"/>,
+		/// with the sign determined by the right-hand rule using <paramref name="normal"/>. If the vectors are parallel, the
+		/// angle is 0 or π depending on their direction.</remarks>
+		/// <param name="dir">The direction vector to which the angle is measured.</param>
+		/// <param name="normal">The normal vector that defines the orientation of the plane in which the angle is measured. The sign of the angle
+		/// is determined based on the direction of this normal.</param>
+		/// <returns>The signed angle, in radians, between this vector and <paramref name="dir"/>. The value is in the range [0, 2π].</returns>
+		public double GetAngle2(XYZ dir, XYZ normal)
+		{
+			double t = this.Dot(dir) / Math.Sqrt(this.GetLengthSquared() * dir.GetLengthSquared());
+			if (MathHelper.IsAlmostZero(Math.Abs(t) - 1.0d))
+			{
+				if (!((double)t > 0.0))
+				{
+					return Math.PI;
+				}
+				return 0.0;
+			}
+
+			double angle = this.GetAngle(dir);
+			XYZ vector = Cross(this, dir);
+			if (!(vector.Dot(normal) > 0.0))
+			{
+				return MathHelper.TwoPI - angle;
+			}
+
+			return angle;
 		}
 
 		/// <inheritdoc/>
@@ -171,6 +194,42 @@ namespace CSMath
 		public string ToString(IFormatProvider? cultureInfo)
 		{
 			return $"{X.ToString(cultureInfo)},{Y.ToString(cultureInfo)},{Z.ToString(cultureInfo)}";
+		}
+
+		/// <inheritdoc/>
+		public double this[int index]
+		{
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return X;
+					case 1:
+						return Y;
+					case 2:
+						return Z;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						X = value;
+						break;
+					case 1:
+						Y = value;
+						break;
+					case 2:
+						Z = value;
+						break;
+					default:
+						throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+				}
+			}
 		}
 	}
 }
