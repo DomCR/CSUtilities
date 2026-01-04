@@ -242,9 +242,9 @@ namespace CSMath
 		{
 			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
 			StringBuilder s = new StringBuilder();
-			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.M00, this.M01, this.M02, separator));
-			s.Append(string.Format("|{0}{2} {0}{2} {1}|" + Environment.NewLine, this.M10, this.M11, this.M12, separator));
-			s.Append(string.Format("|{0}{2} {0}{2} {1}|", this.M20, this.M21, this.M22, separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, this.M00, this.M01, this.M02, separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, this.M10, this.M11, this.M12, separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|", this.M20, this.M21, this.M22, separator));
 			return s.ToString();
 		}
 	}
