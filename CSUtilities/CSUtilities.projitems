@@ -34,5 +34,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Text\TextEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Text\TextEncoding.Windows1252.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Try.cs" />
   </ItemGroup>
 </Project>
