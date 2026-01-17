@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace CSMath
 {
@@ -42,6 +41,40 @@ namespace CSMath
 			}
 		}
 
+		/// <summary>
+		/// Gets the length of the bounding box along the X-axis.
+		/// </summary>
+		public double LengthX
+		{
+			get
+			{
+				return Math.Abs(this.Max.X - this.Min.X);
+			}
+		}
+
+		/// <summary>
+		/// Gets the length of the bounding box along the Y-axis.
+		/// </summary>
+		public double LengthY
+		{
+			get
+			{
+				return Math.Abs(this.Max.Y - this.Min.Y);
+			}
+		}
+
+		/// <summary>
+		/// Gets the length of the bounding box along the Z-axis.
+		/// </summary>
+		public double LengthZ
+		{
+			get
+			{
+				return Math.Abs(this.Max.Z - this.Min.Z);
+			}
+		}
+
+		[Obsolete("Use LengthX instead.")]
 		public double Width
 		{
 			get
@@ -50,6 +83,7 @@ namespace CSMath
 			}
 		}
 
+		[Obsolete("Use LengthY instead.")]
 		public double Height
 		{
 			get
@@ -78,6 +112,10 @@ namespace CSMath
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the BoundingBox class that represents a single point.
+		/// </summary>
+		/// <param name="point">The point to use as both the minimum and maximum bounds of the bounding box.</param>
 		public BoundingBox(XYZ point)
 		{
 			this.Extent = BoundingBoxExtent.Point;
@@ -86,10 +124,14 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Bounding box constructor with 2 points.
+		/// Initializes a new instance of the BoundingBox class that represents the axis-aligned box defined by the specified
+		/// minimum and maximum coordinates.
 		/// </summary>
-		/// <param name="min"></param>
-		/// <param name="max"></param>
+		/// <remarks>If the specified minimum and maximum points are equal, the bounding box represents a single point.
+		/// The constructor automatically assigns the smaller of each coordinate to Min and the larger to Max, regardless of the
+		/// order of the input parameters.</remarks>
+		/// <param name="min">The point representing the minimum X, Y, and Z coordinates of the bounding box.</param>
+		/// <param name="max">The point representing the maximum X, Y, and Z coordinates of the bounding box.</param>
 		public BoundingBox(XYZ min, XYZ max)
 		{
 			if (min == max)
@@ -106,24 +148,26 @@ namespace CSMath
 		}
 
 		/// <summary>
-		/// Bounding box constructor.
+		/// Initializes a new instance of the BoundingBox structure using the specified minimum and maximum X, Y, and Z
+		/// coordinates.
 		/// </summary>
-		/// <param name="minX"></param>
-		/// <param name="minY"></param>
-		/// <param name="minZ"></param>
-		/// <param name="maxX"></param>
-		/// <param name="maxY"></param>
-		/// <param name="maxZ"></param>
+		/// <param name="minX">The minimum X coordinate of the bounding box.</param>
+		/// <param name="minY">The minimum Y coordinate of the bounding box.</param>
+		/// <param name="minZ">The minimum Z coordinate of the bounding box.</param>
+		/// <param name="maxX">The maximum X coordinate of the bounding box.</param>
+		/// <param name="maxY">The maximum Y coordinate of the bounding box.</param>
+		/// <param name="maxZ">The maximum Z coordinate of the bounding box.</param>
 		public BoundingBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
 		{
 			this = new BoundingBox(new XYZ(minX, minY, minZ), new XYZ(maxX, maxY, maxZ));
 		}
 
 		/// <summary>
-		/// Move the bounding box the amount of specified units.
+		/// Returns a new bounding box translated by the specified vector.
 		/// </summary>
-		/// <param name="xyz"></param>
-		/// <returns></returns>
+		/// <param name="xyz">The vector by which to translate the bounding box. Each component is added to the corresponding coordinates of the
+		/// bounding box's minimum and maximum points.</param>
+		/// <returns>A new BoundingBox instance that is the result of translating the current bounding box by the specified vector.</returns>
 		public BoundingBox Move(XYZ xyz)
 		{
 			return new BoundingBox(this.Min + xyz, this.Max + xyz);
@@ -224,7 +268,6 @@ namespace CSMath
 
 			return b;
 		}
-
 
 		/// <summary>
 		/// Create a bounding box from a collection of points.
