@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace CSMath
@@ -45,7 +46,7 @@ namespace CSMath
 		{
 			get
 			{
-				return this.Max.X - this.Min.X;
+				return Math.Abs(this.Max.X - this.Min.X);
 			}
 		}
 
@@ -53,7 +54,7 @@ namespace CSMath
 		{
 			get
 			{
-				return this.Max.Y - this.Min.Y;
+				return Math.Abs(this.Max.Y - this.Min.Y);
 			}
 		}
 
