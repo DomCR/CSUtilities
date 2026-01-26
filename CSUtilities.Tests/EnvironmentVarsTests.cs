@@ -64,5 +64,41 @@ namespace CSUtilities.Tests
 			EnvironmentVars.Set(varname, varvalue, EnvironmentVariableTarget.Process);
 			Assert.Equal(varvalue, Environment.GetEnvironmentVariable(varname));
 		}
+
+		[Fact]
+		public void Set_WithoutTarget_SetsProcessVariable()
+		{
+			string varname = "TEST_SET_NO_TARGET";
+			string varvalue = "VALUE_NO_TARGET";
+			EnvironmentVars.Set(varname, varvalue);
+			Assert.Equal(varvalue, Environment.GetEnvironmentVariable(varname, EnvironmentVariableTarget.Process));
+		}
+
+		[Fact]
+		public void Delete_RemovesVariable()
+		{
+			string varname = "TEST_DELETE";
+			Environment.SetEnvironmentVariable(varname, "TO_BE_DELETED");
+			EnvironmentVars.Delete(varname);
+			Assert.Null(Environment.GetEnvironmentVariable(varname, EnvironmentVariableTarget.Process));
+		}
+
+		[Fact]
+		public void Delete_WithTarget_RemovesVariable()
+		{
+			string varname = "TEST_DELETE_TARGET";
+			Environment.SetEnvironmentVariable(varname, "TO_BE_DELETED", EnvironmentVariableTarget.Process);
+			EnvironmentVars.Delete(varname, EnvironmentVariableTarget.Process);
+			Assert.Null(Environment.GetEnvironmentVariable(varname, EnvironmentVariableTarget.Process));
+		}
+
+		[Fact]
+		public void GetGeneric_ReturnsDefaultIfNotSet()
+		{
+			string varname = "NOT_SET_GENERIC";
+			Assert.Equal(0, EnvironmentVars.Get<int>(varname));
+			Assert.Null(EnvironmentVars.Get<string>(varname));
+			Assert.False(EnvironmentVars.Get<bool>(varname));
+		}
 	}
 }
