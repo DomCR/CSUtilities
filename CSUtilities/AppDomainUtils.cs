@@ -2,28 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
-namespace CSUtilities
-{
+namespace CSUtilities;
+
 #if PUBLIC
-	public
+public
 #else
-	internal
+internal
 #endif
-		static class AppDomainUtils
+	static class AppDomainUtils
+{
+	public static IEnumerable<Type> GetTypesOfInterface<T>()
 	{
-		public static IEnumerable<Type> GetTypesOfInterface<T>()
-		{
-			return AppDomain.CurrentDomain.GetAssemblies()
-				.SelectMany(s => s.GetTypes())
-				.Where(p => p.GetInterface(typeof(T).FullName) != null);
-		}
+		return AppDomain.CurrentDomain.GetAssemblies()
+			.SelectMany(s => s.GetTypes())
+			.Where(p => p.GetInterface(typeof(T).FullName) != null);
+	}
 
-		public static IEnumerable<Type> GetTypesWithAttribute<T>() where T : Attribute
-		{
-			return AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
-			.Where(p => p.GetCustomAttribute<T>() != null);
-		}
+	public static IEnumerable<Type> GetTypesWithAttribute<T>() where T : Attribute
+	{
+		return AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
+		.Where(p => p.GetCustomAttribute<T>() != null);
 	}
 }

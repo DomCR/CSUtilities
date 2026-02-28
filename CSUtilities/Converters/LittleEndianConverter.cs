@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CSUtilities.Converters
+namespace CSUtilities.Converters;
+
+#if PUBLIC
+public
+#else
+	internal
+#endif
+class LittleEndianConverter : EndianConverter
 {
-	internal class LittleEndianConverter : EndianConverter
+	public static LittleEndianConverter Instance = new LittleEndianConverter();
+
+	static IEndianConverter init()
 	{
-		public static LittleEndianConverter Instance = new LittleEndianConverter();
-
-		static IEndianConverter init()
-		{
-			if (BitConverter.IsLittleEndian)
-				return (IEndianConverter)new DefaultEndianConverter();
-			else
-				return (IEndianConverter)new InverseConverter();
-		}
-
-		public LittleEndianConverter() : base(init()) { }
+		if (BitConverter.IsLittleEndian)
+			return (IEndianConverter)new DefaultEndianConverter();
+		else
+			return (IEndianConverter)new InverseConverter();
 	}
+
+	public LittleEndianConverter() : base(init()) { }
 }

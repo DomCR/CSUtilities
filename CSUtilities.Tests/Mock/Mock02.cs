@@ -1,7 +1,6 @@
-﻿namespace CSUtilities.Tests.Mock
+﻿namespace CSUtilities.Tests.Mock;
+
+[MyMockAttribute("Hello")]
+public class Mock02
 {
-	[MyMockAttribute("Hello")]
-	public class Mock02
-	{
-	}
 }

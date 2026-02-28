@@ -3,9 +3,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSUtilities.Tests.Mock
+namespace CSUtilities.Tests.Mock;
+
+public interface IMockInterface
 {
-	public interface IMockInterface
-	{
-	}
 }
