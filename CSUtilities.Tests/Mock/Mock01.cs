@@ -1,6 +1,5 @@
-﻿namespace CSUtilities.Tests.Mock
+﻿namespace CSUtilities.Tests.Mock;
+
+public class Mock01 : IMockInterface
 {
-	public class Mock01 : IMockInterface
-	{
-	}
 }

@@ -1,26 +1,25 @@
 ﻿using CSUtilities.Tests.Mock;
 using Xunit;
 
-namespace CSUtilities.Tests
+namespace CSUtilities.Tests;
+
+public class AppDomainUtilsTests
 {
-	public class AppDomainUtilsTests
+	[Fact]
+	public void GetTypesOfInterfaceTest()
 	{
-		[Fact]
-		public void GetTypesOfInterfaceTest()
-		{
-			var types = AppDomainUtils.GetTypesOfInterface<IMockInterface>();
+		var types = AppDomainUtils.GetTypesOfInterface<IMockInterface>();
 
-			Assert.NotEmpty(types);
-			Assert.Contains(typeof(Mock01), types);
-		}
+		Assert.NotEmpty(types);
+		Assert.Contains(typeof(Mock01), types);
+	}
 
-		[Fact]
-		public void GetTypesWithAttributeTest()
-		{
-			var types = AppDomainUtils.GetTypesWithAttribute<MyMockAttribute>();
+	[Fact]
+	public void GetTypesWithAttributeTest()
+	{
+		var types = AppDomainUtils.GetTypesWithAttribute<MyMockAttribute>();
 
-			Assert.NotEmpty(types);
-			Assert.Contains(typeof(Mock02), types);
-		}
+		Assert.NotEmpty(types);
+		Assert.Contains(typeof(Mock02), types);
 	}
 }
