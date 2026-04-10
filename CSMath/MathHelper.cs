@@ -2,6 +2,14 @@
 
 namespace CSMath;
 
+/// <summary>
+/// Provides helper methods and constants for common mathematical operations, including angle conversions,
+/// floating-point comparisons, and rounding.
+/// </summary>
+/// <remarks>This static class includes constants for frequently used mathematical values and conversion factors
+/// between degrees, radians, and gradians. It also offers utility methods for comparing floating-point numbers with a
+/// configurable tolerance, normalizing angles, and rounding values. The methods are designed to address common issues
+/// with floating-point precision and angle normalization in mathematical computations.</remarks>
 public static class MathHelper
 {
 	/// <summary>
@@ -90,22 +98,55 @@ public static class MathHelper
 		return value * DegToRadFactor;
 	}
 
+	/// <summary>
+	/// Returns zero if the specified number is within a small tolerance of zero; otherwise, returns the original number.
+	/// </summary>
+	/// <param name="number">The number to evaluate for near-zero equivalence.</param>
+	/// <returns>Zero if the specified number is considered close enough to zero; otherwise, the original number.</returns>
 	public static double FixZero(double number)
 	{
 		return FixZero(number, Epsilon);
 	}
+
+	/// <summary>
+	/// Returns zero if the specified number is within the given threshold of zero; otherwise, returns the original number.
+	/// </summary>
+	/// <remarks>This method is useful for normalizing values that are very close to zero due to floating-point
+	/// precision errors. It can help avoid issues where extremely small values are treated as nonzero in
+	/// calculations.</remarks>
+	/// <param name="number">The value to evaluate for near-zero equivalence.</param>
+	/// <param name="threshold">The tolerance within which the number is considered to be zero. Must be non-negative.</param>
+	/// <returns>Zero if the absolute value of the number is less than or equal to the threshold; otherwise, the original number.</returns>
 
 	public static double FixZero(double number, double threshold)
 	{
 		return IsZero(number, threshold) ? 0 : number;
 	}
 
+	/// <summary>
+	/// Returns a copy of the specified vector with components that are effectively zero replaced by exact zeros.
+	/// </summary>
+	/// <typeparam name="T">The type of vector. Must implement the IVector interface and have a parameterless constructor.</typeparam>
+	/// <param name="vector">The vector to process. Components close to zero will be set to zero.</param>
+	/// <returns>A new vector of type T with near-zero components set to zero.</returns>
 	public static T FixZero<T>(T vector)
 		where T : IVector, new()
 	{
 		return FixZero(vector, Epsilon);
 	}
 
+	/// <summary>
+	/// Returns a new vector in which each component of the input vector is replaced with zero if its absolute value is
+	/// less than the specified threshold.
+	/// </summary>
+	/// <remarks>This method does not modify the input vector. The returned vector is a new instance of type T. Use
+	/// this method to eliminate near-zero noise in vector data.</remarks>
+	/// <typeparam name="T">The type of vector. Must implement the IVector interface and have a parameterless constructor.</typeparam>
+	/// <param name="vector">The input vector whose components are to be processed.</param>
+	/// <param name="threshold">The threshold below which a component is considered to be zero. Components with an absolute value less than this
+	/// value are set to zero.</param>
+	/// <returns>A new vector of type T with components set to zero if their absolute value is less than the specified threshold;
+	/// otherwise, the original component value is retained.</returns>
 	public static T FixZero<T>(T vector, double threshold)
 		where T : IVector, new()
 	{
