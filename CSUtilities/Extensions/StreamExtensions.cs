@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace CSUtilities.Extensions;
+﻿namespace CSUtilities.Extensions;
 
 /// <summary>
 /// Stream utility extensions.

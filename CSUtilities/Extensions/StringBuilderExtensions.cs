@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CSUtilities.Extensions;
+﻿namespace CSUtilities.Extensions;
 
 /// <summary>
 /// StringBuilder utility extensions.
