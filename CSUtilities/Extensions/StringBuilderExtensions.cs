@@ -1,4 +1,6 @@
-﻿namespace CSUtilities.Extensions;
+﻿using System.Linq;
+
+namespace CSUtilities.Extensions;
 
 /// <summary>
 /// StringBuilder utility extensions.
@@ -14,7 +16,7 @@ static class StringBuilderExtensions
 	/// <summary>
 	/// Concatenates and appends the members of a collection, using the specified separator between each member.
 	/// </summary>
-	public static StringBuilder AppendJoin<T>(this StringBuilder sb, string? separator, IEnumerable<T> values)
+	public static System.Text.StringBuilder AppendJoin<T>(this System.Text.StringBuilder sb, string? separator, System.Collections.Generic.IEnumerable<T> values)
 	{
 		separator ??= string.Empty;
 

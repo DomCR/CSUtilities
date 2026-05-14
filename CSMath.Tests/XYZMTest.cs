@@ -1,11 +1,10 @@
 ﻿using Xunit.Abstractions;
 
-namespace CSMath.Tests
+namespace CSMath.Tests;
+
+public class XYZMTest : VectorTests<XYZM>
 {
-	public class XYZMTest : VectorTests<XYZM>
+	public XYZMTest(ITestOutputHelper output) : base(output)
 	{
-		public XYZMTest(ITestOutputHelper output) : base(output)
-		{
-		}
 	}
 }

@@ -18,7 +18,7 @@ static class StreamExtensions
 	/// </summary>
 	/// <param name="stream"></param>
 	/// <param name="buffer">A region of memory. This method copies the contents of this region to the current stream. </param>
-	public static void Write(this Stream stream, byte[] buffer)
+	public static void Write(this System.IO.Stream stream, byte[] buffer)
 	{
 		stream.Write(buffer, 0, buffer.Length);
 	}

@@ -1,10 +1,9 @@
-﻿namespace CSMath
+﻿namespace CSMath;
+
+public enum BoundingBoxExtent
 {
-	public enum BoundingBoxExtent
-	{
-		Null,
-		Finite,
-		Infinite,
-		Point
-	}
+	Null,
+	Finite,
+	Infinite,
+	Point
 }

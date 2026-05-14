@@ -1,9 +1,8 @@
-﻿namespace CSMath.Tests
-{
-	public static class TestVariables
-	{
-		public const double Delta = 0.00001d;
+﻿namespace CSMath.Tests;
 
-		public const int DecimalPrecision = 5;
-	}
+public static class TestVariables
+{
+	public const double Delta = 0.00001d;
+
+	public const int DecimalPrecision = 5;
 }

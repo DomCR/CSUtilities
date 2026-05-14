@@ -6,25 +6,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSMath.Tests
+namespace CSMath.Tests;
+
+public class VectorExtensionsTests
 {
-	public class VectorExtensionsTests
+	[Fact()]
+	public void GetLengthTest()
 	{
-		[Fact()]
-		public void GetLengthTest()
-		{
-			XYZ xyz = new XYZ(1, 1, 1);
-			double result = Math.Sqrt(3);
+		XYZ xyz = new XYZ(1, 1, 1);
+		double result = Math.Sqrt(3);
 
-			Assert.Equal(result, xyz.GetLength());
-		}
+		Assert.Equal(result, xyz.GetLength());
+	}
 
-		[Fact()]
-		public void NormalizeTest()
-		{
-			XYZ xyz = new XYZ(1, 1, 1);
+	[Fact()]
+	public void NormalizeTest()
+	{
+		XYZ xyz = new XYZ(1, 1, 1);
 
-			Assert.Equal(1, xyz.Normalize().GetLength());
-		}
+		Assert.Equal(1, xyz.Normalize().GetLength());
 	}
 }
