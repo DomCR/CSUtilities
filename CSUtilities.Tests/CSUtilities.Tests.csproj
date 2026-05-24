@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<LangVersion>latest</LangVersion>
-		<IsPackable>false</IsPackable>
+		<TargetFrameworks>net5.0;net9.0;net48</TargetFrameworks>
 
 		<!-- Enable the MSTest runner, this is an opt-in feature -->
 		<EnableMSTestRunner>true</EnableMSTestRunner>
+		<!-- We need to produce an executable and not a DLL -->
+		<OutputType Condition="'$(TargetFramework)' == 'net9.0'">Exe"</OutputType>
 
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
