@@ -9,6 +9,28 @@ namespace CSUtilities.Extensions;
 /// </summary>
 internal static class IEnumerableExtensions
 {
+#if NET5_0
+	/// <summary>
+	/// Returns distinct elements from a sequence according to a specified key selector function.
+	/// </summary>
+	/// <typeparam name="T">The type of the elements in the source sequence.</typeparam>
+	/// <typeparam name="TKey">The type of the key returned by <paramref name="keySelector"/>.</typeparam>
+	/// <param name="enumerable">The sequence to remove duplicate elements from.</param>
+	/// <param name="keySelector">A function to extract the key for each element.</param>
+	/// <returns>An <see cref="IEnumerable{T}"/> that contains distinct elements from the source sequence.</returns>
+	public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> enumerable, Func<T, TKey> keySelector)
+	{
+		HashSet<TKey> seenKeys = new HashSet<TKey>();
+		foreach (T element in enumerable)
+		{
+			if (seenKeys.Add(keySelector(element)))
+			{
+				yield return element;
+			}
+		}
+	}
+#endif
+
 	/// <summary>
 	/// Return true if the collection is empty.
 	/// </summary>
