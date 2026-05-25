@@ -9,7 +9,7 @@ namespace CSUtilities.Extensions;
 /// </summary>
 internal static class IEnumerableExtensions
 {
-#if NET5_0
+#if NET5_0 || !NET
 	/// <summary>
 	/// Returns distinct elements from a sequence according to a specified key selector function.
 	/// </summary>
