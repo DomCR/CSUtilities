@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BoundingBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BoundingBoxExtent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Geometry\Arc2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\Circle2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\CurveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\ICurve.cs" />

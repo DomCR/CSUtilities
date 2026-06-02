@@ -20,7 +20,7 @@ public static class MathHelper
 	/// <summary>
 	/// Factor for converting degrees to radians.
 	/// </summary>
-	public const double DegToRadFactor = (Math.PI / 180);
+	public const double DegToRadFactor = Math.PI / 180;
 
 	/// <summary>
 	/// Default tolerance
@@ -50,7 +50,7 @@ public static class MathHelper
 	/// <summary>
 	/// Factor for converting radians to degrees.
 	/// </summary>
-	public const double RadToDegFactor = (180 / Math.PI);
+	public const double RadToDegFactor = 180 / Math.PI;
 
 	/// <summary>
 	/// Factor for converting radians to gradians.
@@ -109,6 +109,17 @@ public static class MathHelper
 	}
 
 	/// <summary>
+	/// Replaces the specified number with zero if it is within the defined threshold.
+	/// </summary>
+	/// <param name="number">The number to evaluate.</param>
+	/// <param name="threshold">The threshold value for determining if the number is considered zero.</param>
+	/// <returns>Zero if the number is within the threshold; otherwise, the original number.</returns>
+	public static double FixZero(double number, double threshold)
+	{
+		return IsZero(number, threshold) ? 0 : number;
+	}
+
+	/// <summary>
 	/// Returns zero if the specified number is within the given threshold of zero; otherwise, returns the original number.
 	/// </summary>
 	/// <remarks>This method is useful for normalizing values that are very close to zero due to floating-point
@@ -117,12 +128,6 @@ public static class MathHelper
 	/// <param name="number">The value to evaluate for near-zero equivalence.</param>
 	/// <param name="threshold">The tolerance within which the number is considered to be zero. Must be non-negative.</param>
 	/// <returns>Zero if the absolute value of the number is less than or equal to the threshold; otherwise, the original number.</returns>
-
-	public static double FixZero(double number, double threshold)
-	{
-		return IsZero(number, threshold) ? 0 : number;
-	}
-
 	/// <summary>
 	/// Returns a copy of the specified vector with components that are effectively zero replaced by exact zeros.
 	/// </summary>
@@ -196,6 +201,34 @@ public static class MathHelper
 	}
 
 	/// <summary>
+	/// Determines whether a specified angle falls within a given angular range.
+	/// </summary>
+	/// <remarks>
+	/// This method normalizes all angles to the range [0, 2π) before comparison. It correctly handles ranges that wrap
+	/// around the 0/2π boundary. For example, if the start angle is greater than the end angle, the range is considered
+	/// to span across 0 radians.
+	/// </remarks>
+	/// <param name="angle">The angle to test, in radians.</param>
+	/// <param name="start">The start of the angular range, in radians.</param>
+	/// <param name="end">The end of the angular range, in radians.</param>
+	/// <returns>
+	/// <c>true</c> if the angle falls within the specified range (inclusive); otherwise, <c>false</c>.
+	/// </returns>
+	public static bool IsAngleInRange(double angle, double start, double end)
+	{
+		angle = NormalizeAngleRadians(angle);
+		start = NormalizeAngleRadians(start);
+		end = NormalizeAngleRadians(end);
+
+		if (start > end)
+		{
+			return (angle >= 0.0 && angle <= end) || (angle >= start && angle <= TwoPI);
+		}
+
+		return angle >= start && angle <= end;
+	}
+
+	/// <summary>
 	/// Checks if a number is equal to another.
 	/// </summary>
 	/// <param name="a">Double precision number.</param>
@@ -264,6 +297,16 @@ public static class MathHelper
 		}
 
 		return normalized;
+	}
+
+	public static double NormalizeAngleRadians(double angle)
+	{
+		if (angle < 0.0 || angle > TwoPI)
+		{
+			angle -= TwoPI * Math.Floor(angle / TwoPI);
+		}
+
+		return angle;
 	}
 
 	/// <summary>
