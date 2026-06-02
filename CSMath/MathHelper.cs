@@ -211,10 +211,11 @@ public static class MathHelper
 	/// <param name="angle">The angle to test, in radians.</param>
 	/// <param name="start">The start of the angular range, in radians.</param>
 	/// <param name="end">The end of the angular range, in radians.</param>
+	/// <param name="precision">Tolerance value.</param>
 	/// <returns>
 	/// <c>true</c> if the angle falls within the specified range (inclusive); otherwise, <c>false</c>.
 	/// </returns>
-	public static bool IsAngleInRange(double angle, double start, double end)
+	public static bool IsAngleInRange(double angle, double start, double end, double precision = Epsilon)
 	{
 		angle = NormalizeAngleRadians(angle);
 		start = NormalizeAngleRadians(start);
@@ -222,10 +223,10 @@ public static class MathHelper
 
 		if (start > end)
 		{
-			return (angle >= 0.0 && angle <= end) || (angle >= start && angle <= TwoPI);
+			return (angle >= 0.0 && angle <= end + precision) || (angle >= start - precision && angle <= TwoPI);
 		}
 
-		return angle >= start && angle <= end;
+		return angle >= start - precision && angle <= end + precision;
 	}
 
 	/// <summary>

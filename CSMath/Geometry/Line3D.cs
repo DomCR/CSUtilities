@@ -2,7 +2,6 @@
 
 namespace CSMath.Geometry;
 
-// Eq: pt = origin + a * Direction
 public struct Line3D : ILine<XYZ>, IEquatable<Line3D>
 {
 	/// <inheritdoc/>

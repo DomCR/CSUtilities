@@ -12,6 +12,9 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 	/// <inheritdoc/>
 	public XY Origin { get; set; }
 
+	/// <summary>
+	/// Gets the slope of the line based on its direction vector.
+	/// </summary>
 	public double Slope { get { return (this.Direction.Y - this.Direction.Y) / (this.Direction.X - this.Direction.X); } }
 
 	public Line2D(XY origin, XY direction)
