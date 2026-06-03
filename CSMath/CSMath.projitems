@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\ILine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\Line3D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\LineExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Geometry\Segment2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix3.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Matrix3.operators.cs" />

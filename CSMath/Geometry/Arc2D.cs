@@ -8,6 +8,14 @@ namespace CSMath.Geometry;
 /// </summary>
 public struct Arc2D
 {
+	public Arc2D(XY center, double radius, double startAngle, double endAngle)
+	{
+		this.Center = center;
+		this.Radius = radius;
+		this.StartAngle = startAngle;
+		this.EndAngle = endAngle;
+	}
+
 	/// <summary>
 	/// Gets or sets the starting angle of the arc in radians.
 	/// </summary>
@@ -32,9 +40,9 @@ public struct Arc2D
 	/// Calculates the intersection points between this arc and a line segment.
 	/// </summary>
 	/// <param name="line">The line segment to test for intersection.</param>
-	/// <param name="precision">The precision value for the calculation (currently unused).</param>
+	/// <param name="precision">The precision value for the calculation.</param>
 	/// <returns>An enumerable collection of intersection points. Returns an empty collection if no intersections exist.</returns>
-	public IEnumerable<XY> GetIntersections(Line2D line, double precision)
+	public IEnumerable<XY> FindIntersections(Line2D line, double precision = MathHelper.Epsilon)
 	{
 		double lengthSquared = line.Direction.GetLengthSquared();
 		XY originOffset = line.Origin - this.Center;

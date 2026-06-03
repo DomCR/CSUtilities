@@ -15,7 +15,7 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 	/// <summary>
 	/// Gets the slope of the line based on its direction vector.
 	/// </summary>
-	public double Slope { get { return (this.Direction.Y - this.Direction.Y) / (this.Direction.X - this.Direction.X); } }
+	public double Slope { get { return this.Direction.Y / this.Direction.X; } }
 
 	public Line2D(XY origin, XY direction)
 	{
@@ -28,7 +28,11 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 	{
 		return this.IsPointOnLine(other.Origin) && other.Direction == this.Direction;
 	}
-
+	/// <inheritdoc/>
+	public override int GetHashCode()
+	{
+		return this.Origin.GetHashCode() ^ this.Direction.GetHashCode();
+	}
 	/// <inheritdoc/>
 	public XY FindIntersection(ILine<XY> line)
 	{
@@ -41,5 +45,10 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 		double cross = XY.Cross(this.Direction, line.Direction);
 		double s = (v.X * line.Direction.Y - v.Y * line.Direction.X) / cross;
 		return this.Origin + s * this.Direction;
+	}
+	/// <inheritdoc/>
+	public override bool Equals(object obj)
+	{
+		return obj is Line2D && Equals((Line2D)obj);
 	}
 }

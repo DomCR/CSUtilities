@@ -211,7 +211,7 @@ public static class MathHelper
 	/// <param name="angle">The angle to test, in radians.</param>
 	/// <param name="start">The start of the angular range, in radians.</param>
 	/// <param name="end">The end of the angular range, in radians.</param>
-	/// <param name="precision">Tolerance value.</param>
+	/// <param name="precision">The precision value for the calculation.</param>
 	/// <returns>
 	/// <c>true</c> if the angle falls within the specified range (inclusive); otherwise, <c>false</c>.
 	/// </returns>
