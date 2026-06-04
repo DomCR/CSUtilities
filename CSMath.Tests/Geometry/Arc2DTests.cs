@@ -43,7 +43,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_ArcWithOffsetCenter_ReturnsCorrectPoints()
+	public void FindIntersections_ArcWithOffsetCenter_ReturnsCorrectPoints()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -58,7 +58,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(0, 10), new XY(20, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Equal(2, intersections.Count);
@@ -67,7 +67,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_DiagonalLineThroughArc_ReturnsTwoPoints()
+	public void FindIntersections_DiagonalLineThroughArc_ReturnsTwoPoints()
 	{
 		// Arrange - Full circle
 		Arc2D arc = new Arc2D
@@ -82,7 +82,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-10, -10), new XY(20, 20));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Equal(2, intersections.Count);
@@ -98,7 +98,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_FullCircle_LinePassesThrough_ReturnsTwoPoints()
+	public void FindIntersections_FullCircle_LinePassesThrough_ReturnsTwoPoints()
 	{
 		// Arrange - Full circle (0° to 360°)
 		Arc2D arc = new Arc2D
@@ -113,7 +113,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(5, 0), new XY(0, 10));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Equal(2, intersections.Count);
@@ -126,7 +126,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_LargeRadius_ReturnsCorrectPoints()
+	public void FindIntersections_LargeRadius_ReturnsCorrectPoints()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -141,7 +141,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-2000, 0), new XY(4000, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Equal(2, intersections.Count);
@@ -150,7 +150,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_LineIntersectsArcAtOnePoint_ReturnsOnePoint()
+	public void FindIntersections_LineIntersectsArcAtOnePoint_ReturnsOnePoint()
 	{
 		// Arrange - Arc from 45° to 135° (upper half, centered)
 		Arc2D arc = new Arc2D
@@ -165,7 +165,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(0, -10), new XY(0, 20));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		// Should intersect at 90° (0, 5)
@@ -175,7 +175,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_LineIntersectsCircleButNotArc_ReturnsEmpty()
+	public void FindIntersections_LineIntersectsCircleButNotArc_ReturnsEmpty()
 	{
 		// Arrange - Arc from 0° to 90° (first quadrant only)
 		Arc2D arc = new Arc2D
@@ -191,7 +191,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-10, 0), new XY(20, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		// Should only find the point at 0° (5, 0)
@@ -201,7 +201,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_LineMissesArc_ReturnsEmpty()
+	public void FindIntersections_LineMissesArc_ReturnsEmpty()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -216,14 +216,14 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-10, 10), new XY(20, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance);
+		var intersections = arc.FindIntersections(line, Tolerance);
 
 		// Assert
 		Assert.Empty(intersections);
 	}
 
 	[Fact]
-	public void GetIntersections_LinePassesThroughArc_ReturnsTwoPoints()
+	public void FindIntersections_LinePassesThroughArc_ReturnsTwoPoints()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -238,7 +238,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-10, 0), new XY(20, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Equal(2, intersections.Count);
@@ -247,7 +247,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_LineTangentToArc_ReturnsOnePoint()
+	public void FindIntersections_LineTangentToArc_ReturnsOnePoint()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -262,7 +262,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-10, 5), new XY(20, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Single(intersections);
@@ -271,7 +271,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_SmallArc_LineIntersectsOnce_ReturnsOnePoint()
+	public void FindIntersections_SmallArc_LineIntersectsOnce_ReturnsOnePoint()
 	{
 		// Arrange - Small arc from 80° to 100°
 		Arc2D arc = new Arc2D
@@ -286,7 +286,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(0, 0), new XY(0, 20));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Single(intersections);
@@ -295,7 +295,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_VerticalLine_ReturnsCorrectPoints()
+	public void FindIntersections_VerticalLine_ReturnsCorrectPoints()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -310,7 +310,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(3, -10), new XY(0, 20));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Equal(2, intersections.Count);
@@ -322,7 +322,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_VerySmallRadius_ReturnsCorrectPoints()
+	public void FindIntersections_VerySmallRadius_ReturnsCorrectPoints()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -337,7 +337,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-1, 0), new XY(2, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		Assert.Equal(2, intersections.Count);
@@ -346,7 +346,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_WrapAroundArc_ReturnsCorrectPoints()
+	public void FindIntersections_WrapAroundArc_ReturnsCorrectPoints()
 	{
 		// Arrange - Arc from 315° to 45° (wraps around 0°)
 		Arc2D arc = new Arc2D
@@ -361,7 +361,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(-10, 0), new XY(20, 0));
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance).ToList();
+		var intersections = arc.FindIntersections(line, Tolerance).ToList();
 
 		// Assert
 		// Should only intersect at 0° (5, 0), not at 180° (-5, 0)
@@ -371,7 +371,7 @@ public class Arc2DTests
 	}
 
 	[Fact]
-	public void GetIntersections_ZeroLengthLine_ReturnsEmpty()
+	public void FindIntersections_ZeroLengthLine_ReturnsEmpty()
 	{
 		// Arrange
 		Arc2D arc = new Arc2D
@@ -386,7 +386,7 @@ public class Arc2DTests
 		Line2D line = new Line2D(new XY(5, 0), XY.Zero);
 
 		// Act
-		var intersections = arc.GetIntersections(line, Tolerance);
+		var intersections = arc.FindIntersections(line, Tolerance);
 
 		// Assert
 		Assert.Empty(intersections);
