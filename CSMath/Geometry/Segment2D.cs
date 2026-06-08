@@ -54,11 +54,13 @@ public struct Segment2D : ILine<XY>, IEquatable<Segment2D>
 		return intersection;
 	}
 
+	/// <inheritdoc/>
 	public override bool Equals(object obj)
 	{
 		return obj is Segment2D && Equals((Segment2D)obj);
 	}
 
+	/// <inheritdoc/>
 	public override int GetHashCode()
 	{
 		return this.Origin.GetHashCode() ^ this.End.GetHashCode();

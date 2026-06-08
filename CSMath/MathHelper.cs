@@ -300,6 +300,11 @@ public static class MathHelper
 		return normalized;
 	}
 
+	/// <summary>
+	/// Normalizes the value of an angle in radians between 0-2π.
+	/// </summary>
+	/// <param name="angle">Angle in radians.</param>
+	/// <returns>The equivalent angle in the range 0-2π.</returns>
 	public static double NormalizeAngleRadians(double angle)
 	{
 		if (angle < 0.0 || angle > TwoPI)
@@ -311,11 +316,11 @@ public static class MathHelper
 	}
 
 	/// <summary>
-	/// Convert a value from radian to degree
+	/// Convert a value from radian to degree.
 	/// </summary>
 	/// <param name="value">Value in radians</param>
 	/// <param name="absolute">Calculates the negative values in a 0-360 range.</param>
-	/// <returns>The radian value</returns>
+	/// <returns>The degree value.</returns>
 	public static double RadToDeg(double value, bool absolute = true)
 	{
 		var result = value * RadToDegFactor;
@@ -326,7 +331,7 @@ public static class MathHelper
 	/// Convert a value from radian to gradian.
 	/// </summary>
 	/// <param name="value">Value in radians.</param>
-	/// <returns>The radian value.</returns>
+	/// <returns>The gradian value.</returns>
 	public static double RadToGrad(double value)
 	{
 		return value * RadToGradFactor;
@@ -347,8 +352,8 @@ public static class MathHelper
 	/// <summary>
 	/// Returns the sine of specific angle in radians adjusting the value to 0 using <see cref="Epsilon"/> as tolerance.
 	/// </summary>
-	/// <param name="value"></param>
-	/// <returns></returns>
+	/// <param name="value">Angle in radians.</param>
+	/// <returns>The sine of the angle.</returns>
 	public static double Sin(double value)
 	{
 		double result = Math.Sin(value);

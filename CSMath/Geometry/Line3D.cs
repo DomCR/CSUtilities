@@ -5,10 +5,10 @@ namespace CSMath.Geometry;
 public struct Line3D : ILine<XYZ>, IEquatable<Line3D>
 {
 	/// <inheritdoc/>
-	public XYZ Origin { get; set; }
+	public XYZ Direction { get; set; }
 
 	/// <inheritdoc/>
-	public XYZ Direction { get; set; }
+	public XYZ Origin { get; set; }
 
 	/// <summary>
 	/// Initialize a new instance of the <see cref="Line3D" /> class.
@@ -26,6 +26,12 @@ public struct Line3D : ILine<XYZ>, IEquatable<Line3D>
 		}
 
 		this.Direction = direction.Normalize();
+	}
+
+	/// <inheritdoc/>
+	public bool Equals(Line3D other)
+	{
+		return this.IsPointOnLine(other.Origin) && other.Direction == this.Direction;
 	}
 
 	/// <inheritdoc/>
@@ -57,11 +63,5 @@ public struct Line3D : ILine<XYZ>, IEquatable<Line3D>
 		{
 			return XYZ.NaN;
 		}
-	}
-
-	/// <inheritdoc/>
-	public bool Equals(Line3D other)
-	{
-		return this.IsPointOnLine(other.Origin) && other.Direction == this.Direction;
 	}
 }

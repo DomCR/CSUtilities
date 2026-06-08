@@ -28,11 +28,13 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 	{
 		return this.IsPointOnLine(other.Origin) && other.Direction == this.Direction;
 	}
+
 	/// <inheritdoc/>
-	public override int GetHashCode()
+	public override bool Equals(object obj)
 	{
-		return this.Origin.GetHashCode() ^ this.Direction.GetHashCode();
+		return obj is Line2D && Equals((Line2D)obj);
 	}
+
 	/// <inheritdoc/>
 	public XY FindIntersection(ILine<XY> line)
 	{
@@ -46,9 +48,10 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 		double s = (v.X * line.Direction.Y - v.Y * line.Direction.X) / cross;
 		return this.Origin + s * this.Direction;
 	}
+
 	/// <inheritdoc/>
-	public override bool Equals(object obj)
+	public override int GetHashCode()
 	{
-		return obj is Line2D && Equals((Line2D)obj);
+		return this.Origin.GetHashCode() ^ this.Direction.GetHashCode();
 	}
 }

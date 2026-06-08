@@ -18,16 +18,16 @@ public interface ICurve
 	double RadiusRatio { get; }
 
 	/// <summary>
-	/// Converts the curve in a list of vertexes.
-	/// </summary>
-	/// <param name="precision">Number of vertexes generated.</param>
-	/// <returns>A list vertexes that represents the curve expressed in object coordinate system.</returns>
-	List<XYZ> PolygonalVertexes(int precision);
-
-	/// <summary>
 	/// Calculate the local point on the curve for a given angle relative to the center.
 	/// </summary>
 	/// <param name="angle">Angle in radians.</param>
 	/// <returns>A local point on the curve for the given angle relative to the center.</returns>
 	XYZ PolarCoordinateRelativeToCenter(double angle);
+
+	/// <summary>
+	/// Converts the curve in a list of vertexes.
+	/// </summary>
+	/// <param name="precision">Number of vertexes generated.</param>
+	/// <returns>A list vertexes that represents the curve expressed in object coordinate system.</returns>
+	List<XYZ> PolygonalVertexes(int precision);
 }

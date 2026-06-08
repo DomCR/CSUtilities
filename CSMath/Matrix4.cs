@@ -31,8 +31,6 @@ public partial struct Matrix4
 	/// </summary>
 	public static readonly Matrix4 Zero = new Matrix4(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-	#region Public Fields
-
 	/// <summary>
 	/// Value at column 0, row 0 of the matrix.
 	/// </summary>
@@ -224,8 +222,6 @@ public partial struct Matrix4
 			this[(column * 4) + row] = value;
 		}
 	}
-
-	#endregion Public Fields
 
 	public Matrix4(
 		double m00, double m10, double m20, double m30,

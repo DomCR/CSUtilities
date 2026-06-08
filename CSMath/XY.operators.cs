@@ -4,15 +4,9 @@ namespace CSMath;
 
 public partial struct XY : IVector, IEquatable<XY>
 {
-	/// <summary>
-	/// Adds two vectors together.
-	/// </summary>
-	/// <param name="left">The first source vector.</param>
-	/// <param name="right">The second source vector.</param>
-	/// <returns>The summed vector.</returns>
-	public static XY operator +(XY left, XY right)
+	public static explicit operator XY(XYZ xyz)
 	{
-		return left.Add(right);
+		return new XY(xyz.X, xyz.Y);
 	}
 
 	/// <summary>
@@ -24,6 +18,28 @@ public partial struct XY : IVector, IEquatable<XY>
 	public static XY operator -(XY left, XY right)
 	{
 		return left.Subtract(right);
+	}
+
+	/// <summary>
+	/// Negates a given vector.
+	/// </summary>
+	/// <param name="value">The source vector.</param>
+	/// <returns>The negated vector.</returns>
+	public static XY operator -(XY value)
+	{
+		return Zero.Subtract(value);
+	}
+
+	/// <summary>
+	/// Returns a boolean indicating whether the two given vectors are not equal.
+	/// </summary>
+	/// <param name="left">The first vector to compare.</param>
+	/// <param name="right">The second vector to compare.</param>
+	/// <returns>True if the vectors are not equal; False if they are equal.</returns>
+	public static bool operator !=(XY left, XY right)
+	{
+		return (left.X != right.X ||
+				left.Y != right.Y);
 	}
 
 	/// <summary>
@@ -99,13 +115,14 @@ public partial struct XY : IVector, IEquatable<XY>
 	}
 
 	/// <summary>
-	/// Negates a given vector.
+	/// Adds two vectors together.
 	/// </summary>
-	/// <param name="value">The source vector.</param>
-	/// <returns>The negated vector.</returns>
-	public static XY operator -(XY value)
+	/// <param name="left">The first source vector.</param>
+	/// <param name="right">The second source vector.</param>
+	/// <returns>The summed vector.</returns>
+	public static XY operator +(XY left, XY right)
 	{
-		return Zero.Subtract(value);
+		return left.Add(right);
 	}
 
 	/// <summary>
@@ -118,22 +135,5 @@ public partial struct XY : IVector, IEquatable<XY>
 	{
 		return (left.X == right.X &&
 				left.Y == right.Y);
-	}
-
-	/// <summary>
-	/// Returns a boolean indicating whether the two given vectors are not equal.
-	/// </summary>
-	/// <param name="left">The first vector to compare.</param>
-	/// <param name="right">The second vector to compare.</param>
-	/// <returns>True if the vectors are not equal; False if they are equal.</returns>
-	public static bool operator !=(XY left, XY right)
-	{
-		return (left.X != right.X ||
-				left.Y != right.Y);
-	}
-
-	public static explicit operator XY(XYZ xyz)
-	{
-		return new XY(xyz.X, xyz.Y);
 	}
 }

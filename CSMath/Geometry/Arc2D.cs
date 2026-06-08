@@ -8,18 +8,10 @@ namespace CSMath.Geometry;
 /// </summary>
 public struct Arc2D
 {
-	public Arc2D(XY center, double radius, double startAngle, double endAngle)
-	{
-		this.Center = center;
-		this.Radius = radius;
-		this.StartAngle = startAngle;
-		this.EndAngle = endAngle;
-	}
-
 	/// <summary>
-	/// Gets or sets the starting angle of the arc in radians.
+	/// Gets or sets the center point of the arc.
 	/// </summary>
-	public double StartAngle { get; set; }
+	public XY Center { get; set; }
 
 	/// <summary>
 	/// Gets or sets the ending angle of the arc in radians.
@@ -32,9 +24,17 @@ public struct Arc2D
 	public double Radius { get; set; }
 
 	/// <summary>
-	/// Gets or sets the center point of the arc.
+	/// Gets or sets the starting angle of the arc in radians.
 	/// </summary>
-	public XY Center { get; set; }
+	public double StartAngle { get; set; }
+
+	public Arc2D(XY center, double radius, double startAngle, double endAngle)
+	{
+		this.Center = center;
+		this.Radius = radius;
+		this.StartAngle = startAngle;
+		this.EndAngle = endAngle;
+	}
 
 	/// <summary>
 	/// Calculates the intersection points between this arc and a line segment.

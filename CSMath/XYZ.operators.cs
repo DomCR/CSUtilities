@@ -4,15 +4,9 @@ namespace CSMath;
 
 public partial struct XYZ : IVector, IEquatable<XYZ>
 {
-	/// <summary>
-	/// Adds two vectors together.
-	/// </summary>
-	/// <param name="left">The first source vector.</param>
-	/// <param name="right">The second source vector.</param>
-	/// <returns>The summed vector.</returns>
-	public static XYZ operator +(XYZ left, XYZ right)
+	public static explicit operator XYZ(XY xy)
 	{
-		return left.Add(right);
+		return new XYZ(xy.X, xy.Y, 0);
 	}
 
 	/// <summary>
@@ -24,6 +18,29 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 	public static XYZ operator -(XYZ left, XYZ right)
 	{
 		return left.Subtract(right);
+	}
+
+	/// <summary>
+	/// Negates a given vector.
+	/// </summary>
+	/// <param name="value">The source vector.</param>
+	/// <returns>The negated vector.</returns>
+	public static XYZ operator -(XYZ value)
+	{
+		return Zero.Subtract(value);
+	}
+
+	/// <summary>
+	/// Returns a boolean indicating whether the two given vectors are not equal.
+	/// </summary>
+	/// <param name="left">The first vector to compare.</param>
+	/// <param name="right">The second vector to compare.</param>
+	/// <returns>True if the vectors are not equal; False if they are equal.</returns>
+	public static bool operator !=(XYZ left, XYZ right)
+	{
+		return (left.X != right.X ||
+				left.Y != right.Y ||
+				left.Z != right.Z);
 	}
 
 	/// <summary>
@@ -101,13 +118,14 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 	}
 
 	/// <summary>
-	/// Negates a given vector.
+	/// Adds two vectors together.
 	/// </summary>
-	/// <param name="value">The source vector.</param>
-	/// <returns>The negated vector.</returns>
-	public static XYZ operator -(XYZ value)
+	/// <param name="left">The first source vector.</param>
+	/// <param name="right">The second source vector.</param>
+	/// <returns>The summed vector.</returns>
+	public static XYZ operator +(XYZ left, XYZ right)
 	{
-		return Zero.Subtract(value);
+		return left.Add(right);
 	}
 
 	/// <summary>
@@ -121,23 +139,5 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 		return (left.X == right.X &&
 				left.Y == right.Y &&
 				left.Z == right.Z);
-	}
-
-	/// <summary>
-	/// Returns a boolean indicating whether the two given vectors are not equal.
-	/// </summary>
-	/// <param name="left">The first vector to compare.</param>
-	/// <param name="right">The second vector to compare.</param>
-	/// <returns>True if the vectors are not equal; False if they are equal.</returns>
-	public static bool operator !=(XYZ left, XYZ right)
-	{
-		return (left.X != right.X ||
-				left.Y != right.Y ||
-				left.Z != right.Z);
-	}
-
-	public static explicit operator XYZ(XY xy)
-	{
-		return new XYZ(xy.X, xy.Y, 0);
 	}
 }
