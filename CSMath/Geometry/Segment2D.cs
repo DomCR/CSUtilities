@@ -4,11 +4,8 @@ namespace CSMath.Geometry;
 
 public struct Segment2D : ILine<XY>, IEquatable<Segment2D>
 {
-	public Segment2D(XY origin, XY end)
-	{
-		this.Origin = origin;
-		this.End = end;
-	}
+	/// <inheritdoc/>
+	public XY Direction { get { return this.End - this.Origin; } }
 
 	/// <summary>
 	/// Gets or sets the end point of the segment in the XY plane.
@@ -18,13 +15,22 @@ public struct Segment2D : ILine<XY>, IEquatable<Segment2D>
 	/// <inheritdoc/>
 	public XY Origin { get; set; }
 
-	/// <inheritdoc/>
-	public XY Direction { get { return this.End - this.Origin; } }
+	public Segment2D(XY origin, XY end)
+	{
+		this.Origin = origin;
+		this.End = end;
+	}
 
 	/// <inheritdoc/>
 	public bool Equals(Segment2D other)
 	{
 		return this.Origin.Equals(other.Origin) && this.End.Equals(other.End);
+	}
+
+	/// <inheritdoc/>
+	public override bool Equals(object obj)
+	{
+		return obj is Segment2D && Equals((Segment2D)obj);
 	}
 
 	/// <summary>
@@ -52,12 +58,6 @@ public struct Segment2D : ILine<XY>, IEquatable<Segment2D>
 		}
 
 		return intersection;
-	}
-
-	/// <inheritdoc/>
-	public override bool Equals(object obj)
-	{
-		return obj is Segment2D && Equals((Segment2D)obj);
 	}
 
 	/// <inheritdoc/>

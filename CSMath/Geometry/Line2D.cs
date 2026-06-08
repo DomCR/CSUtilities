@@ -2,11 +2,17 @@ using System;
 
 namespace CSMath.Geometry;
 
+/// <summary>
+/// Represents a 2D line defined by an origin point and a direction vector.
+/// </summary>
 public struct Line2D : ILine<XY>, IEquatable<Line2D>
 {
 	/// <inheritdoc/>
 	public XY Direction { get; set; }
 
+	/// <summary>
+	/// Gets the y-intercept of the line, calculated from the origin and slope.
+	/// </summary>
 	public double Offset { get { return Origin.Y - this.Slope * Origin.X; } }
 
 	/// <inheritdoc/>
@@ -47,6 +53,16 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 		double cross = XY.Cross(this.Direction, line.Direction);
 		double s = (v.X * line.Direction.Y - v.Y * line.Direction.X) / cross;
 		return this.Origin + s * this.Direction;
+	}
+
+	/// <summary>
+	/// Determines if a given point lies on the line.
+	/// </summary>
+	/// <param name="lambda">The parameter value along the line.</param>
+	/// <returns>The point on the line corresponding to the given parameter value.</returns>
+	public XY PointInLine(double lambda)
+	{
+		return this.Origin + lambda * this.Direction;
 	}
 
 	/// <inheritdoc/>
