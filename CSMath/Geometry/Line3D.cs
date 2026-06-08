@@ -28,6 +28,27 @@ public struct Line3D : ILine<XYZ>, IEquatable<Line3D>
 		this.Direction = direction.Normalize();
 	}
 
+	/// <summary>
+	/// Creates a line from 2 points, the first point is the origin and the second point is used to calculate the direction.
+	/// </summary>
+	/// <param name="pt1">The first point, which will be the origin of the line.</param>
+	/// <param name="pt2">The second point, used to calculate the direction of the line.</param>
+	/// <returns>A new instance of the <see cref="Line3D"/> class.</returns>
+	public static Line3D FromPoints(XYZ pt1, XYZ pt2)
+	{
+		return new Line3D(pt1, pt2 - pt1);
+	}
+
+	/// <summary>
+	/// Creates a line from a segment, the origin of the line will be the origin of the segment and the direction will be the direction of the segment.
+	/// </summary>
+	/// <param name="segment">The 3D segment used to create the line.</param>
+	/// <returns>A new instance of the <see cref="Line3D"/> class.</returns>
+	public static Line3D FromSegment3D(Segment3D segment)
+	{
+		return new Line3D(segment.Origin, segment.Direction);
+	}
+
 	/// <inheritdoc/>
 	public bool Equals(Line3D other)
 	{

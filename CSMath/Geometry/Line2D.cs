@@ -29,6 +29,27 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 		this.Direction = direction;
 	}
 
+	/// <summary>
+	/// Creates a line from 2 points, the first point is the origin and the second point is used to calculate the direction.
+	/// </summary>
+	/// <param name="pt1">The first point, which will be the origin of the line.</param>
+	/// <param name="pt2">The second point, used to calculate the direction of the line.</param>
+	/// <returns>A new instance of the <see cref="Line2D"/> class.</returns>
+	public static Line2D FromPoints(XY pt1, XY pt2)
+	{
+		return new Line2D(pt1, pt2 - pt1);
+	}
+
+	/// <summary>
+	/// Creates a line from a 2D segment, using the segment's origin and direction.
+	/// </summary>
+	/// <param name="segment">The 2D segment used to create the line.</param>
+	/// <returns>A new instance of the <see cref="Line2D"/> class.</returns>
+	public static Line2D FromSegment2D(Segment2D segment)
+	{
+		return new Line2D(segment.Origin, segment.Direction);
+	}
+
 	/// <inheritdoc/>
 	public bool Equals(Line2D other)
 	{
@@ -55,6 +76,12 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 		return this.Origin + s * this.Direction;
 	}
 
+	/// <inheritdoc/>
+	public override int GetHashCode()
+	{
+		return this.Origin.GetHashCode() ^ this.Direction.GetHashCode();
+	}
+
 	/// <summary>
 	/// Determines if a given point lies on the line.
 	/// </summary>
@@ -63,11 +90,5 @@ public struct Line2D : ILine<XY>, IEquatable<Line2D>
 	public XY PointInLine(double lambda)
 	{
 		return this.Origin + lambda * this.Direction;
-	}
-
-	/// <inheritdoc/>
-	public override int GetHashCode()
-	{
-		return this.Origin.GetHashCode() ^ this.Direction.GetHashCode();
 	}
 }
