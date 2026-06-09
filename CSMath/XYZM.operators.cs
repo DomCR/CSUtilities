@@ -5,17 +5,6 @@ namespace CSMath;
 public partial struct XYZM : IVector, IEquatable<XYZM>
 {
 	/// <summary>
-	/// Adds two vectors together.
-	/// </summary>
-	/// <param name="left">The first source vector.</param>
-	/// <param name="right">The second source vector.</param>
-	/// <returns>The summed vector.</returns>
-	public static XYZM operator +(XYZM left, XYZM right)
-	{
-		return left.Add(right);
-	}
-
-	/// <summary>
 	/// Subtracts the second vector from the first.
 	/// </summary>
 	/// <param name="left">The first source vector.</param>
@@ -24,6 +13,27 @@ public partial struct XYZM : IVector, IEquatable<XYZM>
 	public static XYZM operator -(XYZM left, XYZM right)
 	{
 		return left.Subtract(right);
+	}
+
+	/// <summary>
+	/// Negates a given vector.
+	/// </summary>
+	/// <param name="value">The source vector.</param>
+	/// <returns>The negated vector.</returns>
+	public static XYZM operator -(XYZM value)
+	{
+		return Zero.Subtract(value);
+	}
+
+	/// <summary>
+	/// Returns a boolean indicating whether the two given vectors are not equal.
+	/// </summary>
+	/// <param name="left">The first vector to compare.</param>
+	/// <param name="right">The second vector to compare.</param>
+	/// <returns>True if the vectors are not equal; False if they are equal.</returns>
+	public static bool operator !=(XYZM left, XYZM right)
+	{
+		return !left.IsEqual(right);
 	}
 
 	/// <summary>
@@ -82,13 +92,14 @@ public partial struct XYZM : IVector, IEquatable<XYZM>
 	}
 
 	/// <summary>
-	/// Negates a given vector.
+	/// Adds two vectors together.
 	/// </summary>
-	/// <param name="value">The source vector.</param>
-	/// <returns>The negated vector.</returns>
-	public static XYZM operator -(XYZM value)
+	/// <param name="left">The first source vector.</param>
+	/// <param name="right">The second source vector.</param>
+	/// <returns>The summed vector.</returns>
+	public static XYZM operator +(XYZM left, XYZM right)
 	{
-		return Zero.Subtract(value);
+		return left.Add(right);
 	}
 
 	/// <summary>
@@ -100,16 +111,5 @@ public partial struct XYZM : IVector, IEquatable<XYZM>
 	public static bool operator ==(XYZM left, XYZM right)
 	{
 		return left.IsEqual(right);
-	}
-
-	/// <summary>
-	/// Returns a boolean indicating whether the two given vectors are not equal.
-	/// </summary>
-	/// <param name="left">The first vector to compare.</param>
-	/// <param name="right">The second vector to compare.</param>
-	/// <returns>True if the vectors are not equal; False if they are equal.</returns>
-	public static bool operator !=(XYZM left, XYZM right)
-	{
-		return !left.IsEqual(right);
 	}
 }

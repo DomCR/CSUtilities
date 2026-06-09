@@ -4,12 +4,13 @@ namespace CSMath;
 
 public partial struct XYZM : IVector, IEquatable<XYZM>
 {
-	public readonly static XYZM NaN = new XYZM(double.NaN);
-	public readonly static XYZM Zero = new XYZM(0, 0, 0, 0);
-	public readonly static XYZM AxisX = new XYZM(1, 0, 0, 0);
-	public readonly static XYZM AxisY = new XYZM(0, 1, 0, 0);
-	public readonly static XYZM AxisZ = new XYZM(0, 0, 1, 0);
-	public readonly static XYZM AxisM = new XYZM(0, 0, 0, 1);
+	/// <inheritdoc/>
+	public uint Dimension { get { return 4; } }
+
+	/// <summary>
+	/// Specifies the M-value of the vector component
+	/// </summary>
+	public double M { get; set; }
 
 	/// <summary>
 	/// Specifies the X-value of the vector component
@@ -26,54 +27,17 @@ public partial struct XYZM : IVector, IEquatable<XYZM>
 	/// </summary>
 	public double Z { get; set; }
 
-	/// <summary>
-	/// Specifies the M-value of the vector component
-	/// </summary>
-	public double M { get; set; }
+	public static readonly XYZM AxisM = new XYZM(0, 0, 0, 1);
 
-	/// <inheritdoc/>
-	public uint Dimension { get { return 4; } }
+	public static readonly XYZM AxisX = new XYZM(1, 0, 0, 0);
 
-	/// <inheritdoc/>
-	public double this[int index]
-	{
-		get
-		{
-			switch (index)
-			{
-				case 0:
-					return X;
-				case 1:
-					return Y;
-				case 2:
-					return Z;
-				case 3:
-					return M;
-				default:
-					throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
-			}
-		}
-		set
-		{
-			switch (index)
-			{
-				case 0:
-					X = value;
-					break;
-				case 1:
-					Y = value;
-					break;
-				case 2:
-					Z = value;
-					break;
-				case 3:
-					M = value;
-					break;
-				default:
-					throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
-			}
-		}
-	}
+	public static readonly XYZM AxisY = new XYZM(0, 1, 0, 0);
+
+	public static readonly XYZM AxisZ = new XYZM(0, 0, 1, 0);
+
+	public static readonly XYZM NaN = new XYZM(double.NaN);
+
+	public static readonly XYZM Zero = new XYZM(0, 0, 0, 0);
 
 	/// <summary>
 	/// Constructor with the coordinate components
@@ -143,5 +107,46 @@ public partial struct XYZM : IVector, IEquatable<XYZM>
 	public string ToString(IFormatProvider? cultureInfo)
 	{
 		return $"{X.ToString(cultureInfo)},{Y.ToString(cultureInfo)},{Z.ToString(cultureInfo)},{M.ToString(cultureInfo)}";
+	}
+
+	/// <inheritdoc/>
+	public double this[int index]
+	{
+		get
+		{
+			switch (index)
+			{
+				case 0:
+					return X;
+				case 1:
+					return Y;
+				case 2:
+					return Z;
+				case 3:
+					return M;
+				default:
+					throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+			}
+		}
+		set
+		{
+			switch (index)
+			{
+				case 0:
+					X = value;
+					break;
+				case 1:
+					Y = value;
+					break;
+				case 2:
+					Z = value;
+					break;
+				case 3:
+					M = value;
+					break;
+				default:
+					throw new IndexOutOfRangeException($"The index must be between 0 and {this.Dimension}.");
+			}
+		}
 	}
 }

@@ -9,28 +9,6 @@ namespace CSMath;
 public struct BoundingBox
 {
 	/// <summary>
-	/// Instance of a null bounding box.
-	/// </summary>
-	public static readonly BoundingBox Null = new BoundingBox(BoundingBoxExtent.Null);
-
-	/// <summary>
-	/// Instance of an infinite bounding box.
-	/// </summary>
-	public static readonly BoundingBox Infinite = new BoundingBox(BoundingBoxExtent.Infinite);
-
-	public BoundingBoxExtent Extent { get; }
-
-	/// <summary>
-	/// Get the min corner of the bounding box.
-	/// </summary>
-	public XYZ Min { get; set; }
-
-	/// <summary>
-	/// Get the max corner of the bounding box.
-	/// </summary>
-	public XYZ Max { get; set; }
-
-	/// <summary>
 	/// Center of the box.
 	/// </summary>
 	public XYZ Center
@@ -38,6 +16,17 @@ public struct BoundingBox
 		get
 		{
 			return this.Min + (this.Max - this.Min) * 0.5;
+		}
+	}
+
+	public BoundingBoxExtent Extent { get; }
+
+	[Obsolete("Use LengthY instead.")]
+	public double Height
+	{
+		get
+		{
+			return Math.Abs(this.Max.Y - this.Min.Y);
 		}
 	}
 
@@ -74,6 +63,16 @@ public struct BoundingBox
 		}
 	}
 
+	/// <summary>
+	/// Get the max corner of the bounding box.
+	/// </summary>
+	public XYZ Max { get; set; }
+
+	/// <summary>
+	/// Get the min corner of the bounding box.
+	/// </summary>
+	public XYZ Min { get; set; }
+
 	[Obsolete("Use LengthX instead.")]
 	public double Width
 	{
@@ -83,34 +82,15 @@ public struct BoundingBox
 		}
 	}
 
-	[Obsolete("Use LengthY instead.")]
-	public double Height
-	{
-		get
-		{
-			return Math.Abs(this.Max.Y - this.Min.Y);
-		}
-	}
+	/// <summary>
+	/// Instance of an infinite bounding box.
+	/// </summary>
+	public static readonly BoundingBox Infinite = new BoundingBox(BoundingBoxExtent.Infinite);
 
-	private BoundingBox(BoundingBoxExtent extent)
-	{
-		this.Extent = extent;
-		switch (extent)
-		{
-			case BoundingBoxExtent.Null:
-				this.Max = new XYZ(double.NaN);
-				this.Min = new XYZ(double.NaN);
-				break;
-			case BoundingBoxExtent.Infinite:
-				this.Min = new XYZ(double.NegativeInfinity);
-				this.Max = new XYZ(double.PositiveInfinity);
-				break;
-			case BoundingBoxExtent.Finite:
-			case BoundingBoxExtent.Point:
-			default:
-				break;
-		}
-	}
+	/// <summary>
+	/// Instance of a null bounding box.
+	/// </summary>
+	public static readonly BoundingBox Null = new BoundingBox(BoundingBoxExtent.Null);
 
 	/// <summary>
 	/// Initializes a new instance of the BoundingBox class that represents a single point.
@@ -162,48 +142,58 @@ public struct BoundingBox
 		this = new BoundingBox(new XYZ(minX, minY, minZ), new XYZ(maxX, maxY, maxZ));
 	}
 
-	/// <summary>
-	/// Returns a new bounding box translated by the specified vector.
-	/// </summary>
-	/// <param name="xyz">The vector by which to translate the bounding box. Each component is added to the corresponding coordinates of the
-	/// bounding box's minimum and maximum points.</param>
-	/// <returns>A new BoundingBox instance that is the result of translating the current bounding box by the specified vector.</returns>
-	public BoundingBox Move(XYZ xyz)
+	private BoundingBox(BoundingBoxExtent extent)
 	{
-		return new BoundingBox(this.Min + xyz, this.Max + xyz);
+		this.Extent = extent;
+		switch (extent)
+		{
+			case BoundingBoxExtent.Null:
+				this.Max = new XYZ(double.NaN);
+				this.Min = new XYZ(double.NaN);
+				break;
+			case BoundingBoxExtent.Infinite:
+				this.Min = new XYZ(double.NegativeInfinity);
+				this.Max = new XYZ(double.PositiveInfinity);
+				break;
+			case BoundingBoxExtent.Finite:
+			case BoundingBoxExtent.Point:
+			default:
+				break;
+		}
 	}
 
 	/// <summary>
-	/// Merge 2 boxes into the common one.
+	/// Create a bounding box from a collection of points.
 	/// </summary>
-	/// <param name="box"></param>
-	/// <returns>The merged box.</returns>
-	public BoundingBox Merge(BoundingBox box)
+	/// <param name="points"></param>
+	/// <returns></returns>
+	public static BoundingBox FromPoints(IEnumerable<XYZ> points)
 	{
-		if (this.Extent == BoundingBoxExtent.Infinite
-			|| box.Extent == BoundingBoxExtent.Infinite)
+		BoundingBox boundingBox = Null;
+
+		foreach (var point in points)
 		{
-			return BoundingBox.Infinite;
-		}
-		else if (this.Extent == BoundingBoxExtent.Null)
-		{
-			return box;
-		}
-		else if (box.Extent == BoundingBoxExtent.Null)
-		{
-			return this;
+			boundingBox = boundingBox.Merge(new BoundingBox(point));
 		}
 
-		var min = new XYZ(
-			System.Math.Min(this.Min.X, box.Min.X),
-			System.Math.Min(this.Min.Y, box.Min.Y),
-			System.Math.Min(this.Min.Z, box.Min.Z));
-		var max = new XYZ(
-			System.Math.Max(this.Max.X, box.Max.X),
-			System.Math.Max(this.Max.Y, box.Max.Y),
-			System.Math.Max(this.Max.Z, box.Max.Z));
+		return boundingBox;
+	}
 
-		return new BoundingBox(min, max);
+	/// <summary>
+	/// Merge Multiple boxes into the common one.
+	/// </summary>
+	/// <param name="boxes"></param>
+	/// <returns>The merged box.</returns>
+	public static BoundingBox Merge(IEnumerable<BoundingBox> boxes)
+	{
+		BoundingBox b = BoundingBox.Null;
+
+		foreach (var box in boxes)
+		{
+			b = b.Merge(box);
+		}
+
+		return b;
 	}
 
 	/// <summary>
@@ -253,36 +243,46 @@ public struct BoundingBox
 	}
 
 	/// <summary>
-	/// Merge Multiple boxes into the common one.
+	/// Merge 2 boxes into the common one.
 	/// </summary>
-	/// <param name="boxes"></param>
+	/// <param name="box"></param>
 	/// <returns>The merged box.</returns>
-	public static BoundingBox Merge(IEnumerable<BoundingBox> boxes)
+	public BoundingBox Merge(BoundingBox box)
 	{
-		BoundingBox b = BoundingBox.Null;
-
-		foreach (var box in boxes)
+		if (this.Extent == BoundingBoxExtent.Infinite
+			|| box.Extent == BoundingBoxExtent.Infinite)
 		{
-			b = b.Merge(box);
+			return BoundingBox.Infinite;
+		}
+		else if (this.Extent == BoundingBoxExtent.Null)
+		{
+			return box;
+		}
+		else if (box.Extent == BoundingBoxExtent.Null)
+		{
+			return this;
 		}
 
-		return b;
+		var min = new XYZ(
+			System.Math.Min(this.Min.X, box.Min.X),
+			System.Math.Min(this.Min.Y, box.Min.Y),
+			System.Math.Min(this.Min.Z, box.Min.Z));
+		var max = new XYZ(
+			System.Math.Max(this.Max.X, box.Max.X),
+			System.Math.Max(this.Max.Y, box.Max.Y),
+			System.Math.Max(this.Max.Z, box.Max.Z));
+
+		return new BoundingBox(min, max);
 	}
 
 	/// <summary>
-	/// Create a bounding box from a collection of points.
+	/// Returns a new bounding box translated by the specified vector.
 	/// </summary>
-	/// <param name="points"></param>
-	/// <returns></returns>
-	public static BoundingBox FromPoints(IEnumerable<XYZ> points)
+	/// <param name="xyz">The vector by which to translate the bounding box. Each component is added to the corresponding coordinates of the
+	/// bounding box's minimum and maximum points.</param>
+	/// <returns>A new BoundingBox instance that is the result of translating the current bounding box by the specified vector.</returns>
+	public BoundingBox Move(XYZ xyz)
 	{
-		BoundingBox boundingBox = Null;
-
-		foreach (var point in points)
-		{
-			boundingBox = boundingBox.Merge(new BoundingBox(point));
-		}
-
-		return boundingBox;
+		return new BoundingBox(this.Min + xyz, this.Max + xyz);
 	}
 }

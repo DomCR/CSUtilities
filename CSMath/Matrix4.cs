@@ -31,8 +31,6 @@ public partial struct Matrix4
 	/// </summary>
 	public static readonly Matrix4 Zero = new Matrix4(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-	#region Public Fields
-
 	/// <summary>
 	/// Value at column 0, row 0 of the matrix.
 	/// </summary>
@@ -112,120 +110,6 @@ public partial struct Matrix4
 	/// Value at column 3, row 3 of the matrix.
 	/// </summary>
 	public double M33;
-
-	public double this[int index]
-	{
-		get
-		{
-			switch (index)
-			{
-				case 0:
-					return this.M00;
-				case 1:
-					return this.M01;
-				case 2:
-					return this.M02;
-				case 3:
-					return this.M03;
-				case 4:
-					return this.M10;
-				case 5:
-					return this.M11;
-				case 6:
-					return this.M12;
-				case 7:
-					return this.M13;
-				case 8:
-					return this.M20;
-				case 9:
-					return this.M21;
-				case 10:
-					return this.M22;
-				case 11:
-					return this.M23;
-				case 12:
-					return this.M30;
-				case 13:
-					return this.M31;
-				case 14:
-					return this.M32;
-				case 15:
-					return this.M33;
-				default:
-					throw new IndexOutOfRangeException();
-			}
-		}
-		set
-		{
-			switch (index)
-			{
-				case 0:
-					this.M00 = value;
-					break;
-				case 1:
-					this.M01 = value;
-					break;
-				case 2:
-					this.M02 = value;
-					break;
-				case 3:
-					this.M03 = value;
-					break;
-				case 4:
-					this.M10 = value;
-					break;
-				case 5:
-					this.M11 = value;
-					break;
-				case 6:
-					this.M12 = value;
-					break;
-				case 7:
-					this.M13 = value;
-					break;
-				case 8:
-					this.M20 = value;
-					break;
-				case 9:
-					this.M21 = value;
-					break;
-				case 10:
-					this.M22 = value;
-					break;
-				case 11:
-					this.M23 = value;
-					break;
-				case 12:
-					this.M30 = value;
-					break;
-				case 13:
-					this.M31 = value;
-					break;
-				case 14:
-					this.M32 = value;
-					break;
-				case 15:
-					this.M33 = value;
-					break;
-				default:
-					throw new IndexOutOfRangeException();
-			}
-		}
-	}
-
-	public double this[int column, int row]
-	{
-		get
-		{
-			return this[(column * 4) + row];
-		}
-		set
-		{
-			this[(column * 4) + row] = value;
-		}
-	}
-
-	#endregion Public Fields
 
 	public Matrix4(
 		double m00, double m10, double m20, double m30,
@@ -882,5 +766,117 @@ public partial struct Matrix4
 		result.M33 = this.M33;
 
 		return result;
+	}
+
+	public double this[int index]
+	{
+		get
+		{
+			switch (index)
+			{
+				case 0:
+					return this.M00;
+				case 1:
+					return this.M01;
+				case 2:
+					return this.M02;
+				case 3:
+					return this.M03;
+				case 4:
+					return this.M10;
+				case 5:
+					return this.M11;
+				case 6:
+					return this.M12;
+				case 7:
+					return this.M13;
+				case 8:
+					return this.M20;
+				case 9:
+					return this.M21;
+				case 10:
+					return this.M22;
+				case 11:
+					return this.M23;
+				case 12:
+					return this.M30;
+				case 13:
+					return this.M31;
+				case 14:
+					return this.M32;
+				case 15:
+					return this.M33;
+				default:
+					throw new IndexOutOfRangeException();
+			}
+		}
+		set
+		{
+			switch (index)
+			{
+				case 0:
+					this.M00 = value;
+					break;
+				case 1:
+					this.M01 = value;
+					break;
+				case 2:
+					this.M02 = value;
+					break;
+				case 3:
+					this.M03 = value;
+					break;
+				case 4:
+					this.M10 = value;
+					break;
+				case 5:
+					this.M11 = value;
+					break;
+				case 6:
+					this.M12 = value;
+					break;
+				case 7:
+					this.M13 = value;
+					break;
+				case 8:
+					this.M20 = value;
+					break;
+				case 9:
+					this.M21 = value;
+					break;
+				case 10:
+					this.M22 = value;
+					break;
+				case 11:
+					this.M23 = value;
+					break;
+				case 12:
+					this.M30 = value;
+					break;
+				case 13:
+					this.M31 = value;
+					break;
+				case 14:
+					this.M32 = value;
+					break;
+				case 15:
+					this.M33 = value;
+					break;
+				default:
+					throw new IndexOutOfRangeException();
+			}
+		}
+	}
+
+	public double this[int column, int row]
+	{
+		get
+		{
+			return this[(column * 4) + row];
+		}
+		set
+		{
+			this[(column * 4) + row] = value;
+		}
 	}
 }
