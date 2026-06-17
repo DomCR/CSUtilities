@@ -51,21 +51,6 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 	/// <param name="value">The element to fill the vector with.</param>
 	public XYZ(double value) : this(value, value, value) { }
 
-	[Obsolete("Deprecated")]
-	public XYZ(double[] components) : this(components[0], components[1], components[2]) { }
-
-	[Obsolete("Deprecated")]
-	public static XYZ CreateFrom(double[] arr, int offset)
-	{
-		double[] values = new double[3];
-		for (int i = offset; i < arr.Length && i < values.Length + offset; i++)
-		{
-			values[i] = (double)arr[i];
-		}
-
-		return new XYZ(values);
-	}
-
 	/// <summary>
 	/// Computes the cross product of two coordinates.
 	/// </summary>
@@ -80,6 +65,13 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 			xyz1.X * xyz2.Y - xyz1.Y * xyz2.X);
 	}
 
+	/// <summary>
+	/// Finds the normal vector of a plane defined by three points.
+	/// </summary>
+	/// <param name="point1">The first point defining the plane.</param>
+	/// <param name="point2">The second point defining the plane.</param>
+	/// <param name="point3">The third point defining the plane.</param>
+	/// <returns>The normal vector of the plane.</returns>
 	public static XYZ FindNormal(XYZ point1, XYZ point2, XYZ point3)
 	{
 		XYZ a = point2.Subtract(point1);
@@ -104,9 +96,9 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 	/// <summary>
 	/// Indicates whether this instance and a specified object are equal with in a specific precision.
 	/// </summary>
-	/// <param name="other"></param>
-	/// <param name="digits">number of decimals</param>
-	/// <returns></returns>
+	/// <param name="other">The object to compare with the current instance.</param>
+	/// <param name="digits">The number of decimal places to consider for equality.</param>
+	/// <returns>true if the objects are equal within the specified precision; otherwise, false.</returns>
 	public bool Equals(XYZ other, int digits)
 	{
 		return other.IsEqual(this, digits);

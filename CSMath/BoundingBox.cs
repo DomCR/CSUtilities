@@ -19,16 +19,10 @@ public struct BoundingBox
 		}
 	}
 
+	/// <summary>
+	/// Gets the extent of the bounding box, indicating whether it is finite, infinite, or null.
+	/// </summary>
 	public BoundingBoxExtent Extent { get; }
-
-	[Obsolete("Use LengthY instead.")]
-	public double Height
-	{
-		get
-		{
-			return Math.Abs(this.Max.Y - this.Min.Y);
-		}
-	}
 
 	/// <summary>
 	/// Gets the length of the bounding box along the X-axis.
@@ -72,15 +66,6 @@ public struct BoundingBox
 	/// Get the min corner of the bounding box.
 	/// </summary>
 	public XYZ Min { get; set; }
-
-	[Obsolete("Use LengthX instead.")]
-	public double Width
-	{
-		get
-		{
-			return Math.Abs(this.Max.X - this.Min.X);
-		}
-	}
 
 	/// <summary>
 	/// Instance of an infinite bounding box.

@@ -1,6 +1,5 @@
 ﻿using CSUtilities.Attributes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -13,19 +12,6 @@ internal
 #endif
 	static class EnumExtensions
 {
-	[Obsolete("Use Type.GetValues()")]
-	public static IEnumerable<T> GetValues<T>()
-	{
-		return Enum.GetValues(typeof(T)).Cast<T>();
-	}
-
-	[Obsolete("Use Type.GetNames()")]
-	public static IEnumerable<string> GetNames<T>(this T value)
-		where T : Enum
-	{
-		return Enum.GetValues(typeof(T)).Cast<T>().Select(o => o.ToString());
-	}
-
 	public static T GetValueByName<T>(string name)
 	{
 		return Enum.GetValues(typeof(T)).Cast<T>().FirstOrDefault(o => o.ToString() == name);
