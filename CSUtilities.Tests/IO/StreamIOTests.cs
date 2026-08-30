@@ -9,6 +9,42 @@ namespace CSUtilities.Tests.IO;
 
 public class StreamIOTests : IDisposable
 {
+	private sealed class PartialReadMemoryStream : MemoryStream
+	{
+		public PartialReadMemoryStream(byte[] data) : base(data) { }
+
+		public override int Read(byte[] buffer, int offset, int count)
+		{
+			return base.Read(buffer, offset, Math.Min(count, 2));
+		}
+
+		public override Task<int> ReadAsync(byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken)
+		{
+			return base.ReadAsync(buffer, offset, Math.Min(count, 2), cancellationToken);
+		}
+	}
+
+	private sealed class NonSeekableStream : Stream
+	{
+		private readonly Stream _inner;
+
+		public NonSeekableStream(byte[] data)
+		{
+			this._inner = new MemoryStream(data);
+		}
+
+		public override bool CanRead => true;
+		public override bool CanSeek => false;
+		public override bool CanWrite => false;
+		public override long Length => throw new NotSupportedException();
+		public override long Position { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+		public override void Flush() { }
+		public override int Read(byte[] buffer, int offset, int count) => this._inner.Read(buffer, offset, Math.Min(count, 2));
+		public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+		public override void SetLength(long value) => throw new NotSupportedException();
+		public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+	}
+
 	private readonly MemoryStream _memoryStream;
 	private readonly StreamIO _streamIO;
 
@@ -39,6 +75,35 @@ public class StreamIOTests : IDisposable
 		_streamIO.WriteBytes(data);
 		_streamIO.Position = 0;
 		Assert.Equal(data, _streamIO.ReadBytes(data.Length));
+	}
+
+	[Fact]
+	public void ConstructorBuffersANonSeekablePartialReadStream()
+	{
+		byte[] data = { 1, 2, 3, 4, 5, 6 };
+		using NonSeekableStream source = new NonSeekableStream(data);
+		using StreamIO stream = new StreamIO(source);
+
+		Assert.True(stream.Stream.CanSeek);
+		Assert.Equal(data, stream.ReadBytes(data.Length));
+	}
+
+	[Fact]
+	public void ReadBytesCompletesPartialReads()
+	{
+		byte[] data = { 1, 2, 3, 4, 5, 6 };
+		using StreamIO stream = new StreamIO(new PartialReadMemoryStream(data));
+
+		Assert.Equal(data, stream.ReadBytes(data.Length));
+	}
+
+	[Fact]
+	public async Task ReadBytesAsyncCompletesPartialReads()
+	{
+		byte[] data = { 1, 2, 3, 4, 5, 6 };
+		using StreamIO stream = new StreamIO(new PartialReadMemoryStream(data));
+
+		Assert.Equal(data, await stream.ReadBytesAsync(data.Length));
 	}
 
 	[Fact]

@@ -59,17 +59,36 @@ internal class StreamIO : IDisposable
 	/// <param name="resetPosition"></param>
 	public StreamIO(Stream stream, bool createCopy, bool resetPosition)
 	{
-		long position = stream.Position;
+		if (stream == null)
+		{
+			throw new ArgumentNullException(nameof(stream));
+		}
 
-		//Check if supports seeking
+		//Readers require seeking. A non-seekable input therefore has to be buffered from its
+		//current position; querying Position or Length first would itself throw.
 		if (!stream.CanSeek || createCopy)
 		{
-			stream.Position = 0;
-			//Create a copy of the stream to allow seeking
-			byte[] buffer = new byte[stream.Length];
-			stream.Read(buffer, 0, buffer.Length);
-			_stream = (Stream)new MemoryStream(buffer);
-			stream.Position = position;
+			MemoryStream copy = new MemoryStream();
+			if (stream.CanSeek)
+			{
+				long position = stream.Position;
+				try
+				{
+					stream.Position = 0;
+					stream.CopyTo(copy);
+				}
+				finally
+				{
+					stream.Position = position;
+				}
+			}
+			else
+			{
+				stream.CopyTo(copy);
+			}
+
+			copy.Position = 0;
+			_stream = copy;
 		}
 		else
 		{
@@ -116,14 +135,15 @@ internal class StreamIO : IDisposable
 		//Set the position to the begining
 		this.Position = offset;
 
-		byte[] buffer = this.ReadBytes(length);
-		//if (this.m_stream.Read(buffer, offset, length) < length)
-		//	throw new EndOfStreamException();
-
-		//Reset the position
-		this.Position = save;
-
-		return buffer;
+		try
+		{
+			return this.ReadBytes(length);
+		}
+		finally
+		{
+			//A failed read must not leave this utility at the requested offset.
+			this.Position = save;
+		}
 	}
 
 	public async Task<byte[]> GetBytesAsync(int offset, int length)
@@ -136,14 +156,14 @@ internal class StreamIO : IDisposable
 		//Set the position to the begining
 		this.Position = offset;
 
-		byte[] buffer = await this.ReadBytesAsync(length);
-		//if (this.m_stream.Read(buffer, offset, length) < length)
-		//	throw new EndOfStreamException();
-
-		//Reset the position
-		this.Position = save;
-
-		return buffer;
+		try
+		{
+			return await this.ReadBytesAsync(length);
+		}
+		finally
+		{
+			this.Position = save;
+		}
 	}
 
 	/// <summary>
@@ -163,9 +183,15 @@ internal class StreamIO : IDisposable
 	/// <returns></returns>
 	public byte[] LookBytes(int count)
 	{
-		byte[] bs = this.ReadBytes(count);
-		this.Position -= count;
-		return bs;
+		long position = this.Position;
+		try
+		{
+			return this.ReadBytes(count);
+		}
+		finally
+		{
+			this.Position = position;
+		}
 	}
 
 	/// <summary>
@@ -214,8 +240,17 @@ internal class StreamIO : IDisposable
 
 		byte[] buffer = new byte[length];
 
-		if (this._stream.Read(buffer, 0, length) < length)
-			throw new EndOfStreamException();
+		int offset = 0;
+		while (offset < length)
+		{
+			int read = this._stream.Read(buffer, offset, length - offset);
+			if (read == 0)
+			{
+				throw new EndOfStreamException();
+			}
+
+			offset += read;
+		}
 
 		return buffer;
 	}
@@ -227,8 +262,17 @@ internal class StreamIO : IDisposable
 
 		byte[] buffer = new byte[length];
 
-		if (await this._stream.ReadAsync(buffer, 0, length, cancellationToken) < length)
-			throw new EndOfStreamException();
+		int offset = 0;
+		while (offset < length)
+		{
+			int read = await this._stream.ReadAsync(buffer, offset, length - offset, cancellationToken);
+			if (read == 0)
+			{
+				throw new EndOfStreamException();
+			}
+
+			offset += read;
+		}
 
 		return buffer;
 	}
