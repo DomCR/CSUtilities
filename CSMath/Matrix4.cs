@@ -434,7 +434,11 @@ public partial struct Matrix4
 		}
 
 		XYZ xaxis;
-		if (Math.Abs(zaxis.X) < (1 / 64) && Math.Abs(zaxis.Y) < (1 / 64))
+		//1/64 is integer division and is therefore zero, which made this branch unreachable and sent
+		//every normal that is near +Z - but not exactly it, which is what a real drawing stores -
+		//down the Wz path, where the cross product is near zero and normalises to a direction that
+		//has nothing to do with the entity.
+		if (Math.Abs(zaxis.X) < (1.0 / 64.0) && Math.Abs(zaxis.Y) < (1.0 / 64.0))
 		{
 			xaxis = XYZ.Cross(XYZ.AxisY, zaxis);
 		}
