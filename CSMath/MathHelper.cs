@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace CSMath;
 
@@ -339,12 +339,21 @@ public static class MathHelper
 	/// Convert a value from radian to degree.
 	/// </summary>
 	/// <param name="value">Value in radians</param>
-	/// <param name="absolute">Calculates the negative values in a 0-360 range.</param>
+	/// <param name="absolute">
+	/// Normalises the result into a 0-360 range. Pass <see langword="false"/> to keep the converted
+	/// value as it is, in the -360 to 360 range the caller gave it in.
+	/// </param>
 	/// <returns>The degree value.</returns>
+	/// <remarks>
+	/// The parameter used to be accepted and ignored, so the result was always normalised. That
+	/// loses a full sweep: an angle pair of -PI to PI, which is how a circular hatch boundary is
+	/// stored, came back as 180 and 180 - the same number twice, with the 360 degrees between them
+	/// gone. Measured on real drawings, twenty-five boundaries in four of them.
+	/// </remarks>
 	public static double RadToDeg(double value, bool absolute = true)
 	{
 		var result = value * RadToDegFactor;
-		return NormalizeAngle(result);
+		return absolute ? NormalizeAngle(result) : result;
 	}
 
 	/// <summary>
