@@ -327,14 +327,26 @@ public static class MathHelper
 	/// <param name="angle">Angle in radians.</param>
 	/// <param name="absolute">If true, negative angles will be converted to its positive equivalent.</param>
 	/// <returns>The equivalent angle in the range 0-2π.</returns>
+	/// <remarks>Negative angles will be converted to its positive equivalent when <paramref name="absolute"/> is true.</remarks>
 	public static double NormalizeAngleRadians(double angle, bool absolute = true)
 	{
-		if (angle < 0.0 || angle > TwoPI)
+		if (IsEqual(Math.Abs(angle), TwoPI))
 		{
-			angle -= TwoPI * Math.Floor(angle / TwoPI);
+			return angle < 0 && !absolute ? -TwoPI : TwoPI;
 		}
 
-		return angle;
+		double normalized = angle % TwoPI;
+		if (IsZero(normalized))
+		{
+			return 0.0;
+		}
+
+		if (normalized < 0 && absolute)
+		{
+			return TwoPI + normalized;
+		}
+
+		return normalized;
 	}
 
 	/// <summary>

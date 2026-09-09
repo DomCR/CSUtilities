@@ -143,6 +143,14 @@ public class MathHelperTests
 	}
 
 	[Theory]
+	[InlineData(1.0, 1.05, 0.1, true)]
+	[InlineData(1.0, 1.5, 0.1, false)]
+	public void IsEqual_CustomThreshold_ReturnsExpected(double a, double b, double threshold, bool expected)
+	{
+		Assert.Equal(expected, MathHelper.IsEqual(a, b, threshold));
+	}
+
+	[Theory]
 	[InlineData(1.0, 1.0000000000005, true)]
 	[InlineData(5.0, 5.0, true)]
 	[InlineData(-5.0, 5.0, true)]
@@ -153,11 +161,11 @@ public class MathHelperTests
 	}
 
 	[Theory]
-	[InlineData(1.0, 1.05, 0.1, true)]
-	[InlineData(1.0, 1.5, 0.1, false)]
-	public void IsEqual_CustomThreshold_ReturnsExpected(double a, double b, double threshold, bool expected)
+	[InlineData(0.05, 0.1, true)]
+	[InlineData(0.2, 0.1, false)]
+	public void IsZero_CustomThreshold_ReturnsExpected(double value, double threshold, bool expected)
 	{
-		Assert.Equal(expected, MathHelper.IsEqual(a, b, threshold));
+		Assert.Equal(expected, MathHelper.IsZero(value, threshold));
 	}
 
 	[Theory]
@@ -174,25 +182,12 @@ public class MathHelperTests
 	}
 
 	[Theory]
-	[InlineData(0.05, 0.1, true)]
-	[InlineData(0.2, 0.1, false)]
-	public void IsZero_CustomThreshold_ReturnsExpected(double value, double threshold, bool expected)
-	{
-		Assert.Equal(expected, MathHelper.IsZero(value, threshold));
-	}
-
-	[Theory]
-	[InlineData(180, 180)]
-	[InlineData(360, 360)]
-	[InlineData(-360, 360)]
-	[InlineData(720, 0)]
-	[InlineData(450.0, 90.0)]
 	[InlineData(-90.0, 270.0)]
 	[InlineData(-450.0, 270.0)]
-	[InlineData(0.0, 0.0)]
-	public void NormalizeAngleTest(double number, double expected)
+	[InlineData(90.0, 90.0)]
+	public void NormalizeAngle_Absolute_ReturnsExpected(double number, double expected)
 	{
-		Assert.Equal(expected, MathHelper.NormalizeAngle(number));
+		Assert.Equal(expected, MathHelper.NormalizeAngle(number, true));
 	}
 
 	[Theory]
@@ -212,12 +207,47 @@ public class MathHelperTests
 	}
 
 	[Theory]
+	[InlineData(0.0, 0.0)]
+	[InlineData(MathHelper.HalfPI, MathHelper.HalfPI)]
+	[InlineData(MathHelper.TwoPI, MathHelper.TwoPI)]
+	[InlineData(-MathHelper.TwoPI, -MathHelper.TwoPI)]
+	[InlineData(2.0 * MathHelper.TwoPI, 0.0)]
+	[InlineData(-2.0 * MathHelper.TwoPI, 0.0)]
+	[InlineData(-MathHelper.HalfPI, -MathHelper.HalfPI)]
+	[InlineData(-MathHelper.PI, -MathHelper.PI)]
+	[InlineData(-(MathHelper.TwoPI + MathHelper.HalfPI), -MathHelper.HalfPI)]
+	public void NormalizeAngleRadians_NotAbsolute_ReturnsExpected(double angle, double expected)
+	{
+		Assert.Equal(expected, MathHelper.NormalizeAngleRadians(angle, false), 10);
+	}
+
+	[Theory]
+	[InlineData(0.0, 0.0)]
+	[InlineData(MathHelper.HalfPI, MathHelper.HalfPI)]
+	[InlineData(MathHelper.PI, MathHelper.PI)]
+	[InlineData(MathHelper.TwoPI, MathHelper.TwoPI)]
+	[InlineData(-MathHelper.TwoPI, MathHelper.TwoPI)]
+	[InlineData(2.0 * MathHelper.TwoPI, 0.0)]
+	[InlineData(MathHelper.TwoPI + MathHelper.HalfPI, MathHelper.HalfPI)]
+	[InlineData(-MathHelper.HalfPI, MathHelper.ThreeHalfPI)]
+	[InlineData(-(MathHelper.TwoPI + MathHelper.HalfPI), MathHelper.ThreeHalfPI)]
+	public void NormalizeAngleRadians_ReturnsExpected(double angle, double expected)
+	{
+		Assert.Equal(expected, MathHelper.NormalizeAngleRadians(angle), 10);
+	}
+
+	[Theory]
+	[InlineData(180, 180)]
+	[InlineData(360, 360)]
+	[InlineData(-360, 360)]
+	[InlineData(720, 0)]
+	[InlineData(450.0, 90.0)]
 	[InlineData(-90.0, 270.0)]
 	[InlineData(-450.0, 270.0)]
-	[InlineData(90.0, 90.0)]
-	public void NormalizeAngle_Absolute_ReturnsExpected(double number, double expected)
+	[InlineData(0.0, 0.0)]
+	public void NormalizeAngleTest(double number, double expected)
 	{
-		Assert.Equal(expected, MathHelper.NormalizeAngle(number, true));
+		Assert.Equal(expected, MathHelper.NormalizeAngle(number));
 	}
 
 	[Theory]
