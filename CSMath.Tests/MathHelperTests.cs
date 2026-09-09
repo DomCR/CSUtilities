@@ -144,6 +144,7 @@ public class MathHelperTests
 	[InlineData(-5.0, 5.0, false)]
 	[InlineData(5.0, -5.0, false)]
 	[InlineData(5.0, 6.0, false)]
+	[InlineData(1e16, 1e16 + 2, false)]
 	public void IsEqual_ReturnsExpected(double a, double b, bool expected)
 	{
 		Assert.Equal(expected, MathHelper.IsEqual(a, b));

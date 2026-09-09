@@ -262,7 +262,7 @@ public static class VectorExtensions
 	public static bool IsPerpendicular<T>(this T left, T right)
 		where T : IVector
 	{
-		return Dot<T>(left, right) == 0;
+		return Dot<T>(left, right).IsZero();
 	}
 
 	/// <summary>
@@ -274,7 +274,7 @@ public static class VectorExtensions
 	public static bool IsZero<T>(this T v)
 		where T : IVector
 	{
-		return v.GetLength() == 0;
+		return v.GetLength().IsZero();
 	}
 
 	/// <summary>
