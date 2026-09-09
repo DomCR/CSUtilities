@@ -249,10 +249,7 @@ public static class MathHelper
 	/// <returns>True if the numbers are equal within the specified tolerance; otherwise, false.</returns>
 	public static bool IsEqual(double a, double b, double threshold)
 	{
-		double diff = Math.Abs(a) - Math.Abs(b);
-
-
-		return IsZero(Math.Abs(a) - Math.Abs(b), threshold);
+		return IsZero(a - b, threshold);
 	}
 
 	/// <summary>
