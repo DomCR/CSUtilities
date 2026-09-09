@@ -49,7 +49,7 @@ public static class CurveExtensions
 
 		var t = Matrix4.GetArbitraryAxis(normal);
 
-		var sweep = start - end;
+		var sweep = end - start;
 		var denominator = MathHelper.IsEqual(sweep, MathHelper.TwoPI) ? precision : precision - 1;
 		double delta = (end - start) / denominator;
 		for (int i = 0; i < precision; i++, start += delta)
