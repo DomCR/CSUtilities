@@ -263,6 +263,16 @@ public static class MathHelper
 	}
 
 	/// <summary>
+	/// Determines whether the specified double-precision floating-point value is negative.
+	/// </summary>
+	/// <param name="value">The value to evaluate.</param>
+	/// <returns>True if the value is negative; otherwise, false.</returns>
+	public static bool IsNegative(double value)
+	{
+		return value < 0;
+	}
+
+	/// <summary>
 	/// Determines whether the specified integer is odd.
 	/// </summary>
 	/// <param name="value">The integer to evaluate.</param>
@@ -304,7 +314,7 @@ public static class MathHelper
 	{
 		if (IsEqual(Math.Abs(angle), 360.0))
 		{
-			return 360;
+			return angle < 0 && !absolute ? -360 : 360;
 		}
 
 		double normalized = angle % 360.0;
