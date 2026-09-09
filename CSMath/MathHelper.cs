@@ -312,23 +312,7 @@ public static class MathHelper
 	/// <remarks>Negative angles will be converted to its positive equivalent.</remarks>
 	public static double NormalizeAngle(double angle, bool absolute = true)
 	{
-		if (IsEqual(Math.Abs(angle), 360.0))
-		{
-			return angle < 0 && !absolute ? -360 : 360;
-		}
-
-		double normalized = angle % 360.0;
-		if (IsZero(normalized))
-		{
-			return 0.0;
-		}
-
-		if (normalized < 0 && absolute)
-		{
-			return 360.0 + normalized;
-		}
-
-		return normalized;
+		return normalizeAngle(angle, 360.0, absolute);
 	}
 
 	/// <summary>
@@ -340,23 +324,7 @@ public static class MathHelper
 	/// <remarks>Negative angles will be converted to its positive equivalent when <paramref name="absolute"/> is true.</remarks>
 	public static double NormalizeAngleRadians(double angle, bool absolute = true)
 	{
-		if (IsEqual(Math.Abs(angle), TwoPI))
-		{
-			return angle < 0 && !absolute ? -TwoPI : TwoPI;
-		}
-
-		double normalized = angle % TwoPI;
-		if (IsZero(normalized))
-		{
-			return 0.0;
-		}
-
-		if (normalized < 0 && absolute)
-		{
-			return TwoPI + normalized;
-		}
-
-		return normalized;
+		return normalizeAngle(angle, TwoPI, absolute);
 	}
 
 	/// <summary>
@@ -403,5 +371,26 @@ public static class MathHelper
 	{
 		double result = Math.Sin(value);
 		return IsZero(result) ? 0 : result;
+	}
+
+	private static double normalizeAngle(double angle, double fullCircle, bool absolute)
+	{
+		if (IsEqual(Math.Abs(angle), fullCircle))
+		{
+			return angle < 0 && !absolute ? -fullCircle : fullCircle;
+		}
+
+		double normalized = angle % fullCircle;
+		if (IsZero(normalized))
+		{
+			return 0.0;
+		}
+
+		if (normalized < 0 && absolute)
+		{
+			return fullCircle + normalized;
+		}
+
+		return normalized;
 	}
 }
