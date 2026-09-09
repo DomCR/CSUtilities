@@ -1,5 +1,4 @@
 using CSUtilities.Converters;
-using System;
 using Xunit;
 
 namespace CSUtilities.Tests.Converters;

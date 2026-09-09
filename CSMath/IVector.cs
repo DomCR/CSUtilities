@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CSMath;
+﻿namespace CSMath;
 
 public interface IVector
 {

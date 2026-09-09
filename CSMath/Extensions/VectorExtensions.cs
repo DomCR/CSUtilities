@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CSMath;
+namespace CSMath.Extensions;
 
 public static class VectorExtensions
 {
@@ -393,7 +393,7 @@ public static class VectorExtensions
 
 		for (int i = 0; i < result.Dimension; i++)
 		{
-			result[i] = MathHelper.IsZero(vector[i], threshold) ? 0 : vector[i];
+			result[i] = vector[i].IsZero(threshold) ? 0 : vector[i];
 		}
 
 		return result;

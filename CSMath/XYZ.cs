@@ -1,4 +1,5 @@
 ﻿using System;
+using CSMath.Extensions;
 
 namespace CSMath;
 
@@ -121,7 +122,7 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 	public double GetAngle(XYZ dir)
 	{
 		double t = this.Dot(dir) / Math.Sqrt(this.GetLengthSquared() * dir.GetLengthSquared());
-		if (MathHelper.IsAlmostZero(Math.Abs(t) - 1.0d))
+		if ((Math.Abs(t) - 1.0d).IsZero())
 		{
 			if (!((double)t > 0.0))
 			{
@@ -146,7 +147,7 @@ public partial struct XYZ : IVector, IEquatable<XYZ>
 	public double GetAngle(XYZ dir, XYZ normal)
 	{
 		double t = this.Dot(dir) / Math.Sqrt(this.GetLengthSquared() * dir.GetLengthSquared());
-		if (MathHelper.IsAlmostZero(Math.Abs(t) - 1.0d))
+		if ((Math.Abs(t) - 1.0d).IsZero())
 		{
 			if (!((double)t > 0.0))
 			{

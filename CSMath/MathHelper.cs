@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSMath.Extensions;
+using System;
 
 namespace CSMath;
 
@@ -75,7 +76,7 @@ public static class MathHelper
 	public static double Cos(double value)
 	{
 		double result = Math.Cos(value);
-		return IsZero(result) ? 0 : result;
+		return result.IsZero() ? 0 : result;
 	}
 
 	/// <summary>
@@ -116,7 +117,7 @@ public static class MathHelper
 	/// <returns>Zero if the number is within the threshold; otherwise, the original number.</returns>
 	public static double FixZero(double number, double threshold)
 	{
-		return IsZero(number, threshold) ? 0 : number;
+		return number.IsZero(threshold) ? 0 : number;
 	}
 
 	/// <summary>
@@ -186,21 +187,6 @@ public static class MathHelper
 	}
 
 	/// <summary>
-	/// Determines whether the specified double-precision floating-point value is approximately zero, within a small
-	/// tolerance.
-	/// </summary>
-	/// <param name="value">The value to compare to zero.</param>
-	/// <returns>true if the value is within a small range of zero; otherwise, false.</returns>
-	public static bool IsAlmostZero(double value)
-	{
-		if (value > -Epsilon)
-		{
-			return value < Epsilon;
-		}
-		return false;
-	}
-
-	/// <summary>
 	/// Determines whether a specified angle falls within a given angular range.
 	/// </summary>
 	/// <remarks>
@@ -249,58 +235,7 @@ public static class MathHelper
 	/// <returns>True if the numbers are equal within the specified tolerance; otherwise, false.</returns>
 	public static bool IsEqual(double a, double b, double threshold)
 	{
-		return IsZero(a - b, threshold);
-	}
-
-	/// <summary>
-	/// Determines whether the specified integer is even.
-	/// </summary>
-	/// <param name="value">The integer to evaluate.</param>
-	/// <returns>True if the integer is even; otherwise, false.</returns>
-	public static bool IsEven(this int value)
-	{
-		return (value & 1) == 0;
-	}
-
-	/// <summary>
-	/// Determines whether the specified double-precision floating-point value is negative.
-	/// </summary>
-	/// <param name="value">The value to evaluate.</param>
-	/// <returns>True if the value is negative; otherwise, false.</returns>
-	public static bool IsNegative(double value)
-	{
-		return value < 0;
-	}
-
-	/// <summary>
-	/// Determines whether the specified integer is odd.
-	/// </summary>
-	/// <param name="value">The integer to evaluate.</param>
-	/// <returns>True if the integer is odd; otherwise, false.</returns>
-	public static bool IsOdd(this int value)
-	{
-		return (value & 1) == 1;
-	}
-
-	/// <summary>
-	/// Checks if a number is close to zero.
-	/// </summary>
-	/// <param name="number">Double precision number.</param>
-	/// <returns>True if its close to zero; otherwise, false.</returns>
-	public static bool IsZero(double number)
-	{
-		return IsZero(number, Epsilon);
-	}
-
-	/// <summary>
-	/// Checks if a number is close to zero.
-	/// </summary>
-	/// <param name="number">Double precision number.</param>
-	/// <param name="threshold">Tolerance.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
-	public static bool IsZero(double number, double threshold)
-	{
-		return number >= -threshold && number <= threshold;
+		return (a - b).IsZero(threshold);
 	}
 
 	/// <summary>
@@ -370,7 +305,7 @@ public static class MathHelper
 	public static double Sin(double value)
 	{
 		double result = Math.Sin(value);
-		return IsZero(result) ? 0 : result;
+		return result.IsZero() ? 0 : result;
 	}
 
 	private static double normalizeAngle(double angle, double fullCircle, bool absolute)
@@ -381,7 +316,7 @@ public static class MathHelper
 		}
 
 		double normalized = angle % fullCircle;
-		if (IsZero(normalized))
+		if (normalized.IsZero())
 		{
 			return 0.0;
 		}

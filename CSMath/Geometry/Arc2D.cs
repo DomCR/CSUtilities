@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CSMath.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSMath.Geometry;

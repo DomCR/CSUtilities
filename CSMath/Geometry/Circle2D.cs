@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CSMath.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSMath.Geometry;
@@ -58,7 +59,7 @@ public struct Circle2D
 		double determinant = XY.Cross(relativeOrigin, line.Direction);
 		double discriminant = this.Radius * this.Radius * lengthSquared - determinant * determinant;
 
-		if (MathHelper.IsZero(discriminant))
+		if (discriminant.IsZero())
 		{
 			double x = determinant * line.Direction.Y / lengthSquared;
 			double y = -determinant * line.Direction.X / lengthSquared;

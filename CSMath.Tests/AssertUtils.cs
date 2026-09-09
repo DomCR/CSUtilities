@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using CSMath.Extensions;
+using Xunit;
 
 namespace CSMath.Tests;
 

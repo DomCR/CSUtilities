@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BoundingBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BoundingBoxExtent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DoubleExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IntExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\Arc2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\Circle2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Geometry\CurveExtensions.cs" />
@@ -29,7 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Quaternion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Quaternion.operators.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Transform.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)VectorExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\VectorExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XY.operators.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XY.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XYZ.operators.cs" />

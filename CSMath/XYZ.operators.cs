@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSMath.Extensions;
+using System;
 
 namespace CSMath;
 
