@@ -153,6 +153,7 @@ public class MathHelperTests
 	[Theory]
 	[InlineData(1.0, 1.0000000000005, true)]
 	[InlineData(5.0, 5.0, true)]
+	[InlineData(-5.0, -5.0, true)]
 	[InlineData(-5.0, 5.0, false)]
 	[InlineData(5.0, 6.0, false)]
 	public void IsEqual_ReturnsExpected(double a, double b, bool expected)

@@ -234,7 +234,7 @@ public static class MathHelper
 	/// </summary>
 	/// <param name="a">Double precision number.</param>
 	/// <param name="b">Double precision number.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
+	/// <returns>True if the numbers are equal within a small tolerance; otherwise, false.</returns>
 	public static bool IsEqual(double a, double b)
 	{
 		return IsEqual(a, b, Epsilon);
@@ -246,9 +246,12 @@ public static class MathHelper
 	/// <param name="a">Double precision number.</param>
 	/// <param name="b">Double precision number.</param>
 	/// <param name="threshold">Tolerance.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
+	/// <returns>True if the numbers are equal within the specified tolerance; otherwise, false.</returns>
 	public static bool IsEqual(double a, double b, double threshold)
 	{
+		double diff = Math.Abs(a) - Math.Abs(b);
+
+
 		return IsZero(Math.Abs(a) - Math.Abs(b), threshold);
 	}
 
@@ -286,7 +289,7 @@ public static class MathHelper
 	/// Checks if a number is close to zero.
 	/// </summary>
 	/// <param name="number">Double precision number.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
+	/// <returns>True if its close to zero; otherwise, false.</returns>
 	public static bool IsZero(double number)
 	{
 		return IsZero(number, Epsilon);
