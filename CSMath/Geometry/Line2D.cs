@@ -1,3 +1,4 @@
+using CSMath.Extensions;
 using System;
 
 namespace CSMath.Geometry;

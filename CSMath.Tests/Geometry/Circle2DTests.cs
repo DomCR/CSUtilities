@@ -1,3 +1,4 @@
+using CSMath.Extensions;
 using CSMath.Geometry;
 using System.Linq;
 using Xunit;
@@ -114,8 +115,8 @@ public class Circle2DTests
 		Assert.Equal(2, intersections.Length);
 
 		// Both points should be at x=0
-		Assert.True(MathHelper.IsZero(intersections[0].X, 1e-10));
-		Assert.True(MathHelper.IsZero(intersections[1].X, 1e-10));
+		Assert.True(intersections[0].X.IsZero(1e-10));
+		Assert.True(intersections[1].X.IsZero(1e-10));
 
 		// Both points should be on the circle
 		double distance1 = intersections[0].GetLength();
@@ -137,9 +138,9 @@ public class Circle2DTests
 		// Assert
 		Assert.Equal(2, intersections.Length);
 		Assert.True(MathHelper.IsEqual(5.0, intersections[0].X, 1e-10) || MathHelper.IsEqual(-5.0, intersections[0].X, 1e-10));
-		Assert.True(MathHelper.IsZero(intersections[0].Y, 1e-10));
+		Assert.True(intersections[0].Y.IsZero(1e-10));
 		Assert.True(MathHelper.IsEqual(5.0, intersections[1].X, 1e-10) || MathHelper.IsEqual(-5.0, intersections[1].X, 1e-10));
-		Assert.True(MathHelper.IsZero(intersections[1].Y, 1e-10));
+		Assert.True(intersections[1].Y.IsZero(1e-10));
 	}
 
 	[Fact]
@@ -213,6 +214,6 @@ public class Circle2DTests
 		// Assert
 		Assert.Single(intersections);
 		Assert.True(MathHelper.IsEqual(5.0, intersections[0].X, 1e-10));
-		Assert.True(MathHelper.IsZero(intersections[0].Y, 1e-10));
+		Assert.True(intersections[0].Y.IsZero(1e-10));
 	}
 }

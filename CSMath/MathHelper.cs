@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSMath.Extensions;
+using System;
 
 namespace CSMath;
 
@@ -75,7 +76,7 @@ public static class MathHelper
 	public static double Cos(double value)
 	{
 		double result = Math.Cos(value);
-		return IsZero(result) ? 0 : result;
+		return result.IsZero() ? 0 : result;
 	}
 
 	/// <summary>
@@ -116,7 +117,7 @@ public static class MathHelper
 	/// <returns>Zero if the number is within the threshold; otherwise, the original number.</returns>
 	public static double FixZero(double number, double threshold)
 	{
-		return IsZero(number, threshold) ? 0 : number;
+		return number.IsZero(threshold) ? 0 : number;
 	}
 
 	/// <summary>
@@ -186,21 +187,6 @@ public static class MathHelper
 	}
 
 	/// <summary>
-	/// Determines whether the specified double-precision floating-point value is approximately zero, within a small
-	/// tolerance.
-	/// </summary>
-	/// <param name="value">The value to compare to zero.</param>
-	/// <returns>true if the value is within a small range of zero; otherwise, false.</returns>
-	public static bool IsAlmostZero(double value)
-	{
-		if (value > -Epsilon)
-		{
-			return value < Epsilon;
-		}
-		return false;
-	}
-
-	/// <summary>
 	/// Determines whether a specified angle falls within a given angular range.
 	/// </summary>
 	/// <remarks>
@@ -234,7 +220,7 @@ public static class MathHelper
 	/// </summary>
 	/// <param name="a">Double precision number.</param>
 	/// <param name="b">Double precision number.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
+	/// <returns>True if the numbers are equal within a small tolerance; otherwise, false.</returns>
 	public static bool IsEqual(double a, double b)
 	{
 		return IsEqual(a, b, Epsilon);
@@ -246,105 +232,47 @@ public static class MathHelper
 	/// <param name="a">Double precision number.</param>
 	/// <param name="b">Double precision number.</param>
 	/// <param name="threshold">Tolerance.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
+	/// <returns>True if the numbers are equal within the specified tolerance; otherwise, false.</returns>
 	public static bool IsEqual(double a, double b, double threshold)
 	{
-		return IsZero(Math.Abs(a) - Math.Abs(b), threshold);
-	}
-
-	/// <summary>
-	/// Determines whether the specified integer is even.
-	/// </summary>
-	/// <param name="value">The integer to evaluate.</param>
-	/// <returns>True if the integer is even; otherwise, false.</returns>
-	public static bool IsEven(this int value)
-	{
-		return (value & 1) == 0;
-	}
-
-	/// <summary>
-	/// Determines whether the specified integer is odd.
-	/// </summary>
-	/// <param name="value">The integer to evaluate.</param>
-	/// <returns>True if the integer is odd; otherwise, false.</returns>
-	public static bool IsOdd(this int value)
-	{
-		return (value & 1) == 1;
-	}
-
-	/// <summary>
-	/// Checks if a number is close to zero.
-	/// </summary>
-	/// <param name="number">Double precision number.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
-	public static bool IsZero(double number)
-	{
-		return IsZero(number, Epsilon);
-	}
-
-	/// <summary>
-	/// Checks if a number is close to zero.
-	/// </summary>
-	/// <param name="number">Double precision number.</param>
-	/// <param name="threshold">Tolerance.</param>
-	/// <returns>True if its close to one or false in any other case.</returns>
-	public static bool IsZero(double number, double threshold)
-	{
-		return number >= -threshold && number <= threshold;
+		return (a - b).IsZero(threshold);
 	}
 
 	/// <summary>
 	/// Normalizes the value of an angle in degrees between 0-360.
 	/// </summary>
 	/// <param name="angle">Angle in degrees.</param>
+	/// <param name="absolute">If true, negative angles will be converted to its positive equivalent.</param>
 	/// <returns>The equivalent angle in the range 0-360.</returns>
 	/// <remarks>Negative angles will be converted to its positive equivalent.</remarks>
-	public static double NormalizeAngle(double angle)
+	public static double NormalizeAngle(double angle, bool absolute = true)
 	{
-		if (IsEqual(Math.Abs(angle), 360.0))
-		{
-			return 360;
-		}
-
-		double normalized = angle % 360.0;
-		if (IsZero(normalized))
-		{
-			return 0.0;
-		}
-
-		if (normalized < 0)
-		{
-			return 360.0 + normalized;
-		}
-
-		return normalized;
+		return normalizeAngle(angle, 360.0, absolute);
 	}
 
 	/// <summary>
 	/// Normalizes the value of an angle in radians between 0-2π.
 	/// </summary>
 	/// <param name="angle">Angle in radians.</param>
+	/// <param name="absolute">If true, negative angles will be converted to its positive equivalent.</param>
 	/// <returns>The equivalent angle in the range 0-2π.</returns>
-	public static double NormalizeAngleRadians(double angle)
+	/// <remarks>Negative angles will be converted to its positive equivalent when <paramref name="absolute"/> is true.</remarks>
+	public static double NormalizeAngleRadians(double angle, bool absolute = true)
 	{
-		if (angle < 0.0 || angle > TwoPI)
-		{
-			angle -= TwoPI * Math.Floor(angle / TwoPI);
-		}
-
-		return angle;
+		return normalizeAngle(angle, TwoPI, absolute);
 	}
 
 	/// <summary>
 	/// Convert a value from radian to degree.
 	/// </summary>
 	/// <param name="value">Value in radians</param>
-	/// <param name="absolute">Calculates the negative values in a 0-360 range.</param>
+	/// <param name="normalize">Normalizes the value to a 0-360 range.</param>
+	/// <param name="absolute">If true, negative values will be converted to its positive equivalent.</param>
 	/// <returns>The degree value.</returns>
-	public static double RadToDeg(double value, bool absolute = true)
+	public static double RadToDeg(double value, bool normalize = true, bool absolute = true)
 	{
 		var result = value * RadToDegFactor;
-		return NormalizeAngle(result);
+		return normalize ? NormalizeAngle(result, absolute) : result;
 	}
 
 	/// <summary>
@@ -377,6 +305,27 @@ public static class MathHelper
 	public static double Sin(double value)
 	{
 		double result = Math.Sin(value);
-		return IsZero(result) ? 0 : result;
+		return result.IsZero() ? 0 : result;
+	}
+
+	private static double normalizeAngle(double angle, double fullCircle, bool absolute)
+	{
+		if (IsEqual(Math.Abs(angle), fullCircle))
+		{
+			return angle < 0 && !absolute ? -fullCircle : fullCircle;
+		}
+
+		double normalized = angle % fullCircle;
+		if (normalized.IsZero())
+		{
+			return 0.0;
+		}
+
+		if (normalized < 0 && absolute)
+		{
+			return fullCircle + normalized;
+		}
+
+		return normalized;
 	}
 }

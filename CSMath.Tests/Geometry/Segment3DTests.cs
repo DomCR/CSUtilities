@@ -1,4 +1,5 @@
-﻿using CSMath.Geometry;
+﻿using CSMath.Extensions;
+using CSMath.Geometry;
 using Xunit;
 
 namespace CSMath.Tests.Geometry;
