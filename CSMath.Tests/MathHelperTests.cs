@@ -197,6 +197,31 @@ public class MathHelperTests
 
 	[Theory]
 	[InlineData(0.0, 0.0)]
+	[InlineData(180.0, 180.0)]
+	[InlineData(360.0, 360.0)]
+	[InlineData(-360.0, 360.0)]
+	[InlineData(720.0, 0.0)]
+	[InlineData(450.0, 90.0)]
+	[InlineData(-90.0, -90.0)]
+	[InlineData(-180.0, -180.0)]
+	[InlineData(-450.0, -90.0)]
+	[InlineData(-720.0, 0.0)]
+	public void NormalizeAngle_NotAbsolute_ReturnsExpected(double number, double expected)
+	{
+		Assert.Equal(expected, MathHelper.NormalizeAngle(number, false));
+	}
+
+	[Theory]
+	[InlineData(-90.0, 270.0)]
+	[InlineData(-450.0, 270.0)]
+	[InlineData(90.0, 90.0)]
+	public void NormalizeAngle_Absolute_ReturnsExpected(double number, double expected)
+	{
+		Assert.Equal(expected, MathHelper.NormalizeAngle(number, true));
+	}
+
+	[Theory]
+	[InlineData(0.0, 0.0)]
 	[InlineData(MathHelper.HalfPI, 90.0)]
 	[InlineData(MathHelper.PI, 180.0)]
 	[InlineData(MathHelper.TwoPI, 360.0)]

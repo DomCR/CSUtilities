@@ -297,9 +297,10 @@ public static class MathHelper
 	/// Normalizes the value of an angle in degrees between 0-360.
 	/// </summary>
 	/// <param name="angle">Angle in degrees.</param>
+	/// <param name="absolute">If true, negative angles will be converted to its positive equivalent.</param>
 	/// <returns>The equivalent angle in the range 0-360.</returns>
 	/// <remarks>Negative angles will be converted to its positive equivalent.</remarks>
-	public static double NormalizeAngle(double angle)
+	public static double NormalizeAngle(double angle, bool absolute = true)
 	{
 		if (IsEqual(Math.Abs(angle), 360.0))
 		{
@@ -312,7 +313,7 @@ public static class MathHelper
 			return 0.0;
 		}
 
-		if (normalized < 0)
+		if (normalized < 0 && absolute)
 		{
 			return 360.0 + normalized;
 		}
@@ -324,8 +325,9 @@ public static class MathHelper
 	/// Normalizes the value of an angle in radians between 0-2π.
 	/// </summary>
 	/// <param name="angle">Angle in radians.</param>
+	/// <param name="absolute">If true, negative angles will be converted to its positive equivalent.</param>
 	/// <returns>The equivalent angle in the range 0-2π.</returns>
-	public static double NormalizeAngleRadians(double angle)
+	public static double NormalizeAngleRadians(double angle, bool absolute = true)
 	{
 		if (angle < 0.0 || angle > TwoPI)
 		{
@@ -339,12 +341,13 @@ public static class MathHelper
 	/// Convert a value from radian to degree.
 	/// </summary>
 	/// <param name="value">Value in radians</param>
-	/// <param name="absolute">Calculates the negative values in a 0-360 range.</param>
+	/// <param name="normalize">Normalizes the value to a 0-360 range.</param>
+	/// <param name="absolute">If true, negative values will be converted to its positive equivalent.</param>
 	/// <returns>The degree value.</returns>
-	public static double RadToDeg(double value, bool absolute = true)
+	public static double RadToDeg(double value, bool normalize = true, bool absolute = true)
 	{
 		var result = value * RadToDegFactor;
-		return NormalizeAngle(result);
+		return normalize ? NormalizeAngle(result, absolute) : result;
 	}
 
 	/// <summary>
