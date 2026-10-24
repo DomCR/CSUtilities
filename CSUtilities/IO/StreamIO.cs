@@ -12,6 +12,15 @@ namespace CSUtilities.IO;
 /// </summary>
 internal class StreamIO : IDisposable
 {
+	public Encoding Encoding { get; set; } = Encoding.Default;
+
+	public IEndianConverter EndianConverter { get; set; } = new DefaultEndianConverter();
+
+	/// <summary>
+	/// Gets the length in bytes of the stream.
+	/// </summary>
+	public virtual long Length => this._stream.Length;
+
 	/// <summary>
 	/// Gets or sets the position within the current stream.
 	/// </summary>
@@ -20,15 +29,6 @@ internal class StreamIO : IDisposable
 		get => this._stream.Position;
 		set => this._stream.Position = value;
 	}
-
-	/// <summary>
-	/// Gets the length in bytes of the stream.
-	/// </summary>
-	public virtual long Length => this._stream.Length;
-
-	public Encoding Encoding { get; set; } = Encoding.Default;
-
-	public IEndianConverter EndianConverter { get; set; } = new DefaultEndianConverter();
 
 	public Stream Stream { get { return _stream; } }
 
@@ -97,6 +97,12 @@ internal class StreamIO : IDisposable
 	/// Initializes a new instance of the <see cref="StreamIO" /> class.
 	/// </summary>
 	public StreamIO(byte[] arr) : this(new MemoryStream(arr)) { }
+
+	/// <inheritdoc/>
+	public void Dispose()
+	{
+		_stream.Dispose();
+	}
 
 	/// <summary>
 	/// Get an array of bytes given an offset, before the operation the position is set to 0.
@@ -191,15 +197,6 @@ internal class StreamIO : IDisposable
 	}
 
 	/// <summary>
-	/// Read a character from the stream
-	/// </summary>
-	/// <returns></returns>
-	public char ReadChar()
-	{
-		return (char)this.ReadByte();
-	}
-
-	/// <summary>
 	/// Read n bytes at the stream position.
 	/// </summary>
 	/// <remarks>
@@ -234,133 +231,12 @@ internal class StreamIO : IDisposable
 	}
 
 	/// <summary>
-	/// Read the stream as a string until it finds the match character
-	/// </summary>
-	/// <param name="match">Character to match</param>
-	/// <returns></returns>
-	public string ReadUntil(char match)
-	{
-		string line = string.Empty;
-		char last;
-
-		do
-		{
-			last = this.ReadChar();
-			line += last;
-
-		} while (match != last);
-
-		return line;
-	}
-
-	/// <summary>
-	/// Read a <see cref="short"/> value form the stream.
+	/// Read a character from the stream
 	/// </summary>
 	/// <returns></returns>
-	public short ReadShort()
+	public char ReadChar()
 	{
-		return ReadShort<DefaultEndianConverter>();
-	}
-
-	/// <summary>
-	/// Read a <see cref="short"/> value form the stream.
-	/// </summary>
-	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
-	/// <returns></returns>
-	public short ReadShort<T>() where T : IEndianConverter, new()
-	{
-		T converter = new T();
-
-		byte[] buffer = this.ReadBytes(2);
-		return converter.ToInt16(buffer);
-	}
-
-	/// <summary>
-	/// Read a <see cref="ushort"/> value form the stream.
-	/// </summary>
-	/// <returns></returns>
-	public ushort ReadUShort()
-	{
-		return ReadUShort<DefaultEndianConverter>();
-	}
-
-	/// <summary>
-	/// Read a <see cref="ushort"/> value form the stream.
-	/// </summary>
-	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
-	/// <returns></returns>
-	public ushort ReadUShort<T>() where T : IEndianConverter, new()
-	{
-		T converter = new T();
-
-		byte[] buffer = this.ReadBytes(2);
-		return converter.ToUInt16(buffer);
-	}
-
-	/// <summary>
-	/// Read a <see cref="int"/> value form the stream.
-	/// </summary>
-	/// <returns></returns>
-	public int ReadInt()
-	{
-		return ReadInt<DefaultEndianConverter>();
-	}
-
-	/// <summary>
-	/// Read a <see cref="int"/> value form the stream.
-	/// </summary>
-	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
-	/// <returns></returns>
-	public int ReadInt<T>() where T : IEndianConverter, new()
-	{
-		T converter = new T();
-
-		byte[] buffer = this.ReadBytes(4);
-		return converter.ToInt32(buffer);
-	}
-
-	/// <summary>
-	/// Read a <see cref="uint"/> value form the stream.
-	/// </summary>
-	/// <returns></returns>
-	public uint ReadUInt()
-	{
-		return ReadUInt<DefaultEndianConverter>();
-	}
-
-	/// <summary>
-	/// Read a <see cref="uint"/> value form the stream.
-	/// </summary>
-	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
-	/// <returns></returns>
-	public uint ReadUInt<T>() where T : IEndianConverter, new()
-	{
-		T converter = new T();
-
-		byte[] buffer = this.ReadBytes(4);
-		return converter.ToUInt32(buffer);
-	}
-
-	/// <summary>
-	/// Read a <see cref="float"/> value form the stream.
-	/// </summary>
-	/// <returns></returns>
-	public float ReadSingle()
-	{
-		return ReadSingle<DefaultEndianConverter>();
-	}
-
-	/// <summary>
-	/// Read a <see cref="float"/> value form the stream.
-	/// </summary>
-	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
-	/// <returns></returns>
-	public float ReadSingle<T>() where T : IEndianConverter, new()
-	{
-		T converter = new T();
-
-		byte[] buffer = this.ReadBytes(4);
-		return converter.ToSingle(buffer);
+		return (char)this.ReadByte();
 	}
 
 	/// <summary>
@@ -369,7 +245,7 @@ internal class StreamIO : IDisposable
 	/// <returns></returns>
 	public double ReadDouble()
 	{
-		return ReadDouble<DefaultEndianConverter>();
+		return this.readValue<double>(8, this.EndianConverter.ToDouble);
 	}
 
 	/// <summary>
@@ -379,10 +255,26 @@ internal class StreamIO : IDisposable
 	/// <returns></returns>
 	public double ReadDouble<T>() where T : IEndianConverter, new()
 	{
-		T converter = new T();
+		return this.readValue<double>(8, new T().ToDouble);
+	}
 
-		byte[] buffer = this.ReadBytes(8);
-		return converter.ToDouble(buffer);
+	/// <summary>
+	/// Read a <see cref="int"/> value form the stream.
+	/// </summary>
+	/// <returns></returns>
+	public int ReadInt()
+	{
+		return this.readValue<int>(4, this.EndianConverter.ToInt32);
+	}
+
+	/// <summary>
+	/// Read a <see cref="int"/> value form the stream.
+	/// </summary>
+	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+	/// <returns></returns>
+	public int ReadInt<T>() where T : IEndianConverter, new()
+	{
+		return this.readValue<int>(4, new T().ToInt32);
 	}
 
 	/// <summary>
@@ -391,7 +283,7 @@ internal class StreamIO : IDisposable
 	/// <returns></returns>
 	public long ReadLong()
 	{
-		return ReadLong<DefaultEndianConverter>();
+		return this.readValue<long>(8, this.EndianConverter.ToInt64);
 	}
 
 	/// <summary>
@@ -401,32 +293,45 @@ internal class StreamIO : IDisposable
 	/// <returns></returns>
 	public long ReadLong<T>() where T : IEndianConverter, new()
 	{
-		T converter = new T();
-
-		byte[] buffer = this.ReadBytes(8);
-		return converter.ToInt64(buffer);
+		return this.readValue<long>(8, new T().ToInt64);
 	}
 
 	/// <summary>
-	/// Read a <see cref="ulong"/> value form the stream.
+	/// Read a <see cref="short"/> value form the stream.
 	/// </summary>
 	/// <returns></returns>
-	public ulong ReadULong()
+	public short ReadShort()
 	{
-		return ReadULong<DefaultEndianConverter>();
+		return this.readValue<short>(2, this.EndianConverter.ToInt16);
 	}
 
 	/// <summary>
-	/// Read a <see cref="ulong"/> value form the stream.
+	/// Read a <see cref="short"/> value form the stream.
 	/// </summary>
 	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
 	/// <returns></returns>
-	public ulong ReadULong<T>() where T : IEndianConverter, new()
+	public short ReadShort<T>() where T : IEndianConverter, new()
 	{
-		T converter = new T();
+		return this.readValue<short>(2, new T().ToInt16);
+	}
 
-		byte[] buffer = this.ReadBytes(8);
-		return converter.ToUInt64(buffer);
+	/// <summary>
+	/// Read a <see cref="float"/> value form the stream.
+	/// </summary>
+	/// <returns></returns>
+	public float ReadSingle()
+	{
+		return this.readValue<float>(4, this.EndianConverter.ToSingle);
+	}
+
+	/// <summary>
+	/// Read a <see cref="float"/> value form the stream.
+	/// </summary>
+	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+	/// <returns></returns>
+	public float ReadSingle<T>() where T : IEndianConverter, new()
+	{
+		return this.readValue<float>(4, new T().ToSingle);
 	}
 
 	/// <summary>
@@ -455,6 +360,82 @@ internal class StreamIO : IDisposable
 	}
 
 	/// <summary>
+	/// Read a <see cref="uint"/> value form the stream.
+	/// </summary>
+	/// <returns></returns>
+	public uint ReadUInt()
+	{
+		return this.readValue<uint>(4, this.EndianConverter.ToUInt32);
+	}
+
+	/// <summary>
+	/// Read a <see cref="uint"/> value form the stream.
+	/// </summary>
+	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+	/// <returns></returns>
+	public uint ReadUInt<T>() where T : IEndianConverter, new()
+	{
+		return this.readValue<uint>(4, new T().ToUInt32);
+	}
+
+	/// <summary>
+	/// Read a <see cref="ulong"/> value form the stream.
+	/// </summary>
+	/// <returns></returns>
+	public ulong ReadULong()
+	{
+		return this.readValue<ulong>(8, this.EndianConverter.ToUInt64);
+	}
+
+	/// <summary>
+	/// Read a <see cref="ulong"/> value form the stream.
+	/// </summary>
+	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+	/// <returns></returns>
+	public ulong ReadULong<T>() where T : IEndianConverter, new()
+	{
+		return this.readValue<ulong>(8, new T().ToUInt64);
+	}
+
+	/// <summary>
+	/// Read the stream as a string until it finds the match character
+	/// </summary>
+	/// <param name="match">Character to match</param>
+	/// <returns></returns>
+	public string ReadUntil(char match)
+	{
+		string line = string.Empty;
+		char last;
+
+		do
+		{
+			last = this.ReadChar();
+			line += last;
+		} while (match != last);
+
+		return line;
+	}
+
+	/// <summary>
+	/// Read a <see cref="ushort"/> value form the stream.
+	/// </summary>
+	/// <returns></returns>
+	public ushort ReadUShort()
+	{
+		return this.readValue<ushort>(2, this.EndianConverter.ToUInt16);
+	}
+
+	/// <summary>
+	/// Read a <see cref="ushort"/> value form the stream.
+	/// </summary>
+	/// <typeparam name="T">Endian converter to process the bytes.</typeparam>
+	/// <returns></returns>
+	public ushort ReadUShort<T>() where T : IEndianConverter, new()
+	{
+		return this.readValue<ushort>(2, new T().ToUInt16);
+	}
+
+	/// <summary>
 	/// Write a value as an array of bytes
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
@@ -462,7 +443,7 @@ internal class StreamIO : IDisposable
 	public void Write<T>(T value)
 		where T : struct
 	{
-		this.Write(value, new DefaultEndianConverter());
+		this.Write(value, this.EndianConverter);
 	}
 
 	public void Write<T, E>(T value)
@@ -485,16 +466,6 @@ internal class StreamIO : IDisposable
 		this._stream.Write(arr, 0, arr.Length);
 	}
 
-	public virtual void WriteBytes(byte[] buffer)
-	{
-		this._stream.Write(buffer, 0, buffer.Length);
-	}
-
-	public virtual void WriteBytes(byte[] buffer, int offset, int count)
-	{
-		this._stream.Write(buffer, offset, count);
-	}
-
 	/// <summary>
 	/// Write a string using the default encoding
 	/// </summary>
@@ -515,9 +486,19 @@ internal class StreamIO : IDisposable
 		this._stream.Write(arr, 0, arr.Length);
 	}
 
-	/// <inheritdoc/>
-	public void Dispose()
+	public virtual void WriteBytes(byte[] buffer)
 	{
-		_stream.Dispose();
+		this._stream.Write(buffer, 0, buffer.Length);
+	}
+
+	public virtual void WriteBytes(byte[] buffer, int offset, int count)
+	{
+		this._stream.Write(buffer, offset, count);
+	}
+
+	private T readValue<T>(int length, Func<byte[], T> converter)
+	{
+		byte[] buffer = this.ReadBytes(length);
+		return converter(buffer);
 	}
 }
