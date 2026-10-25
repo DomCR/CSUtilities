@@ -1,4 +1,4 @@
-﻿using CSMath.Extensions;
+using CSMath.Extensions;
 using System;
 using System.Text;
 using System.Threading;
@@ -91,14 +91,21 @@ public partial struct Matrix3
 
 	public Matrix3(Matrix4 matrix)
 	{
+		// [PATCH] Matrix4 stores Mij with the FIRST index as the column (its own remarks show
+		// row 0 = M00, M10, M20, M30 and its vector operator computes X' = M00*x + M10*y + ...),
+		// while Matrix3's operators treat the FIRST index as the row (X' = M00*x + M01*y + ...).
+		// A plain copy therefore made the 3x3 linear part the TRANSPOSE of the real transform:
+		// every rotation applied through getWorldMatrix() ran with the wrong sign (arc start/end
+		// angles, text rotation, ellipse major-axis, ...). Transpose on copy so that
+		// Matrix3 * XYZ applies exactly the same linear map as Matrix4 * XYZ.
 		this.M00 = matrix.M00;
-		this.M01 = matrix.M01;
-		this.M02 = matrix.M02;
-		this.M10 = matrix.M10;
+		this.M01 = matrix.M10;
+		this.M02 = matrix.M20;
+		this.M10 = matrix.M01;
 		this.M11 = matrix.M11;
-		this.M12 = matrix.M12;
-		this.M20 = matrix.M20;
-		this.M21 = matrix.M21;
+		this.M12 = matrix.M21;
+		this.M20 = matrix.M02;
+		this.M21 = matrix.M12;
 		this.M22 = matrix.M22;
 	}
 
