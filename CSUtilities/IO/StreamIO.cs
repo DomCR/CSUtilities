@@ -1,4 +1,5 @@
 ﻿using CSUtilities.Converters;
+using CSUtilities.Extensions;
 using System;
 using System.IO;
 using System.Text;
@@ -57,17 +58,28 @@ internal class StreamIO : IDisposable
 	/// <param name="stream"></param>
 	/// <param name="createCopy"></param>
 	/// <param name="resetPosition"></param>
+	/// <remarks>
+	/// A stream that cannot seek is copied from its current position to its end, without reading
+	/// its <see cref="Stream.Position"/> or <see cref="Stream.Length"/>, which such a stream may not support.
+	/// </remarks>
 	public StreamIO(Stream stream, bool createCopy, bool resetPosition)
 	{
-		long position = stream.Position;
-
-		//Check if supports seeking
-		if (!stream.CanSeek || createCopy)
+		if (!stream.CanSeek)
 		{
+			//Copy what is left of a forward-only stream to allow seeking
+			MemoryStream copy = new MemoryStream();
+			stream.CopyTo(copy);
+			copy.Position = 0L;
+			_stream = copy;
+		}
+		else if (createCopy)
+		{
+			long position = stream.Position;
+
 			stream.Position = 0;
-			//Create a copy of the stream to allow seeking
+			//Create a copy of the stream
 			byte[] buffer = new byte[stream.Length];
-			stream.Read(buffer, 0, buffer.Length);
+			stream.ReadExactly(buffer, 0, buffer.Length);
 			_stream = (Stream)new MemoryStream(buffer);
 			stream.Position = position;
 		}
@@ -211,8 +223,8 @@ internal class StreamIO : IDisposable
 
 		byte[] buffer = new byte[length];
 
-		if (this._stream.Read(buffer, 0, length) < length)
-			throw new EndOfStreamException();
+		//A single read may return fewer bytes than asked without being at the end
+		this._stream.ReadExactly(buffer, 0, length);
 
 		return buffer;
 	}
@@ -224,8 +236,7 @@ internal class StreamIO : IDisposable
 
 		byte[] buffer = new byte[length];
 
-		if (await this._stream.ReadAsync(buffer, 0, length, cancellationToken) < length)
-			throw new EndOfStreamException();
+		await this._stream.ReadExactlyAsync(buffer, 0, length, cancellationToken);
 
 		return buffer;
 	}
