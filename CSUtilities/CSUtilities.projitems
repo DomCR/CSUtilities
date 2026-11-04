@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\StringValueAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\Generic\ObservableList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\Generic\ObservableListEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BigEndianConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EnvironmentVars.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtension.cs" />
