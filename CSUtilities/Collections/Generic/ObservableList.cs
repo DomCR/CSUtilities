@@ -66,6 +66,19 @@ public class ObservableList<T> : IList<T>
 		this.Insert(_list.Count, item);
 	}
 
+	/// <summary>
+	/// Adds the elements of the specified sequence to the end of the collection.
+	/// </summary>
+	/// <remarks>Elements are added in the order they are returned by the sequence.</remarks>
+	/// <param name="items">The sequence of elements to add to the collection.</param>
+	public void AddRange(IEnumerable<T> items)
+	{
+		foreach (var item in items)
+		{
+			this.Add(item);
+		}
+	}
+
 	/// <inheritdoc/>
 	public void Clear()
 	{
